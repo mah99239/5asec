@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+
+      android:id="@+id/cl_terms_root"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context=".ui.main.view.TermsActivity"
+      >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_terms_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"
+        />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_terms_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lv_terms"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_terms_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_terms_left"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+
+        android:id="@+id/cpi_terms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_terms_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="16dp"
+        />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

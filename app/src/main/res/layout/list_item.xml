@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <TextView
+        android:text="1. Palcing in order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/secondaryTextColor"
+        android:id="@+id/tv_item_name" />
+
+    <TextView
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/secondaryTextColor"
+        android:textSize="25sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:text="Insure that you review your order before submitting it, If you have made a mistake after submitting your order please contact us on following email : 5asecCS@idcksa.com we will confirm any changes to your order by emai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_item_content"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
+
+  </LinearLayout>
+</layout>

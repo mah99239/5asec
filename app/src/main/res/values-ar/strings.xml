@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="app_name">5asec</string>
+    <!--login in Activity-->
+    <!--hint at EditText and TextView and any View in login In -->
+    <string name="login_skip">او تخطى التسجيل</string>
+    <string name="login_signUp">ليس لديك حساب؟</string>
+    <string name="login_login">الدخول</string>
+    <string name="login_password">كلمه السر</string>
+    <string name="login_email">البريد الالكترونى</string>
+    <string name="login_forgotPassword">نسيت كلمه المرور</string>
+
+    <!--signUp Activity -->
+    <!--error in signUp -->
+    <string name="signUp_error_mobile">رقم الجوال غير صحيح</string>
+    <string name="signUp_error_email">هذا البريد الالكترونى موجود بالفعل</string>
+    <!--hint at EditText and TextView and any View in SignUp -->
+
+    <string name="signUp_privcayTerms">الموافقه على الشروط والاحكام</string>
+    <string name="signUp_birthdate">تاريخ الميلاد (اختيارى)</string>
+    <string name="signUp_gender">الجنس(اختيارى)</string>
+    <string name="signUp_confirmPass">تاكيد كلمه المرور</string>
+    <string name="signUp_pass">كلمه المرور</string>
+    <string name="signUp_phone">رقم الجوال</string>
+    <string name="signUp_email">البريد الالكترونى</string>
+    <string name="signUp_fullName">الاسم بالكامل</string>
+    <string name="signUp_button">التالى</string>
+    <string name="signUp_notConnect">غير متصل بالانترنت</string>
+
+
+
+</resources>

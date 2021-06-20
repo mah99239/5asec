@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <string name="app_name">5asec</string>
+
+  <!--  text login in-->
+  <string name="login_password">Password</string>
+  <string name="login_email">E-mail</string>
+  <string name="login_forgotPassword">Forgot password?</string>
+  <string name="login_login">login in</string>
+  <string name="login_signUp">don\'t have an account</string>
+  <string name="login_skip">Or skip login</string>
+
+
+  <!--signUp Activity -->
+
+  <!--error in signUp -->
+  <string name="signUp_error_email">This Email already existed</string>
+  <string name="signUp_error_mobile">invalid mobile number</string>
+
+  <!--hint at EditText and TextView and any View in SignUp -->
+  <string name="signUp_notConnect">Not connect</string>
+  <string name="signUp_button">Sign Up</string>
+  <string name="signUp_fullName">Full name</string>
+  <string name="signUp_email">E-mail</string>
+  <string name="signUp_phone">phone</string>
+  <string name="signUp_pass">password</string>
+  <string name="signUp_confirmPass">confirm password</string>
+  <string name="signUp_gender">Gender (Optional)</string>
+  <string name="signUp_birthdate">BirthDate (Optional)</string>
+  <string name="signUp_privcayTerms">Approve privacy agreement and terms of service</string>
+
+
+</resources>

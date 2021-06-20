@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--activity main -->
+  <dimen name="guideline_main_begin">64dp</dimen>
+  <dimen name="guideline_main_margin">16dp</dimen>
+  <dimen name="view_main_margin">8dp</dimen>
+  <dimen name="button_main_size">36dp</dimen>
+
+  <!--Activity SignUp -->
+  <dimen name="margin_signUp">32dp</dimen>
+
+</resources>

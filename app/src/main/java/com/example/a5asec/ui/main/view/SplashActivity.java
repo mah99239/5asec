@@ -1,0 +1,31 @@
+package com.example.a5asec.ui.main.view;
+
+import android.content.Intent;
+import android.os.Handler;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import com.example.a5asec.R;
+
+public class SplashActivity extends AppCompatActivity
+{
+  Handler handler;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_splash);
+   // Picasso.get().load("https://stg.5asec-ksa.com/api/audit-logs/").into(imageView);
+   // Glide.with(this).load("http://goo.gl/gEgYUd").into(imageView);
+
+    handler=new Handler();
+    handler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        Intent intent=new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+      }
+    },3000);
+  }
+}
