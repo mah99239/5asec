@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.view.home.ProfileFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_profile_verticalLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_profile_verticalRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_profile_horizontalUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_profile_horizontalDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <TextView
+            android:id="@+id/tv_profile_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_profile_head_element"
+            android:text="@string/profile_text_welcome"
+
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft"
+            app:layout_constraintTop_toTopOf="@+id/gl_profile_horizontalUp" />
+
+        <TextView
+            android:id="@+id/tv_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_profile_element"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_welcome"
+            tools:text="Name: Mahmoud" />
+
+        <TextView
+            android:id="@+id/tv_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_name"
+            tools:text="E-mail: mahmoud99239@gmail.com" />
+
+        <TextView
+            android:id="@+id/tv_profile_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_email"
+            tools:text="+23342342342342" />
+
+        <TextView
+            android:id="@+id/tv_profile_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_profile_head_element"
+            android:text="@string/profile_text_address"
+            app:layout_constraintEnd_toEndOf="@+id/btn_profile_address"
+            app:layout_constraintStart_toStartOf="@+id/btn_profile_address"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_phone" />
+
+        <Button
+            android:id="@+id/btn_profile_address"
+            style="@style/Widget_App_secondaryButton"
+
+            android:layout_marginTop="@dimen/margin_profile"
+            android:text="@string/profile_button_manage_address"
+            app:layout_constraintEnd_toStartOf="@+id/gl_profile_verticalRight"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_address" />
+
+        <Button
+            android:id="@+id/btn_profile_mobile"
+            style="@style/Widget_App_tertiaryButton"
+
+            android:text="@string/profile_button_verify_mobile"
+            app:layout_constraintBottom_toTopOf="@+id/btn_profile_password"
+            app:layout_constraintEnd_toStartOf="@+id/gl_profile_verticalRight"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft" />
+
+        <Button
+            android:id="@+id/btn_profile_password"
+
+            style="@style/Widget_App_primaryButton"
+
+            android:layout_marginBottom="@dimen/margin_profile"
+            android:text="@string/profile_button_change_password"
+            app:layout_constraintBottom_toTopOf="@+id/gl_profile_horizontalDown"
+            app:layout_constraintEnd_toStartOf="@+id/gl_profile_verticalRight"
+            app:layout_constraintStart_toStartOf="@+id/gl_profile_verticalLeft" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

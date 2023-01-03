@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sh_contact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <include layout="@layout/shimmer_contact" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_contact_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:isScrollContainer="true"
+        android:visibility="visible"
+        tools:context=".ui.view.home.ContactFragment">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_contact_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_contact_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline"
+            app:layout_constraintStart_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_contact_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_contact_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <TextView
+            android:id="@+id/tv_contact_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_text_label"
+            app:layout_constraintEnd_toStartOf="@+id/tv_contact_social"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toTopOf="@+id/gl_contact_up" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/d_contact_after_contact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/margin_contact_divider"
+            app:layout_constraintEnd_toStartOf="@+id/gl_contact_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contact_label" />
+
+        <ImageView
+            android:id="@+id/iv_contact_phone"
+            android:layout_width="@dimen/size_contact_icon"
+            android:layout_height="@dimen/size_contact_icon"
+            android:layout_marginStart="@dimen/margin_contact_start"
+            android:layout_marginTop="@dimen/margin_contact_top"
+            android:src="@drawable/ic_contact_call_24"
+            app:guidelineUseRtl="false"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/d_contact_after_contact" />
+
+        <TextView
+            android:id="@+id/tv_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_contact_start"
+            app:layout_constraintStart_toEndOf="@+id/iv_contact_phone"
+            app:layout_constraintTop_toTopOf="@+id/iv_contact_phone"
+            tools:text="+96659098808" />
+
+        <ImageView
+            android:id="@+id/iv_contact_email"
+            android:layout_width="@dimen/size_contact_icon"
+            android:layout_height="@dimen/size_contact_icon"
+            android:layout_marginStart="@dimen/margin_contact_start"
+            android:layout_marginTop="@dimen/margin_contact_top"
+            android:src="@drawable/ic_email"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/iv_contact_phone" />
+
+        <TextView
+            android:id="@+id/tv_contact_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_contact_start"
+            app:layout_constraintStart_toEndOf="@+id/iv_contact_email"
+            app:layout_constraintTop_toTopOf="@+id/iv_contact_email"
+            tools:text="http://www.5asec.sa/contact" />
+
+        <TextView
+            android:id="@+id/tv_contact_social"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/contact_text_social"
+            app:layout_constraintEnd_toStartOf="@+id/gl_contact_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/tv_contact_label"
+            app:layout_constraintTop_toTopOf="@+id/gl_contact_up" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/d_contact_after_social"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/d_contact_after_find"
+            app:layout_constraintStart_toEndOf="@+id/tv_contact_label"
+            app:layout_constraintTop_toBottomOf="@+id/d_contact_after_contact"
+            />
+
+        <ImageView
+            android:id="@+id/iv_contact_inst"
+            android:layout_width="@dimen/size_contact_button_icon"
+            android:layout_height="@dimen/size_contact_button_icon"
+            android:layout_marginStart="@dimen/margin_contact_start"
+            android:layout_marginEnd="@dimen/margin_contact_start"
+            android:src="@drawable/ic_contact_inst"
+            app:layout_constraintEnd_toStartOf="@+id/iv_contact_twit"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_contact_face"
+            app:layout_constraintTop_toTopOf="@+id/iv_contact_face" />
+
+        <ImageView
+            android:id="@+id/iv_contact_face"
+            android:layout_width="@dimen/size_contact_button_icon"
+            android:layout_height="@dimen/size_contact_button_icon"
+            android:layout_marginTop="@dimen/margin_contact_top"
+            android:src="@drawable/ic_contact_face"
+            app:layout_constraintEnd_toStartOf="@+id/iv_contact_inst"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/d_contact_after_social"
+            app:layout_constraintTop_toBottomOf="@+id/d_contact_after_contact" />
+
+        <ImageView
+            android:id="@+id/iv_contact_twit"
+            android:layout_width="@dimen/size_contact_button_icon"
+            android:layout_height="@dimen/size_contact_button_icon"
+            android:src="@drawable/ic_contact_twit"
+            app:layout_constraintEnd_toStartOf="@+id/gl_contact_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_contact_inst"
+            app:layout_constraintTop_toTopOf="@+id/iv_contact_inst" />
+
+        <TextView
+            android:id="@+id/tv_contact_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_contact_top_element"
+            android:text="@string/contact_text_find"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/iv_contact_email" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/d_contact_after_find"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/margin_contact_divider"
+            app:layout_constraintEnd_toStartOf="@+id/gl_contact_end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contact_find" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mv_contact_location"
+
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_contact_top"
+            android:fadeScrollbars="true"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/gl_contact_down"
+            app:layout_constraintEnd_toStartOf="@+id/gl_contact_end"
+
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/gl_contact_start"
+            app:layout_constraintTop_toBottomOf="@+id/d_contact_after_find"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+</layout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_login_graph"
+    app:startDestination="@id/nav_login">
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.a5asec.ui.view.login.LoginFragment"
+        android:label="@string/login_tittle">
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@+id/nav_login_signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
+            app:destination="@+id/forgetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_login_signUpFragment"
+        android:name="com.example.a5asec.ui.view.login.SignUpFragment"
+        android:label="@string/sign_up_tittle">
+        <action
+            android:id="@+id/action_signUpFragment_to_termsFragment"
+            app:destination="@+id/nav_login_termsFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_dataPickerFragment"
+            app:destination="@+id/nav_login_dataPickerFragment"
+            app:launchSingleTop="true" />
+        <argument
+            android:name="date"
+            android:defaultValue="null"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_nav_login_signUpFragment_to_nav_login_successFragment"
+            app:destination="@id/nav_login_successFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_login_termsFragment"
+        android:name="com.example.a5asec.ui.view.login.TermsFragment"
+        android:label="@string/terms_tittle">
+        <action
+            android:id="@+id/action_termsFragment_to_signUpFragment"
+            app:destination="@+id/nav_login_signUpFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/nav_login_dataPickerFragment"
+        android:name="com.example.a5asec.ui.view.login.DataPickerFragment"
+        android:label="DataPickerFragment">
+        <arguments
+            android:name="date"
+            android:defaultValue="@null"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_dataPickerFragment_to_signUpFragment"
+            app:destination="@+id/nav_login_signUpFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/nav_login_successFragment"
+        android:name="com.example.a5asec.ui.view.login.SuccessFragment"
+        android:label="@string/success_tittle">
+        <action
+            android:id="@+id/action_nav_login_successFragment_to_forgetPasswordFragment"
+            app:destination="@id/nav_login"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.example.a5asec.ui.view.login.ForgetPasswordFragment"
+        android:label="@string/forget_password_tittle">
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_newPasswordFragment"
+            app:destination="@+id/newPasswordFragment"
+            app:popUpTo="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.example.a5asec.ui.view.login.NewPasswordFragment" >
+        <action
+            android:id="@+id/action_newPasswordFragment_to_nav_login"
+            app:destination="@id/nav_login"
+            app:popUpTo="@id/nav_login" />
+    </fragment>
+</navigation>

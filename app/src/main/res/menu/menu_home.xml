@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home_cart"
+        android:contentDescription="@string/cart_tittle"
+        android:icon="@drawable/ic_bar_shopping"
+        android:title="@string/cart_tittle"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_home_notification"
+        android:contentDescription="@string/notification_tittle"
+        android:icon="@drawable/ic_bar_notifaction"
+        android:title="@string/notification_tittle"
+        app:showAsAction="ifRoom" />
+
+
+
+
+</menu>

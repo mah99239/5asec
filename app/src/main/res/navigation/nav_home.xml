@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home"
+    app:startDestination="@+id/nav_home_priceList">
+    <fragment
+        android:id="@+id/nav_home_priceList"
+        android:name="com.example.a5asec.ui.view.home.PriceListFragment"
+        android:label="@string/price_list_title">
+        <action
+            android:id="@+id/action_priceListFragment_to_servicesItemFragment"
+            app:destination="@+id/nav_home_servicesItem"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_home_servicesItem"
+        android:name="com.example.a5asec.ui.view.home.ServicesFragment"
+        android:label="@string/services_list_title" />
+    <fragment
+        android:id="@+id/nav_home_orders"
+        android:name="com.example.a5asec.ui.view.home.OrderPagerFragment"
+        android:label="@string/order_tittle" />
+    <fragment
+        android:id="@+id/nav_home_profile"
+        android:name="com.example.a5asec.ui.view.home.ProfileFragment"
+        android:label="@string/profile_tittle" >
+        <action
+            android:id="@+id/action_nav_home_profile_to_manageAddressFragment2"
+            app:destination="@id/nav_home_manage_address" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_home_about"
+        android:name="com.example.a5asec.ui.view.home.AboutFragment"
+        android:label="@string/about_tittle" />
+    <fragment
+        android:id="@+id/nav_home_cart"
+        android:name="com.example.a5asec.ui.view.home.CartFragment"
+        android:label="@string/cart_tittle" />
+    <fragment
+        android:id="@+id/nav_home_contact"
+        android:name="com.example.a5asec.ui.view.home.ContactFragment"
+        android:label="@string/contact_tittle" />
+    <fragment
+        android:id="@+id/nav_home_notification"
+        android:name="com.example.a5asec.ui.view.home.NotificationFragment"
+        android:label="@string/notification_tittle" />
+    <fragment
+        android:id="@+id/nav_home_discount"
+        android:name="com.example.a5asec.ui.view.home.DiscountFragment"
+        android:label="@string/discount_tittle" />
+    <fragment
+        android:id="@+id/nav_home_setting"
+        android:name="com.example.a5asec.ui.view.home.SettingFragment"
+        android:label="@string/setting_tittle" />
+    <fragment
+        android:id="@+id/nav_home_terms"
+        android:name="com.example.a5asec.ui.view.login.TermsFragment"
+        android:label="@string/terms_tittle" />
+    <dialog
+        android:id="@+id/nav_logOut"
+        android:name="com.example.a5asec.ui.view.home.LogOutDialog"
+
+        />
+    <fragment
+        android:id="@+id/nav_home_manage_address"
+        android:name="com.example.a5asec.ui.view.home.ManageAddressFragment"
+        android:label="@string/manage_address_tittle" >
+        <action
+            android:id="@+id/action_manageAddress_to_newAddress"
+            app:destination="@id/newAddressFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"
+            />
+
+
+
+        <action
+            android:id="@+id/action_manageAddress_to_address"
+            app:destination="@id/addressFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_nav_home_manage_address_to_addressSettingFragment"
+            app:destination="@id/addressSettingFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_nav_home_manage_address_to_newAddressFragment"
+            app:destination="@id/newAddressFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/newAddressFragment"
+        android:name="com.example.a5asec.ui.view.home.AddAddressFragment"
+        android:label="{nav_home_address_arg_title}"
+        tools:layout="@layout/fragment_add_address">
+        <action
+            android:id="@+id/action_newAddressFragment_to_nav_home_manage_address"
+            app:destination="@id/nav_home_manage_address"
+            app:popUpTo="@id/nav_home_manage_address"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
+        <argument
+            android:name="nav_home_address_arg_check"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="nav_home_address_arg_title"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.a5asec.ui.view.home.AddressFragment"
+        android:label="Address" />
+    <dialog
+        android:id="@+id/addressSettingFragment"
+        android:name="com.example.a5asec.ui.view.home.AddressSettingFragment"
+      >
+        <action
+            android:id="@+id/action_addressSettingFragment_to_nav_home_manage_address"
+            app:destination="@id/nav_home_manage_address" />
+        <action
+            android:id="@+id/action_addressSettingFragment_to_newAddressFragment"
+            app:destination="@id/newAddressFragment" />
+    </dialog>
+</navigation>

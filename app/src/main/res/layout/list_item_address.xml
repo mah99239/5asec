@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_address_container"
+        style="@style/Widget_App_CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_all_guideline"
+        android:addStatesFromChildren="true"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_theme_light_primaryContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_address_container_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/md_theme_light_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_address_tittle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_order"
+                    tools:text="Primary Address"
+                    android:textColor="@color/md_theme_light_onSecondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_address_setting"
+
+                    style="@style/Widget_App_iconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|clip_horizontal|center|clip_vertical|center_horizontal|fill|fill_horizontal|left|fill_vertical"
+                    app:backgroundTint="@color/md_theme_light_secondary"
+                    app:icon="@drawable/ic_menu_settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_address_city"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_address_container_id"
+                tools:text="City" />
+
+            <TextView
+                android:id="@+id/tv_address_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_address_city"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address_city"
+                tools:text="area" />
+
+            <TextView
+                android:id="@+id/tv_address_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_address_area"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address_area"
+                tools:text="street" />
+
+            <Button
+                android:id="@+id/btn_address_location"
+
+                style="@style/Widget_App_iconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|clip_horizontal|center|clip_vertical|center_horizontal|fill|fill_horizontal|left|fill_vertical"
+                android:layout_marginEnd="8dp"
+                app:backgroundTint="@color/md_theme_light_primaryContainer"
+                app:icon="@drawable/ic_address_location_24"
+                app:iconTint="@color/md_theme_light_onPrimaryContainer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_address_container_id"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

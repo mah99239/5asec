@@ -1,0 +1,165 @@
+plugins {
+    id 'com.android.application'
+    id "androidx.navigation.safeargs"
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'org.jetbrains.kotlin.android'
+
+
+}
+
+android {
+
+    namespace 'com.example.a5asec'
+
+    if (project.hasProperty("debug")) {
+        splits.abi.isEnable = false
+        splits.density.isEnable = false
+        aaptOptions.cruncherEnabled = false
+    }
+
+/*    buildFeatures {
+        buildConfig = false
+        viewBinding = false
+        dataBinding = false
+        aidl = false
+        renderScript = false
+        resValues = true
+        shaders = false
+    }*/
+
+    bundle {
+        storeArchive {
+            enable = false
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    dataBinding {
+        enabled true
+    }
+
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        resConfigs "ar", "en"
+
+        applicationId "com.example.a5asec"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+    }
+    // TODO : add multiple productFlavors in my app (go learn)
+    //flavorDimensions "client", "server"
+    /*  productFlavors {
+
+      }*/
+
+    buildTypes {
+        debug {
+            pseudoLocalesEnabled true
+
+            //IMROVE:error with minifyEnabled is true
+            minifyEnabled false
+            debuggable true
+        }
+        qa {
+            minifyEnabled true
+            debuggable false
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+
+    api androidXDependencies.splashScreen
+    api androidXDependencies.appcompat
+    api androidXDependencies.constraintlayout
+    api androidXDependencies.legacy
+
+    api androidXDependencies.recycleViewSelection
+
+    api androidXDependencies.navigationFragment
+    api androidXDependencies.navigationUi
+    api androidXDependencies.navigationDynamicFeatures
+    // Testing Navigation
+    //androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
+
+    api androidXDependencies.lifecycleViewmodel
+    api androidXDependencies.lifecylceLivedata
+    api androidXDependencies.lifecylceRunTime
+    api androidXDependencies.lifecylceSavedState
+    // annotationProcessor androidXDependencies.lifecylceCompiler
+    api androidXDependencies.lifecylceCommon
+    api androidXDependencies.lifecylceService
+    api androidXDependencies.lifecylceProcess
+    implementation 'androidx.fragment:fragment:1.4.1'
+
+    annotationProcessor androidXDependencies.annotation
+
+    api androidXDependencies.multidex
+    api androidXDependencies.swiprefresh
+
+    //Loading effect shimmer
+    api 'com.facebook.shimmer:shimmer:0.5.0@aar'
+
+
+    api  'org.apache.commons:commons-lang3:3.0'
+
+    //lombok
+    compileOnly  lombokDependencies.run
+    annotationProcessor  lombokDependencies.project
+
+    implementation 'com.google.android.material:material:1.7.0'
+
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+
+    //retrofit
+    api retrofitDependencies.run
+    api retrofitDependencies.convertergson
+    api retrofitDependencies.converterscalars
+    api retrofitDependencies.okhttp
+
+    //retrofit adapter
+    api retrofitDependencies.adapter
+    api retrofitDependencies.adapterrxjava3
+    api retrofitDependencies.interceptor
+
+    //rxAndroid
+    api retrofitDependencies.rxandroid
+    api retrofitDependencies.rxjava3
+
+//    implementation 'org.maplibre.gl:android-sdk:9.2.1'
+
+    //room
+    api roomDependencies.runtime
+    annotationProcessor roomDependencies.compiler
+    api roomDependencies.rxjava3
+    api roomDependencies.guava
+
+
+    //Glide
+    api glideDependencies.run
+    annotationProcessor glideDependencies.compiler
+    api(glideDependencies.integration) {
+        exclude group: 'glide-parent'
+    }
+
+
+
+
+
+}

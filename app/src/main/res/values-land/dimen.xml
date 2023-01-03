@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_all_guideline">16dp</dimen>
+
+    <!-- Login Activity-->
+    <dimen name="guideline_all_margin">16dp</dimen>
+    <dimen name="view_main_margin">16dp</dimen>
+    <dimen name="margin_login_image_start">16dp</dimen>
+    <dimen name="margin_login_top">8dp</dimen>
+
+    <!--Activity SignUp -->
+    <dimen name="margin_signUp">32dp</dimen>
+
+
+    <!--Home Activity -->
+    <dimen name="height_nav_header">176dp</dimen>
+
+    <!--Price list Fragment -->
+    <dimen name="height_price_list_image_banner">96dp</dimen>
+
+    <!--item price-->
+    <dimen name="size_item_price_card">96dp</dimen>
+
+
+    <!--Laundry Services Fragment -->
+
+    <!--layout laundry services content -->
+    <dimen name="height_layout_laundry_services_container">320dp</dimen>
+    <dimen name="margin_all_layout_laundry_services_small">8dp</dimen>
+    <dimen name="textsize_layout_laundry_services_text">14sp</dimen>
+    <dimen name="size_layout_laundry_services_button">48dp</dimen>
+
+    <!--item_services -->
+    <dimen name="margin_item_services_container">8dp</dimen>
+    <dimen name="padding_all_item_services_text">8dp</dimen>
+    <dimen name="size_item_services_image">48dp</dimen>
+
+    <!--item laundry services -->
+    <dimen name="size_item_laundry_services_card">96dp</dimen>
+    <dimen name="height_item_laundry_services_image">48dp</dimen>
+    <dimen name="height_item_laundry_services_text">24dp</dimen>
+    <dimen name="padding_item_laundry_services_text">4dp</dimen>
+
+    <!--Profile Fragment -->
+    <dimen name="margin_profile_headline_text">16dp</dimen>
+    <dimen name="margin_profile_text">8dp</dimen>
+    <dimen name="margin_profile_space_text">32dp</dimen>
+    <dimen name="margin_profile_button_bottom">8dp</dimen>
+
+    <!--Contact Fragment -->
+    <dimen name="margin_contact_divider">8dp</dimen>
+    <dimen name="margin_contact_top">16dp</dimen>
+    <dimen name="margin_contact_start">8dp</dimen>
+    <dimen name="margin_contact_top_element">32dp</dimen>
+    <dimen name="size_contact_icon">24dp</dimen>
+    <dimen name="size_contact_button_icon">48dp</dimen>
+
+    <!--Cart Fragment -->
+    <dimen name="margin_cart_recycle">16dp</dimen>
+    <!--item Cart  -->
+    <dimen name="margin_cart_card">8dp</dimen>
+    <dimen name="margin_cart_text">8dp</dimen>
+
+
+    <!--setting Fragment -->
+    <dimen name="textsize_setting_text">16sp</dimen>
+</resources>

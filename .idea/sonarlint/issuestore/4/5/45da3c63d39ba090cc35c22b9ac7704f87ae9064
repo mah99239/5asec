@@ -1,0 +1,11 @@
+
+R
+java:S4973["<Strings and Boxed types should be compared using "equals()".(àÒÀá
+t
+java:S14507"YRemove the "actionMode" field and declare it as a local variable in the relevant methods.(ŠÜìùÿÿÿÿ
+O
+java:S1602",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ8—Ÿ›øÕ0
+W	java:S125µ"<This block of commented-out lines of code should be removed.(ÒÌâ–øÿÿÿÿ
+^	java:S125ü"<This block of commented-out lines of code should be removed.(ÏäêÌşÿÿÿÿ8¡Ÿ›øÕ0
+I
+java:S10687".Remove this unused "actionMode" private field.(ŠÜìùÿÿÿÿ

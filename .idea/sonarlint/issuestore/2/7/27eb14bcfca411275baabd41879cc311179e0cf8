@@ -1,0 +1,19 @@
+
+O
+java:S11997"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ8ÔõÏÊÓ0
+]	java:S125+"<This block of commented-out lines of code should be removed.(«²ŞÃıÿÿÿÿ8…ÚÎÊÓ0
+V
+java:S1854s"@Remove this useless assignment to local variable "refreshToken".(õ–
+Y
+java:S1854r">Remove this useless assignment to local variable "jsonParams".(ú§À†şÿÿÿÿ
+J
+java:S1481r"/Remove this unused "jsonParams" local variable.(ú§À†şÿÿÿÿ
+G
+java:S1481s"1Remove this unused "refreshToken" local variable.(õ–
+Q	java:S125v"<This block of commented-out lines of code should be removed.(õ–
+E
+java:S1144K"/Remove this unused private "resultTime" method.(¼¨Æà
+O
+java:S1144["2Remove this unused private "responseCount" method.(†ê•²8”ÚÎÊÓ0
+G
+java:S1144n"1Remove this unused private "refreshToken" method.(ù»äù

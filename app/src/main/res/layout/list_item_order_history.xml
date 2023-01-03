@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_order_history_container"
+        style="@style/Widget_App_CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:addStatesFromChildren="true"
+
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_theme_light_primaryContainer">
+
+            <LinearLayout
+                android:id="@+id/ll_order_history_container_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/md_theme_light_secondary"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_order_history_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_order"
+                    android:text="@string/order_id_title"
+                    android:textColor="@color/md_theme_light_onSecondary" />
+
+                <TextView
+                    android:id="@+id/tv_order_history_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/md_theme_light_onSecondary"
+                    tools:text="102421" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imv_order_history_date"
+                android:layout_width="@dimen/size_order_image"
+                android:layout_height="@dimen/size_order_image"
+                android:layout_marginStart="@dimen/margin_order"
+                android:layout_marginTop="@dimen/margin_order"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_order_history_container_id"
+                app:srcCompat="@drawable/ic_order" />
+
+            <TextView
+                android:id="@+id/tv_order_history_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_order"
+                app:layout_constraintStart_toEndOf="@+id/imv_order_history_date"
+
+                app:layout_constraintTop_toTopOf="@+id/imv_order_history_date"
+                tools:text="24-05-2022" />
+
+            <ImageView
+                android:id="@+id/imv_order_history_count"
+                android:layout_width="@dimen/size_order_image"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_order"
+                app:layout_constraintStart_toStartOf="@+id/imv_order_history_date"
+                app:layout_constraintTop_toBottomOf="@+id/imv_order_history_date"
+                app:srcCompat="@drawable/ic_bar_shopping"
+                app:tint="@color/md_theme_dark_background" />
+
+            <TextView
+                android:id="@+id/tv_order_history_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_order"
+                app:layout_constraintStart_toEndOf="@+id/imv_order_history_date"
+
+                app:layout_constraintTop_toTopOf="@+id/imv_order_history_count"
+                tools:text="3" />
+
+            <ImageView
+                android:id="@+id/imv_order_history_status"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_order"
+                android:layout_marginBottom="@dimen/margin_order"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imv_order_history_count"
+                app:layout_constraintTop_toBottomOf="@+id/imv_order_history_count"
+                app:srcCompat="@drawable/ic_status" />
+
+            <TextView
+                android:id="@+id/tv_order_history_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_order"
+                app:layout_constraintStart_toEndOf="@+id/imv_order_history_date"
+
+                app:layout_constraintTop_toTopOf="@+id/imv_order_history_status"
+                tools:text="order canceld by client" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

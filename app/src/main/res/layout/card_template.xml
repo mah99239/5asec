@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.constraintlayout.widget.Placeholder
+        android:id="@+id/ph_template_image"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:content="@+id/iv_laundry_services"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Placeholder
+        android:id="@+id/ph_template_text_head"
+        android:layout_width="0dp"
+
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        app:content="@+id/tv_laundry_services_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ph_template_image" />
+
+    <androidx.constraintlayout.widget.Placeholder
+        android:id="@+id/ph_template_text_salary"
+        android:layout_width="0dp"
+
+        android:layout_height="24dp"
+        app:content="@+id/tv_laundry_services_salary"
+        app:guidelineUseRtl="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ph_template_text_head" />
+</merge>

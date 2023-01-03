@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_language">
+        <item>اللغه الانجلزيه</item>
+        <item>اللغه العربيه</item>
+    </string-array>
+    <string-array name="sign_up_gender">
+        <item>ذكر</item>
+        <item>انثى</item>
+        <item>غير محدد</item>
+    </string-array>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+
+        style="@style/Widget_App_CardView"
+        android:layout_width="@dimen/size_item_price_card"
+        android:layout_height="@dimen/height_item_price_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_price_image"
+
+                android:background="@color/md_theme_light_tertiaryContainer"
+                android:scaleType="fitCenter"
+                app:strokeColor="@color/md_theme_light_outlineVariant"
+                app:strokeWidth="1dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_itemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:fontFamily="@font/rubik_light"
+                android:gravity="center"
+                android:padding="4dp"
+                 />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

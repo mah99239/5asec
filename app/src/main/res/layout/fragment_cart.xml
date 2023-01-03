@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_cart_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.view.home.CartFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_cart_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_cart_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_cart_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_cart_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/tv_cart_total"
+            app:layout_constraintEnd_toStartOf="@+id/gl_cart_end"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/gl_cart_start"
+            app:layout_constraintTop_toTopOf="@+id/gl_cart_up"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="6"
+            tools:listitem="@layout/list_item_cart"
+            tools:visibility="gone">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_cart_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_cart_check_out"
+            app:layout_constraintEnd_toEndOf="@+id/gl_cart_end"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Total: 120SAR"
+            tools:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_cart_check_out"
+            style="@style/Widget_App_primaryButton"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+
+            android:text="@string/cart_button_label"
+            app:layout_constraintBottom_toTopOf="@+id/gl_cart_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/gl_cart_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_cart_start" />
+
+        <ImageView
+            android:id="@+id/imv_cart_empty"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_services_image"
+            android:layout_marginTop="120dp"
+            android:backgroundTint="@color/md_theme_dark_inversePrimary"
+            android:backgroundTintMode="screen"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_bar_shopping"
+            tools:visibility="visible"
+            app:tint="@color/md_theme_dark_inversePrimary" />
+
+        <TextView
+            android:id="@+id/tv_cart_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cart_text_empty"
+            android:textColor="@color/md_theme_dark_inversePrimary"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imv_cart_empty"
+            tools:visibility="visible" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cpi_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

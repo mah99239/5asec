@@ -1,0 +1,8 @@
+{
+  "dev": {
+    "BASE_URL": "https://stg.5asec-ksa.com//",
+    "headers": {
+
+    }
+  }
+}

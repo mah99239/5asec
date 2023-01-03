@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">5asec</string>
+
+
+    <string name="login_email_invaild">Enter valid email</string>
+    <string name="login_empty">Email and password are empty!</string>
+    <string name="login_email_empty">email is empty!</string>
+    <string name="login_password_empty">Password is empty!</string>
+    <string name="login_email_match">Email don\'t match!</string>
+    <string name="login_inactive">Inactive account</string>
+    <string name="login_complete">Complete login </string>
+    <string name="login_invaild">Invalid username or password!</string>
+
+
+    <string name="newPassword_code">Code</string>
+    <string name="newPassword_confirm">confirm</string>
+    <string name="newPassword_newPassword">New password</string>
+    <string name="newPassword_text">Enter the code and new password</string>
+    <string name="newPassword_message_email">please check your inbox email</string>
+    <string name="newPassword_empty_code">Code is null</string>
+    <string name="newPassword_error_code">Wrong reset key</string>
+
+    <string name="sign_up_birthdate">BirthDate (Optional)</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="sign_up_confirm_password">confirm password</string>
+    <string name="sign_up_email">E-mail</string>
+    <string name="sign_up_error_email">This Email already existed</string>
+    <string name="sign_up_error_mobile">invalid mobile number</string>
+    <string name="sign_up_full_name">Full name</string>
+    <string name="sign_up_gender">Gender (Optional)</string>
+    <string name="sign_up_not_connect">Not connect</string>
+    <string name="sign_up_pass">password</string>
+    <string name="sign_up_phone">phone</string>
+    <string name="sign_up_privacy_terms">Approve privacy agreement and terms of service</string>
+    <string name="sign_up_tittle">Sign up</string>
+    <string name="sign_up_invalid_email">Invalid Email format</string>
+    <string name="sign_up_used_email">Email already used</string>
+    <string name="sign_up_invalid_mobile">Invalid mobile number</string>
+    <string name="sign_up_error_password">Password must be at least 8 characters.</string>
+    <string name="sign_up_dontmatch_password">Don\'t match</string>
+    <string name="sign_up_empty_name">name is null</string>
+    <string name="sign_up_empty_email">email is null</string>
+    <string name="sign_up_empty_phone">mobile is null</string>
+    <string name="sign_up_empty_password">password is null</string>
+    <string name="sign_up_empty_confirmpassword">confirm password is null</string>
+
+    <string name="about_tittle">about us</string>
+    <string name="all_cost_label">SAR</string>
+    <string name="all_network_back">back online</string>
+    <string name="all_network_button">Retry</string>
+    <string name="all_network_error">Check your internet connection Please</string>
+
+    <string name="cart_button_label">GO to checkout</string>
+    <string name="cart_text_name_service">Thobe</string>
+    <string name="cart_text_services">Required service: </string>
+    <string name="cart_text_total_service">Total: </string>
+    <string name="cart_text_count">count: </string>
+    <string name="cart_tittle">Cart</string>
+    <string name="cart_text_empty">Your cart is empty!</string>
+
+    <string name="contact_text_find">Find us</string>
+    <string name="contact_text_label">Contact</string>
+    <string name="contact_text_social">Stay in touch</string>
+    <string name="contact_tittle">Contact us</string>
+    <string name="discount_tittle">promotions and discounts</string>
+    <string name="forget_password_confirm">confirm</string>
+    <string name="forget_password_email">E-mail</string>
+    <string name="forget_password_text">Please enter your email</string>
+    <string name="forget_password_tittle">Forget password</string>
+
+    <string name="laundry_Service_base_name">Basic service</string>
+    <string name="laundry_service_content_available_services">available service:</string>
+    <string name="laundry_service_content_cart_button">add to cart</string>
+    <string name="laundry_service_content_cart_updata_button">update cart</string>
+    <string name="login_button_signUp">sign Up</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_forgotPassword">Forgot password?</string>
+    <string name="login_login">login in</string>
+    <string name="login_password">Password</string>
+    <string name="login_sign_up">don\'t have an account</string>
+    <string name="login_skip">Or skip login</string>
+    <string name="login_tittle">Login</string>
+
+
+    <string name="log_out_tittle">log out</string>
+    <string name="log_out_message">Are you sure?</string>
+    <string name="log_out_positive">OK</string>
+    <string name="log_out_Negative">Cancel</string>
+
+    <string name="notification_tittle">Notification</string>
+
+    <string name="price_list_title">Price List</string>
+
+    <string name="profile_button_change_password">Change password</string>
+    <string name="profile_button_manage_address">Mange Addresses</string>
+    <string name="profile_button_verify_mobile">Verify mobile</string>
+    <string name="profile_text_address">You don\'t have addresses yet</string>
+    <string name="profile_text_welcome">Welcome</string>
+    <string name="profile_tittle">Profile</string>
+
+    <string name="change_password_older_text">please enter your old password.</string>
+    <string name="change_password_new_text">please enter your new password.</string>
+    <string name="change_password_positive">save</string>
+    <string name="change_password_negative">Cancel</string>
+    <string name="change_password_empty_old">old password is empty.</string>
+    <string name="change_password_error_old">old password is incorrect.</string>
+    <string name="change_password_empty_new">new password is empty.</string>
+    <string name="change_password_error_length">new password less than 8</string>
+    <string name="change_password_success">change password successfully.</string>
+
+    <string name="services_list_title">Services List</string>
+    <string name="services_text_empty">Coming Soon</string>
+    <string name="setting_text_language">App language</string>
+    <string name="setting_text_language_helper">Current language</string>
+    <string name="setting_text_notification">Receive mobile notifications, SMS and emails</string>
+    <string name="setting_text_version">Version number</string>
+    <string name="setting_text_version_number">V1.0</string>
+    <string name="setting_tittle">Setting</string>
+
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="success_button">OK</string>
+    <string name="success_text">Your account has been created successfully\n .. please check your inbox to verify your account\n *please check your spam folder if you didn\'t find the sent email in your inbox</string>
+    <string name="success_tittle">Success</string>
+    <string name="terms_tittle">Terms and conditions</string>
+    <string name="order_tabitem_current">Current order</string>
+    <string name="order_tabitem_history">History order</string>
+    <string name="order_tittle">My order</string>
+
+    <string name="order_info_title">Order Info</string>
+    <string name="order_status_title">Order Status</string>
+    <string name="order_id_title">Id order:</string>
+
+    <string name="address_primary_address">Primary address</string>
+    <string name="address_other_address">address #</string>
+
+    <string name="manage_address_tittle">Manage addresses</string>
+
+    <string name="add_address_info_tittle">Address info</string>
+    <string name="add_address_update_tittle">Edit Address</string>
+    <string name="add_address_tittle">add addresses</string>
+    <string name="add_address_city">City</string>
+    <string name="add_address_area">Area</string>
+    <string name="add_address_street">Street</string>
+    <string name="add_address_building">Building</string>
+    <string name="add_address_floor">Floor No.</string>
+    <string name="add_address_apartment">Apartment No.</string>
+    <string name="add_address_landmark">Nearest Landmark.</string>
+    <string name="add_address_notes">Notes</string>
+    <string name="add_address_primary">Primary address</string>
+    <string name="add_address_save">Save</string>
+
+    <string name="add_address_city_empty">select city please.</string>
+    <string name="add_address_not_specfiied">Not specified</string>
+    <string name="add_address_area_empty">select area please.</string>
+    <string name="add_address_error_message">You must select a city and region to complete saving the address</string>
+    <string name="setting_address_button_edit">Edit</string>
+    <string name="setting_address_button_delete">Delete</string>
+    <string name="setting_address_button_cancel">Cancel</string>
+    <string name="setting_address_dialog_title">Confirm delete</string>
+    <string name="setting_address_dialog_message">Confirm delete this address</string>
+    <string name="setting_address_dialog_ok">Ok</string>
+    <string name="setting_address_dialog_cancel">Cancel</string>
+
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.view.home.OrderPagerFragment">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_order_info"
+            style="@style/Widget.Material3.TabLayout.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@color/md_theme_light_primary"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabRippleColor="@color/md_theme_light_primary">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_order_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/order_info_title"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="3dp" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_order_info_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/order_status_title" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_order_info"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tl_order_info" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

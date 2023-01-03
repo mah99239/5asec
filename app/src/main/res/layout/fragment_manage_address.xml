@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_mange_address_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/guideline_all_margin"
+        tools:context=".ui.view.home.ManageAddressFragment">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cpi_manage_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imv_manage_address_empty"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_services_image"
+            android:layout_marginTop="120dp"
+            android:backgroundTint="@color/md_theme_dark_inversePrimary"
+            android:backgroundTintMode="screen"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_address_location_24"
+            app:tint="@color/md_theme_dark_inversePrimary"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_manage_address_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="you don't have addresses yet"
+            android:textColor="@color/md_theme_dark_inversePrimary"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/imv_manage_address_empty"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toEndOf="@+id/imv_manage_address_empty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imv_manage_address_empty"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_mange_address"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/guideline_all_margin"
+            app:layout_constraintBottom_toTopOf="@+id/btn_mange_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/list_item_address"
+            tools:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_mange_address"
+            style="@style/Widget_App_primaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="add address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

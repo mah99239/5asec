@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="login_email_invaild">ادخال بريد الالكترونى صخيخ</string>
+    <string name="login_empty">البريد الإلكتروني وكلمة المرور فارغان!!</string>
+    <string name="login_email_empty">البريد الإلكتروني  فارغه!</string>
+    <string name="login_password_empty">كلمة المرور فارغه!</string>
+    <string name="login_email_match">البريد الإلكتروني عبر صحيح!</string>
+    <string name="login_inactive">الحساب غير مفعل</string>
+    <string name="login_complete">عمليه تسجيل ناجحه </string>
+    <string name="login_invaild">البريد الالكترونى او كلمه السر غير صحيحه!</string>
+    <string name="login_button_signUp">انشاء حساب</string>
+    <string name="login_email">البريد الالكترونى</string>
+    <string name="login_forgotPassword">نسيت كلمه المرور</string>
+    <string name="login_login">الدخول</string>
+    <string name="login_password">كلمه السر</string>
+    <string name="login_sign_up">ليس لديك حساب؟</string>
+    <string name="login_skip">او تخطى التسجيل</string>
+    <string name="login_tittle">تسجيل الدخول</string>
+
+
+
+
+
+    <string name="newPassword_code">الكود</string>
+    <string name="newPassword_confirm">تاكيد</string>
+    <string name="newPassword_newPassword">كلمه المرور الجديدة</string>
+    <string name="newPassword_text">ادخل الكود وكلمه المرور الجديدة</string>
+    <string name="newPassword_message_email">يرجى التحقق من البريد الإلكتروني الوارد الخاص بك</string>
+    <string name="newPassword_empty_code">مفتاح إعادة تعيين فارغ</string>
+    <string name="newPassword_error_code">مفتاح إعادة تعيين خاطئ</string>
+    <string name="sign_up_birthdate">تاريخ الميلاد (اختيارى)</string>
+    <string name="sign_up_button">التالى</string>
+    <string name="sign_up_confirm_password">تاكيد كلمه المرور</string>
+    <string name="sign_up_email">البريد الالكترونى</string>
+    <string name="sign_up_error_email">هذا البريد الالكترونى موجود بالفعل</string>
+    <string name="sign_up_error_mobile">رقم الجوال غير صحيح</string>
+    <string name="sign_up_full_name">الاسم بالكامل</string>
+    <string name="sign_up_gender">الجنس(اختيارى)</string>
+    <string name="sign_up_not_connect">غير متصل بالانترنت</string>
+    <string name="sign_up_pass">كلمه المرور</string>
+    <string name="sign_up_phone">رقم الجوال</string>
+    <string name="sign_up_privacy_terms">الموافقه على الشروط والاحكام</string>
+    <string name="sign_up_tittle">انشاء حساب</string>
+    <string name="sign_up_invalid_email">الايميل عير صحصيح</string>
+    <string name="sign_up_used_email">الايميل مستخدم من قبل</string>
+    <string name="sign_up_invalid_mobile">رقم الموبايل غير صحيح</string>
+    <string name="sign_up_error_password">يجب أن تكون كلمة المرور 8 أحرف على الأقل .</string>
+    <string name="sign_up_dontmatch_password">كلمات السر لا تتطابق</string>
+    <string name="sign_up_empty_name">الاسم فارغ</string>
+    <string name="sign_up_empty_email">البريد الإلكتروني فارغ</string>
+    <string name="sign_up_empty_phone">رقم الموبايل فارغ</string>
+    <string name="sign_up_empty_password">كلمة المرور فارغة</string>
+    <string name="sign_up_empty_confirmpassword">تأكيد كلمة المرور فارغة</string>
+
+
+    <string name="log_out_tittle">تسجيل خروج</string>
+    <string name="log_out_message">هل أنت متاكد؟?</string>
+    <string name="log_out_positive">تاكيد</string>
+    <string name="log_out_Negative">الفاء</string>
+
+    <string name="about_tittle">من نحن</string>
+    <string name="all_cost_label">ريال</string>
+    <string name="all_network_back">تم استعاده الاتصال بالانترنت</string>
+    <string name="all_network_button">اعاده المحاوله</string>
+    <string name="all_network_error">تحقق من اتصالك بالانترنت من فضلك</string>
+    <string name="cart_button_label">تاكيد الطلب</string>
+    <string name="cart_text_name_service">Thobe</string>
+    <string name="cart_text_services">الخدمه المطلوبه:</string>
+    <string name="cart_text_total_service">احمالى السعر</string>
+    <string name="cart_text_count"> الكميه:</string>
+    <string name="cart_text_empty">عربة التسوق فارغة!</string>
+
+    <string name="cart_tittle">السله</string>
+
+
+    <string name="contact_text_find">أين تجدنا</string>
+    <string name="contact_text_label">تواصل</string>
+    <string name="contact_text_social">ابقى على اتصال</string>
+    <string name="contact_tittle">تواصل معنا</string>
+    <string name="discount_tittle">الترقيات والخصومات</string>
+
+    <string name="forget_password_confirm">تاكيد</string>
+    <string name="forget_password_email">البريد الالكترونى</string>
+    <string name="forget_password_text">من فضلك ادخال البريد الالكترونى الخاص بك</string>
+    <string name="forget_password_tittle">نسيت كلمه السر</string>
+
+    <string name="laundry_Service_base_name">الخدمه الاساسيه</string>
+    <string name="laundry_service_content_available_services">الخدمات المتاحه:</string>
+    <string name="laundry_service_content_cart_button">أضف إلى السلة</string>
+    <string name="laundry_service_content_cart_updata_button">تحديث السله</string>
+
+
+
+
+
+
+    <string name="notification_tittle">الاشعارات</string>
+    <string name="order_tabitem_current">الطلبات الحاليه</string>
+    <string name="order_tabitem_history">الطلبات القديمه</string>
+    <string name="order_tittle">طلباتى</string>
+    <string name="price_list_title">قائمه الاسعار</string>
+
+
+    <string name="profile_button_change_password">تغيير كلمه السر</string>
+    <string name="profile_button_manage_address">اداره العنوان</string>
+    <string name="profile_button_verify_mobile">التحقق من الموبايل</string>
+    <string name="profile_text_address">لا توجد عناوين مسجلة</string>
+    <string name="profile_text_welcome">مرحبا</string>
+    <string name="profile_tittle">الحساب الشخصى</string>
+
+    <string name="change_password_older_text">الرجاء إدخال كلمة المرور القديمة الخاصة بك..</string>
+    <string name="change_password_new_text">الرجاء إدخال كلمة المرور الجديدة الخاصة بك.</string>
+    <string name="change_password_positive">حفظ</string>
+    <string name="change_password_negative">إلغاء</string>
+    <string name="change_password_empty_old">كلمة سر قديمة فارغة.</string>
+    <string name="change_password_error_old">كلمة سر قديمة ليست صحيحة.</string>
+    <string name="change_password_empty_new">كلمة المرور الجديدة فارغة.</string>
+    <string name="change_password_error_length">كلمة مرور جديدة أقل من 8</string>
+    <string name="change_password_success">تم تغيير كلمة المرور بنجاح.</string>
+
+
+    <string name="services_list_title">قائمه الخدمات</string>
+    <string name="services_text_empty">قريبا</string>
+    <string name="setting_text_language">لغه التطبيق</string>
+    <string name="setting_text_language_helper">اللغه الحاليه</string>
+    <string name="setting_text_notification">ارسال الاشعارات والرسائل النصيه ورسائل البريد الالكترونى</string>
+    <string name="setting_text_version">رقم النسخه</string>
+    <string name="setting_text_version_number">V1.0</string>
+    <string name="setting_tittle">الاعدادات</string>
+
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="success_button">تم</string>
+    <string name="success_text">تم إنشاء حسابك بنجاح  n .. يرجى التحقق من صندوق الوارد الخاص بك للتحقق من حسابك  n * يرجى التحقق من مجلد البريد العشوائي إذا لم تجد البريد الإلكتروني المرسل في صندوق الوارد الخاص بك</string>
+    <string name="success_tittle">تم انشاء الحساب</string>
+    <string name="terms_tittle">الشروط والاحكام</string>
+
+
+    <string name="order_info_title">معلومات الطلب</string>
+    <string name="order_status_title">حالة الطلب</string>
+    <string name="order_id_title">معرف الهوية:</string>
+
+    <string name="address_primary_address">العنوان الأساسي</string>
+    <string name="address_other_address">العنوان # </string>
+
+    <string name="manage_address_tittle">إدارة العناوين</string>
+
+    <string name="add_address_info_tittle">معلومات العناوين</string>
+    <string name="add_address_tittle">أضف العناوين</string>
+    <string name="add_address_city">مدينة</string>
+    <string name="add_address_area">منطقة</string>
+    <string name="add_address_street">شارع</string>
+    <string name="add_address_building">مبنى</string>
+    <string name="add_address_floor">رقم الطابق.</string>
+    <string name="add_address_apartment">رقم الشقة.</string>
+    <string name="add_address_landmark">أقرب معلم.</string>
+    <string name="add_address_notes">ملاحظات</string>
+    <string name="add_address_primary">العنوان الأساسي</string>
+    <string name="add_address_save"> حفظ</string>
+
+</resources>

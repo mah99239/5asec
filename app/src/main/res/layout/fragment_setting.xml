@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+   <!--     <import type="androidx.databinding.ObservableList"/>
+        <import  type="java.util.Arrays"/>
+        <variable name="LanguageList" type="ObservableList&lt;String&gt;"/>-->
+
+        <variable name="currentLanguage" type="String"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_setting_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.view.home.SettingFragment">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_setting_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_setting_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_setting_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_setting_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
+
+        <ImageView
+            android:id="@+id/iv_setting_language"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="@+id/gl_setting_start"
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_language"
+            app:srcCompat="@drawable/ic_setting_translate" />
+
+        <TextView
+            android:id="@+id/tv_setting_language"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:text="@string/setting_text_language"
+            app:layout_constraintBaseline_toBaselineOf="@+id/til_setting_language"
+            app:layout_constraintStart_toEndOf="@+id/iv_setting_language" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_setting_language"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintEnd_toStartOf="@+id/gl_setting_end"
+            app:layout_constraintTop_toTopOf="@+id/gl_setting_up">
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_setting_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="@{currentLanguage}"
+                app:simpleItems="@array/setting_language"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_setting_notification"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="@+id/iv_setting_language"
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_notification"
+            app:srcCompat="@drawable/ic_setting_notifications_24" />
+
+
+        <TextView
+            android:id="@+id/tv_setting_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+
+            android:gravity="center"
+            android:textSize="@dimen/textsize_setting_text"
+            android:text="@string/setting_text_notification"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sw_setting_notification"
+            app:layout_constraintStart_toEndOf="@+id/iv_setting_notification" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/sw_setting_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:checked="false"
+            app:layout_constraintEnd_toStartOf="@+id/gl_setting_end"
+            app:layout_constraintTop_toBottomOf="@+id/til_setting_language" />
+
+        <ImageView
+            android:id="@+id/iv_setting_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/iv_setting_notification"
+            app:layout_constraintStart_toStartOf="@+id/iv_setting_notification"
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_version"
+            app:srcCompat="@drawable/ic_setting_version" />
+
+        <TextView
+            android:id="@+id/tv_setting_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_text_version"
+            app:layout_constraintBaseline_toBaselineOf="@+id/iv_setting_version_number"
+            app:layout_constraintStart_toStartOf="@+id/tv_setting_notification" />
+
+        <TextView
+            android:id="@+id/iv_setting_version_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/setting_text_version_number"
+            app:layout_constraintEnd_toEndOf="@+id/sw_setting_notification"
+            app:layout_constraintStart_toStartOf="@+id/sw_setting_notification"
+            app:layout_constraintTop_toBottomOf="@+id/sw_setting_notification" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

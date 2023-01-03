@@ -1,0 +1,6 @@
+
+f
+java:S1301"KReplace this "switch" statement by "if" statements to increase readability.(’ÿ„¢ýÿÿÿÿ
+o	java:S116"ZRename this field "ITEMS_PAGE_SIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒÛ¥½
+7
+java:S1170"!Make this final field static too.(ÒÛ¥½
