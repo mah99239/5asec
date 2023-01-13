@@ -38,6 +38,7 @@ public abstract class Client
                 .baseUrl(BASE_URL)
                 .client(client)
 
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 

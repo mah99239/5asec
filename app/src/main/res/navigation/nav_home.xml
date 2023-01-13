@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_nav_home_profile_to_manageAddressFragment2"
             app:destination="@id/nav_home_manage_address" />
+        <action
+            android:id="@+id/action_nav_home_profile_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_home_about"
@@ -113,7 +116,7 @@
             app:destination="@id/nav_home_manage_address"
             app:popUpTo="@id/nav_home_manage_address"
             app:popUpToInclusive="true"
-            app:launchSingleTop="true" />
+            />
         <argument
             android:name="nav_home_address_arg_check"
             app:argType="integer"
@@ -126,7 +129,13 @@
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.example.a5asec.ui.view.home.AddressFragment"
-        android:label="Address" />
+        android:label="Address" >
+        <argument
+            android:name="arg_latLang"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <dialog
         android:id="@+id/addressSettingFragment"
         android:name="com.example.a5asec.ui.view.home.AddressSettingFragment"

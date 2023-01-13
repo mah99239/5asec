@@ -5,19 +5,17 @@
     >
 
 
-    <FrameLayout
-        android:id="@+id/standard_bottom_sheet"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cdl_setting_address_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:behavior_hideable="false"
-
-
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/i_laundry_service_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -27,12 +25,10 @@
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/btg_setting_address_container"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+             >
 
                 <Button
                     android:id="@+id/btn_setting_address_edit"
@@ -78,9 +74,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/btn_setting_address_delete" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
-    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

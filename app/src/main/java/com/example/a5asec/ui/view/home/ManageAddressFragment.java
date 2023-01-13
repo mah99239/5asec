@@ -213,7 +213,6 @@ public class ManageAddressFragment extends Fragment implements AddressAdapter.On
         Log.e(TAG, "onItemClick, position = " + position);
         var address = mAdapter.getItemAddress(position);
 
-
         mAddressViewModel.setAddress(address);
         }
 

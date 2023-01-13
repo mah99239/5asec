@@ -56,6 +56,7 @@
                 style="@style/Widget_App_TextInputLayout"
                 android:layout_marginTop="@dimen/margin_login_top"
                 android:hint="@string/login_email"
+
                 app:layout_constraintEnd_toStartOf="@+id/gl_login_end"
                 app:layout_constraintStart_toStartOf="@+id/gl_login_start"
                 app:layout_constraintTop_toBottomOf="@+id/imv_login_logo">

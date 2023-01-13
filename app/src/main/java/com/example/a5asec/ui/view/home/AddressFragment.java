@@ -22,30 +22,33 @@ import com.example.a5asec.databinding.FragmentAddressBinding;
 import com.example.a5asec.ui.view.viewmodel.AddressViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
-public class AddressFragment extends Fragment implements OnMapReadyCallback
+public class AddressFragment extends Fragment
     {
     private static final String TAG = "AddressFragment";
     FragmentAddressBinding mBinding;
     private AddressViewModel mAddressViewModel;
-    private GoogleMap mMap;
+    private GoogleMap mGoogleMap;
+    private LatLng mLatLng;
     private Geocoder geocoder;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
         {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_address, container, false);
-
+        showProgress();
+        setupMap();
+        mBinding.mapAddress.onCreate(savedInstanceState);
+        mBinding.mapAddress.onResume();
         return mBinding.getRoot();
         }
 
@@ -53,31 +56,59 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
-        setupUi();
+        var argCheck =AddressFragmentArgs.fromBundle(getArguments()).getArgLatLang();
+        if(argCheck != null)
+            {
+
+            try
+                {
+                List<Address>  addresses = geocoder.getFromLocationName(argCheck, 1);
+                Address address = addresses.get(0);
+                Log.e(TAG, "latalng = " + address);
+                mLatLng = new LatLng(address.getLatitude(), address.getLongitude());
+                hideProgress();
+
+                } catch (IOException e)
+                {
+                e.printStackTrace();
+                }
+
+
+
+            }
+        else
+            {
+            setupUi();
+
+            }
         }
     private void setupUi()
         {
-        setupMap();
         setupViewModel();
         setupInfoAddressObserver();
         }
     private void setupMap()
         {
+         geocoder = new Geocoder(requireContext());
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.f_add_address_map);
+        mBinding.mapAddress.getMapAsync(this::getMapReady);
 
-        if (mapFragment != null)
-            {
-            mapFragment.getMapAsync(this);
-            }
-        geocoder = new Geocoder(requireContext());
+        }
+    public void getMapReady(GoogleMap googleMap)
+        {
+        double latitudeFloat = 21.492500;
+        double langFloat = 39.177570;
+        var latLang = new LatLng(latitudeFloat, langFloat);
+        this.mGoogleMap = googleMap;
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        setMarkerInfoAddress(Objects.requireNonNullElse(mLatLng, latLang));
+
 
         }
 
     private void setupInfoAddressObserver()
         {
-        ShowProgress();
 
         mAddressViewModel.getAddress().observe(getViewLifecycleOwner(), addressResource ->
             {
@@ -89,10 +120,10 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback
                 var address = addressResource.getMData();
                 hideProgress();
 
-                var lat = Double.parseDouble(address.getArea().getCity().getLat());
-                var lang = Double.parseDouble(address.getArea().getCity().getLang());
-                var latLng = new LatLng(lat, lang);
-                setMarkerInfoAddress(latLng);
+                var lat = Double.parseDouble(address.getArea().getLat());
+                var lang = Double.parseDouble(address.getArea().getLang());
+                mLatLng = new LatLng(lat, lang);
+
                 }
 
                 case LOADING -> {
@@ -109,27 +140,31 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback
                 }
             });
         }
-    private void ShowProgress()
+    private void showProgress()
         {
         mBinding.cpiAddress.setVisibility(View.VISIBLE);
-      //  mBinding.fAddressMap.setVisibility(View.GONE);
+        mBinding.mapAddress.setVisibility(View.GONE);
 
         }
     private void hideProgress()
         {
-     //   mBinding.fAddressMap.setVisibility(View.VISIBLE);
+        mBinding.mapAddress.setVisibility(View.VISIBLE);
         mBinding.cpiAddress.setVisibility(View.GONE);
-
 
         }
     private void setMarkerInfoAddress(LatLng latLng)
         {
 
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(latLng);
+        Log.e(TAG, " MarkerOptions, latlng = " + latLng);
 
-        mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .draggable(true);
+
+        mGoogleMap.addMarker(markerOptions);
+
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+
 
         }
     private void setupViewModel()
@@ -140,40 +175,41 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback
         }
 
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap)
+    public void onStart()
         {
-        double latitudeFloat = 21.492500;
-        double langFloat = 39.177570;
-        mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        super.onStart();
+        mBinding.mapAddress.onStart();
+        }
 
-        try
-            {
+    @Override
+    public void onResume()
+        {
+        mBinding.mapAddress.onResume();
+        super.onResume();
+        }
 
-            List<Address> addresses = geocoder.getFromLocation(latitudeFloat, langFloat, 1);
+    @Override
+    public void onPause()
+        {
+        super.onPause();
+        mBinding.mapAddress.onPause();
+        }
 
-
-            if (addresses.size() > 0)
-                {
-
-                Address address = addresses.get(0);
-                LatLng jaddah = new LatLng(address.getLatitude(), address.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions()
-                        .position(jaddah)
-
-                        .alpha(0.7f)
-                        .zIndex(1.0f)
-                        .title(address.getLocality());
-                mMap.addMarker(markerOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jaddah, 12));
-
-
-                }
-            } catch (IOException e)
-            {
-            e.printStackTrace();
-            }
-
+    @Override
+    public void onDestroy()
+        {
+        super.onDestroy();
+        mBinding.mapAddress.onDestroy();
+        mBinding = null;
 
         }
+
+    @Override
+    public void onLowMemory()
+        {
+        super.onLowMemory();
+        mBinding.mapAddress.onLowMemory();
+        mBinding = null;
+        }
+
     }

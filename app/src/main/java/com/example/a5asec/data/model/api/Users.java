@@ -1,5 +1,6 @@
 package com.example.a5asec.data.model.api;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.gson.annotations.Expose;
@@ -7,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 
@@ -90,6 +92,12 @@ public class Users
     @SerializedName("password")
     private String password;
 
+    @Getter(AccessLevel.NONE)
+    private String city;
+
+    @Getter(AccessLevel.NONE)
+    private String area;
+
     public Users(String fullName, String email, String password, String mobile, String gender,
                  String birthDate)
 
@@ -110,6 +118,18 @@ public class Users
         this.login = login;
         this.password = password;
         }
+
+    public String getCity(@NonNull String language)
+        {
+        return language.equals("en") ? cityEn : cityAr;
+        }
+
+    public String getArea(@NonNull String language)
+        {
+        return language.equals("en") ? areaEn : areaAr;
+        }
+
+
 
     public String getPassword()
         {

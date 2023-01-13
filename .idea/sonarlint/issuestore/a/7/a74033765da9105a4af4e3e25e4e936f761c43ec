@@ -1,14 +1,0 @@
-
-\
-java:S1192c"FDefine a constant instead of duplicating this literal ":user" 6 times.(ØÏ 
-e
-java:S2637ÿ"GParameter 1 to this call is marked "@NonNull" but null could be passed.(õé¢Â8ÍßµºÖ0
-G
-java:S1602N",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ
-7
-java:S6205i"Remove this redundant block.(Ö…‚Ğûÿÿÿÿ
-7
-java:S6205n"Remove this redundant block.(ß×ùÙıÿÿÿÿ
-W	java:S125…"<This block of commented-out lines of code should be removed.(€†Ğìøÿÿÿÿ
-?
-java:S6205Ö"Remove this redundant block.(Ö…‚Ğûÿÿÿÿ8ÿßµºÖ0

@@ -3,11 +3,11 @@ package com.example.a5asec.data.repository;
 import com.example.a5asec.data.model.api.Address;
 import com.example.a5asec.data.model.api.City;
 import com.example.a5asec.data.remote.api.AddressHelper;
-import com.example.a5asec.data.remote.api.ResponseEntity;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
@@ -33,12 +33,13 @@ public class AddressRepository
         return mAddressHelper.getCities();
         }
 
-    public Single<ResponseEntity> deleteAddress(int id){return mAddressHelper.deleteAddress(id);}
+    public Completable deleteAddress(long id){return mAddressHelper.deleteAddress(id);}
 
     public  Single<Address> addAddress( Address.CreateAddress address){return mAddressHelper.addAddress(address);}
 
-    public  Single<Address> updateAddress( Address.CreateAddress address){return mAddressHelper.updateAddress(address);}
-    public Single<Address> primaryAddress(int id)
+    public  Single<Address> updateAddress( Address.UpdateAddress address){return mAddressHelper.updateAddress(address);}
+
+    public Single<List<Address>> primaryAddress(long id)
 
         {
         return mAddressHelper.primaryAddress(id);

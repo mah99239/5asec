@@ -5,6 +5,7 @@ import com.example.a5asec.data.model.api.City;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
@@ -23,13 +24,14 @@ public interface AddressApi
     Observable<List<City>> getCities();
 
     @DELETE("/api/addresses/{id}")
-    Single<ResponseEntity> deleteAddress(@Path("id") int id);
+    Completable deleteAddress(@Path("id") long id);
 
     @POST("api/addresses")
     Single<Address> addAddress(@Body Address.CreateAddress address);
 
     @PUT("api/addresses")
-    Single<Address> updateAddress(@Body Address.CreateAddress address);
+    Single<Address> updateAddress(@Body Address.UpdateAddress address);
+
     @PUT("api/addresses/primary/{id}")
-    Single<Address> primaryAddress(@Path("id") int id);
+    Single<List<Address>> primaryAddress(@Path("id") long id);
     }

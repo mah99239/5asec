@@ -161,5 +161,9 @@
     <string name="setting_address_dialog_message">Confirm delete this address</string>
     <string name="setting_address_dialog_ok">Ok</string>
     <string name="setting_address_dialog_cancel">Cancel</string>
+    <string name="setting_address_dialog_done">Done</string>
+    <string name="setting_address_error_dialog_title">Sorry</string>
+    <string name="setting_address_error_dialog_message">can\'t remove primary address</string>
+    <string name="setting_address_delete_message"> removed item address</string>
 
 </resources>

@@ -13,20 +13,25 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.a5asec.R;
-import com.example.a5asec.data.model.api.Users;
 import com.example.a5asec.data.local.prefs.TokenPreferences;
+import com.example.a5asec.data.model.api.Users;
 import com.example.a5asec.databinding.FragmentProfileBinding;
 import com.example.a5asec.ui.view.viewmodel.UserViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
+
+import lombok.val;
 
 
 public class ProfileFragment extends Fragment
@@ -34,7 +39,7 @@ public class ProfileFragment extends Fragment
     private static final String TAG = "ProfileFragment";
     FragmentProfileBinding mBinding;
     private UserViewModel mUserViewModel;
-
+    private String argumentLatLang;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -67,23 +72,53 @@ public class ProfileFragment extends Fragment
 
     private void initClickedButton()
         {
-        mBinding.btnProfileAddress.setOnClickListener(v ->
+        manageAddressOnClick();
+        mobileOnClick();
+        passwordOnClick();
+        addressOnClick();
+        }
+
+
+    private void manageAddressOnClick()
+        {
+        mBinding.btnProfileManageAddress.setOnClickListener(v ->
             {
             Log.e(TAG, "addressButton");
             var action
                     = ProfileFragmentDirections.actionNavHomeProfileToManageAddressFragment2();
             Navigation.findNavController(requireView()).navigate(action);
             });
+        }
+
+    private void mobileOnClick()
+        {
         mBinding.btnProfileMobile.setOnClickListener(v ->
             {
 
             Log.e(TAG, "mobileButton");
 
             });
+        }
+
+    private void passwordOnClick()
+        {
         mBinding.btnProfilePassword.setOnClickListener(v ->
             {
             Log.e(TAG, "passwordButton");
             dialogChangePassword();
+            });
+        }
+
+    private void addressOnClick()
+        {
+        mBinding.btnProfileAddress.setOnClickListener(v ->
+            {
+            Log.e(TAG, "addressButton");
+
+            var action
+                    = ProfileFragmentDirections.actionNavHomeProfileToAddressFragment();
+            action.setArgLatLang(argumentLatLang);
+            Navigation.findNavController(requireView()).navigate(action);
             });
         }
 
@@ -119,13 +154,28 @@ public class ProfileFragment extends Fragment
 
     private void setDataUser(@NonNull Users user)
         {
+        val LANGUAGE_TAGS = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+
         String name = user.getFullName();
         String email = user.getEmail();
         String phone = user.getMobile();
-        String address = user.getAreaEn();
+        String city = user.getCity(LANGUAGE_TAGS);
+        String area = user.getArea(LANGUAGE_TAGS);
         boolean verify = user.isMobileVerified();
 
-        checkedAddress(address);
+        if (StringUtils.isNotBlank(city))
+            {
+            showLayoutAddress();
+            mBinding.tvProfileCity.setText(city);
+            mBinding.tvProfileArea.setText(area);
+
+
+            argumentLatLang = city;
+
+            } else
+            {
+            hideLayoutAddress();
+            }
         checkedVerifyPassword(verify);
         mBinding.tvProfileName.setText(name);
         mBinding.tvProfileEmail.setText(email);
@@ -133,19 +183,20 @@ public class ProfileFragment extends Fragment
         // addressTextView.setText();
         }
 
-    private void checkedAddress(String address)
+    private void hideLayoutAddress()
         {
-        if (address == null)
-            {
-            Log.e(TAG, "null");
-            mBinding.tvProfileAddress.setVisibility(View.VISIBLE);
-            } else
-            {
-            Log.e(TAG, address);
 
-            mBinding.tvProfileAddress.setVisibility(View.GONE);
+        mBinding.tvProfileAddress.setVisibility(View.VISIBLE);
+        mBinding.cvProfileAddress.setVisibility(View.INVISIBLE);
 
-            }
+        }
+
+    private void showLayoutAddress()
+        {
+        mBinding.cvProfileAddress.setVisibility(View.VISIBLE);
+
+        mBinding.tvProfileAddress.setVisibility(View.GONE);
+
         }
 
     private void checkedVerifyPassword(boolean verify)

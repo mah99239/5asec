@@ -5,6 +5,7 @@ import com.example.a5asec.data.model.api.City;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
@@ -27,12 +28,12 @@ public class AddressHelper
         }
 
 
-    public  Single<ResponseEntity> deleteAddress( int id){return mAddressApi.deleteAddress(id);}
+    public Completable deleteAddress(long id){return mAddressApi.deleteAddress(id);}
 
     public  Single<Address> addAddress( Address.CreateAddress address){return mAddressApi.addAddress(address);}
 
-    public  Single<Address> updateAddress( Address.CreateAddress address){return mAddressApi.updateAddress(address);}
-    public Single<Address> primaryAddress(int id)
+    public  Single<Address> updateAddress( Address.UpdateAddress address){return mAddressApi.updateAddress(address);}
+    public Single<List<Address>> primaryAddress(long id)
 
         {
         return mAddressApi.primaryAddress(id);

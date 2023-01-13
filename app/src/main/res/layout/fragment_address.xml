@@ -18,15 +18,14 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="visible" />
-        <fragment
-            android:id="@+id/f_address_map"
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_address"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadeScrollbars="true"
             android:isScrollContainer="true"
-
        />
 
     </FrameLayout>

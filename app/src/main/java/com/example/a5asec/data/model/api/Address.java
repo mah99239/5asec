@@ -95,6 +95,56 @@ public  class Address
         }
 
     @Data
+    public static  class UpdateAddress
+        {
+
+        @Expose
+        @SerializedName("street")
+        private String street;
+        @Expose
+        @SerializedName("note")
+        private String note;
+        @Expose
+        @SerializedName("nearLandmark")
+        private String nearLandmark;
+        @Expose
+        @SerializedName("lat")
+        private String lat;
+        @Expose
+        @SerializedName("lang")
+        private String lang;
+        @Expose
+        @SerializedName("id")
+        private int id;
+        @Expose
+        @SerializedName("floor")
+        private String floor;
+        @Expose
+        @SerializedName("building")
+        private String building;
+        @Expose
+        @SerializedName("areaId")
+        private int areaId;
+        @Expose
+        @SerializedName("apartment")
+        private String apartment;
+
+        public UpdateAddress(String apartment, String street, int areaId, String building, String floor,
+                             String lang, String lat, String nearLandmark, String notes)
+            {
+            this.apartment = apartment;
+            this.street = street;
+            this.areaId = areaId;
+            this.building = building;
+            this.floor = floor;
+            this.lang = lang;
+            this.lat= lat;
+            this.nearLandmark = nearLandmark;
+            this.note = notes;
+            }
+        }
+
+    @Data
     public static class AreaEntity
         {
         @Expose

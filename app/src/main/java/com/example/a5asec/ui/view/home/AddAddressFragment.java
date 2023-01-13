@@ -4,8 +4,6 @@ import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH
 
 import android.content.Context;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
@@ -26,13 +25,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.a5asec.R;
+import com.example.a5asec.data.model.api.Address;
 import com.example.a5asec.data.model.api.City;
 import com.example.a5asec.databinding.FragmentAddAddressBinding;
 import com.example.a5asec.ui.view.viewmodel.AddressViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -40,47 +38,140 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.val;
 
-
-public class AddAddressFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapClickListener
-        , GoogleMap.OnMarkerDragListener
+public class AddAddressFragment extends Fragment implements GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener
     {
 
     private static final String TAG = "AddAddressFragment";
+    private static final int TAG_ADD = 1;
+    private static final int TAG_INFO = 2;
+    private static final int TAG_EDIT = 3;
+    private static final String LANGUAGE_TAGS = AppCompatDelegate.getApplicationLocales().toLanguageTags();
 
-    private FragmentAddAddressBinding mBinding;
-    private AddressViewModel mAddressViewModel;
-    private GoogleMap mMap;
-    private Geocoder geocoder;
-    private List<City> citiesCovered;
-    private City mSelectionCity;
     HighLightArrayAdapter mCityAdapter;
     HighLightArrayAdapter mAreaAdapter;
+    private GoogleMap googleMap;
+    private FragmentAddAddressBinding mBinding;
+    private AddressViewModel mAddressViewModel;
+    private Marker mMarker;
+    private List<City> citiesCovered;
     private int mIdAreaSelection;
     private int argCheck;
+    private LatLng latLng;
+    private ObservableField<String> currentLatCity;
+    private ObservableField<String> currentLangCity;
+    private ObservableField<Address> mAddressObservableField;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_address, container, false);
-        argCheck = AddAddressFragmentArgs.fromBundle(getArguments()).getNavHomeAddressArgCheck();
+
+        mBinding.mapAddAddress.onCreate(savedInstanceState);
+        mBinding.mapAddAddress.onResume();
+        setupMap();
         return mBinding.getRoot();
+
         }
 
+    private void setupMap()
+        {
+        //  geocoder = new Geocoder(requireContext());
+        mBinding.mapAddAddress.getMapAsync(this::getMapReady);
+
+        }
+
+    private void getMapReady(GoogleMap googleMap)
+        {
+        double latitudeDefault = 21.492500;
+        double langDefault = 39.177570;
+        var latLang = new LatLng(latitudeDefault, langDefault);
+        this.googleMap = googleMap;
+        this.googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+
+        setMarkerMap(Objects.requireNonNullElse(latLng, latLang));
+
+        if (argCheck == 1 || argCheck == 3)
+            {
+            this.googleMap.setOnMapClickListener(this);
+            this.googleMap.setOnMarkerDragListener(this);
+
+            }
+        }
+
+    @Override
+    public void onMapClick(@NonNull LatLng latLng)
+        {
+        clearMarker();
+        setMarkerMap(latLng);
+        }
+
+    private void setMarkerMap(@NonNull LatLng latLng)
+        {
+        //  List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+        // if (!addresses.isEmpty())
+
+        //Log.e(TAG, "latalng = " + latLng);
+        // Address address = addresses.get(0);
+        //  String streetAddress = address.getAddressLine(0);
+        setUpMapIfNeeded();
+        clearMarker();
+        Log.e(TAG, " MarkerOptions, latlng = " + latLng);
+        Log.e(TAG, " setMarkerMap, map = " + googleMap);
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .draggable(true);
+
+        mMarker = googleMap.addMarker(markerOptions);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+
+        }
+
+    private void clearMarker()
+        {
+        if (mMarker != null)
+            {
+            mMarker.remove();
+            }
+        }
+
+    @Override
+    public void onMarkerDragStart(@NonNull Marker marker)
+        {
+        Log.d(TAG, "onMarkerDragStart: ");
+        }
+
+    @Override
+    public void onMarkerDrag(@NonNull Marker marker)
+        {
+        mMarker = marker;
+
+        Log.d(TAG, "onMarkerDrag: ");
+        }
+
+    @Override
+    public void onMarkerDragEnd(@NonNull Marker marker)
+        {
+        mMarker = marker;
+
+        Log.d(TAG, "onMarkerDragEnd: ");
+
+
+        }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
+        argCheck = AddAddressFragmentArgs.fromBundle(getArguments()).getNavHomeAddressArgCheck();
         setupUI();
-        setupMap();
 
         }
 
@@ -88,19 +179,26 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         {
 
         setupViewModel();
+
         switch (argCheck)
             {
-
-            case 2 -> setupUiInfo();  // show info address
-
-            case 3 -> { // show edit address
-            setupUiEdit();
-            setupClickUpdateAddress();
-            }
-            default -> setupUiAddAddress(); // show add address
+            case TAG_ADD -> setupUiAddAddress();
+            case TAG_INFO -> setupUiInfo();
+            case TAG_EDIT -> setupUiEdit();
             }
 
         }
+
+    private void setupViewModel()
+        {
+        NavController navController = NavHostFragment.findNavController(this);
+        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_manage_address);
+        mAddressViewModel = new ViewModelProvider(backStackEntry).get(AddressViewModel.class);
+
+        }
+
+
+    //---------------------------------------setup Screen add address-------------------------------
 
     /**
      * this show add address screen.
@@ -111,23 +209,26 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         setupCLickAddAddress();
         }
 
-    /**
-     * this show info address screen.
-     */
-    private void setupUiInfo()
+    private void setupCitiesObserver()
         {
-        disableEnabledFields();
-        setupInfoAddressObserver();
-        mBinding.btnAddAddress.setVisibility(View.GONE);
-        }
+        mAddressViewModel.getCities().observe(getViewLifecycleOwner(), citiesResource ->
+            {
+            switch (citiesResource.mStatus)
+                {
 
-    /**
-     * this show edit address screen.
-     */
-    private void setupUiEdit()
-        {
-        setupInfoAddressObserver();
-        setupCitiesObserver();
+                case SUCCESS -> {
+                Log.e(TAG, "SUCCESS");
+                citiesCovered = citiesResource.getMData();
+                setupCityAutoCompleteVIew();
+
+
+                }
+
+                case LOADING -> Log.e(TAG, "LOADING");
+                case ERROR, NULL -> Log.e(TAG, "ERROR");
+
+                }
+            });
         }
 
     /**
@@ -135,17 +236,19 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
      */
     private void setupCityAutoCompleteVIew()
         {
+        currentLatCity = new ObservableField<>();
+        currentLangCity = new ObservableField<>();
 
-        //TODO: show selection user in list .
-         mCityAdapter = new HighLightArrayAdapter
-                (getContext(), android.R.layout.simple_list_item_single_choice,
-                        getCities());
+        mCityAdapter = new HighLightArrayAdapter(getContext(), android.R.layout.simple_list_item_single_choice, getCities());
         mBinding.actvAddAddressCity.setAdapter(mCityAdapter);
         mBinding.actvAddAddressCity.setOnItemClickListener((parent, view, position, id) ->
             {
             mBinding.actvAddAddressCity.setListSelection(position);
             var currentSelectionCity = citiesCovered.get(position);
-
+            var currentLat = currentSelectionCity.getLat();
+            var currentLang = currentSelectionCity.getLang();
+            currentLatCity.set(currentLat);
+            currentLangCity.set(currentLang);
             fetchAreaToAutoCompleteView(currentSelectionCity);
             mCityAdapter.setSelection(position);
 
@@ -153,106 +256,94 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
 
         }
 
+    /**
+     * fetch areas to   in the city.
+     *
+     * @param city pass when user selected city
+     */
+    private void fetchAreaToAutoCompleteView(@NonNull City city)
+        {
+        var latitude = Double.parseDouble(city.getLat());
+        var lang = Double.parseDouble(city.getLang());
+        latLng = new LatLng(latitude, lang);
+
+        //setMarkerMap(latLng);
+        //  setAreasWithCity(city);
+        setupAreaAutoCompleteVIew(city);
+
+        }
 
     /**
      * show's areas supported in the city.
      */
-    private void setupAreaAutoCompleteVIew()
+    private void setupAreaAutoCompleteVIew(City city)
         {
         mBinding.actvAddAddressArea.setText("");
-        mAreaAdapter = new HighLightArrayAdapter
-                (getContext(), android.R.layout.simple_list_item_single_choice,
-                        getArea());
+        mAreaAdapter = new HighLightArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_single_choice, getAreasToFetchInAreaAutoCompleteTextView(city));
 
         mBinding.actvAddAddressArea.setEnabled(true);
         mBinding.actvAddAddressArea.setAdapter(mAreaAdapter);
         mBinding.actvAddAddressArea.setOnItemClickListener((parent, view, position, id) ->
             {
 
-            var latitude = Double.parseDouble(mSelectionCity.getAreas().get(position).getLat());
-            var lang = Double.parseDouble(mSelectionCity.getAreas().get(position).getLang());
+            var latitude = Double.parseDouble(city.getAreas().get(position).getLat());
+            var lang = Double.parseDouble(city.getAreas().get(position).getLang());
             LatLng latlng = new LatLng(latitude, lang);
-            mIdAreaSelection = mSelectionCity.getAreas().get(position).getId();
+            mIdAreaSelection = city.getAreas().get(position).getId();
             mAreaAdapter.setSelection(position);
 
             setMarkerMap(latlng);
             });
 
-
         }
 
-    /**
-     * fetch areas to   in the city.
-     * @param city pass when user selected city
-     */
-    private void fetchAreaToAutoCompleteView( City city)
+    private void setUpMapIfNeeded()
         {
-        var latitude = Double.parseDouble(city.getLat());
-        var lang = Double.parseDouble(city.getLang());
-        LatLng latlng = new LatLng(latitude, lang);
-
-        setMarkerMap(latlng);
-        setAreaInCity(city);
-        setupAreaAutoCompleteVIew();
-        }
-
-    private void setAreaInCity(City areas)
-        {
-        mSelectionCity = areas;
-        }
-
-    private void setCity(String city)
-        {
-        citiesCovered.forEach(currentCity ->
+        if (googleMap == null)
             {
-            if (currentCity.getNameEn().equals(city))
-                {
-                mSelectionCity = currentCity;
-                return;
-                }
-            Log.e(TAG," setCity selectionCity" + mSelectionCity);
-
-
-            });
+            setupMap();
+            }
 
 
         }
 
-    private void setArea(String area)
+
+
+
+    private void setupCLickAddAddress()
         {
-        mSelectionCity.getAreas().forEach(currentCity ->
+        mBinding.btnAddAddress.setOnClickListener(v -> addAddress());
+        }
+
+    private void addAddress()
+        {
+
+        if (checkEmptyCityAndArea())
             {
-            if (currentCity.getNameEn().equals(area))
-                {}
-              //  mSelectionCity = currentCity;
+            var latCity = currentLatCity.get();
+            var langCity = currentLangCity.get();
 
-            });
-        }
-    @NonNull
-    private List<String> getArea()
-        {
-        val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+            var idArea = mIdAreaSelection;
 
-        var nameAreas = new ArrayList<String>();
-        mSelectionCity.getAreas().forEach(areas -> nameAreas.add(areas.getName(language)));
-        return nameAreas;
+            var street = Objects.requireNonNull(mBinding.etAddAddressStreet.getText()).toString();
+            var building = Objects.requireNonNull(mBinding.etAddAddressBuilding.getText()).toString();
+            var floor = Objects.requireNonNull(mBinding.etAddAddressFloor.getText()).toString();
+            var apartment = Objects.requireNonNull(mBinding.etAddAddressApartment.getText()).toString();
+            var landmark = Objects.requireNonNull(mBinding.etAddAddressLandmark.getText()).toString();
+            var notes = Objects.requireNonNull(mBinding.etAddAddressNotes.getText()).toString();
 
-        }
 
-    @NonNull
-    private List<String> getCities()
-        {
-        val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+            Log.e(TAG, "TAG_ADD ok = " + TAG_ADD);
+            var address = new com.example.a5asec.data.model.api.Address.CreateAddress(apartment,
+                    street, idArea, building, floor, langCity, latCity, landmark, notes);
+            mAddressViewModel.setCreateAddress(address);
+            setupAddAddressObserver();
 
-        var nameCity = new ArrayList<String>();
-        citiesCovered.forEach(city -> nameCity.add(city.getName(language)));
-        return nameCity;
-        }
-
-    private void setCitiesCovered(@NonNull List<City> cities)
-        {
-        citiesCovered = cities;
-
+            } else
+            {
+            Log.e(TAG, "error:  add address");
+            }
         }
 
 
@@ -280,40 +371,59 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         return true;
         }
 
-
-    private void addAddress()
+    private void setupAddAddressObserver()
         {
-        if (checkEmptyCityAndArea())
+        var primary = mBinding.cbAddAddressPrimary.isChecked();
+        mAddressViewModel.getAddress().observe(getViewLifecycleOwner(), addressResource ->
             {
-            var latCity = mSelectionCity.getLat();
-            var langCity = mSelectionCity.getLang();
-            var idArea = mIdAreaSelection;
-
-            var street = Objects.requireNonNull(mBinding.etAddAddressStreet.getText()).toString();
-            var building = Objects.requireNonNull(mBinding.etAddAddressBuilding.getText()).toString();
-            var floor = Objects.requireNonNull(mBinding.etAddAddressFloor.getText()).toString();
-            var apartment = Objects.requireNonNull(mBinding.etAddAddressApartment.getText()).toString();
-            var landmark = Objects.requireNonNull(mBinding.etAddAddressLandmark.getText()).toString();
-            var notes = Objects.requireNonNull(mBinding.etAddAddressNotes.getText()).toString();
-
-
-            var address = new com.example.a5asec.data.model.api.Address.CreateAddress(apartment, street, idArea,
-                    building, floor, langCity, latCity, landmark, notes);
-            if (argCheck == 1)
+            switch (addressResource.mStatus)
                 {
-                mAddressViewModel.setCreateAddress(address);
-                setupAddAddressObserver();
-                } else
-                {
-                mAddressViewModel.setUpdateAddress(address);
-                setupAddAddressObserver();
+
+                case SUCCESS -> {
+                var id = addressResource.getMData().getId();
+                if (primary)
+                    {
+                    mAddressViewModel.setPrimaryAddress(id);
+                    }
+                messageSnackbar("Success");
+                actionToManageAddressScreen();
 
                 }
 
-            } else
-            {
-            Log.e(TAG, "false");
-            }
+                case LOADING -> {
+                Log.e(TAG, "LOADING");
+
+
+                }
+                case ERROR, NULL -> {
+
+                Log.e(TAG, "ERROR");
+                Log.e(TAG, "ERROR" + addressResource.getMMessage());
+
+                }
+
+                }
+            });
+        }
+
+    private void actionToManageAddressScreen()
+        {
+        var action = AddAddressFragmentDirections.actionNewAddressFragmentToNavHomeManageAddress();
+        Navigation.findNavController(requireView()).navigate(action);
+        }
+
+    //---------------------------------------setup Screen Info--------------------------------------
+
+
+    /**
+     * this show info address screen.
+     */
+    private void setupUiInfo()
+        {
+        disableEnabledFields();
+
+        setupInfoAddressObserver();
+        mBinding.btnAddAddress.setVisibility(View.GONE);
         }
 
 
@@ -330,14 +440,51 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         mBinding.cbAddAddressPrimary.setEnabled(false);
         }
 
+    private void setupInfoAddressObserver()
+        {
+
+        mAddressViewModel.getAddress().observe(getViewLifecycleOwner(), addressResource ->
+            {
+            switch (addressResource.mStatus)
+                {
+
+                case SUCCESS -> {
+                var address = addressResource.getMData();
+
+                Log.e(TAG, "SUCCESS + " + address);
+
+
+                initDataToFields(address);
+
+                var lat = Double.parseDouble(address.getArea().getLat());
+                var lang = Double.parseDouble(address.getArea().getLang());
+                latLng = new LatLng(lat, lang);
+
+                }
+
+                case LOADING -> {
+                Log.e(TAG, "LOADING");
+
+
+                }
+                case ERROR, NULL -> {
+
+                Log.e(TAG, "ERROR");
+                Log.e(TAG, "ERROR" + addressResource.getMMessage());
+
+                }
+
+                }
+            });
+        }
+
     private void initDataToFields(@NonNull com.example.a5asec.data.model.api.Address address)
         {
-        val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-        String notSpecfied = getString(R.string.add_address_not_specfiied);
+        //  String notSpecfied = getString(R.string.add_address_not_specfiied);
 
 
-        var city = address.getArea().getCity().getName(language);
-        var area = address.getArea().getName(language);
+        var city = address.getArea().getCity().getName(LANGUAGE_TAGS);
+        var area = address.getArea().getName(LANGUAGE_TAGS);
         var street = address.getStreet();
         var building = address.getBuilding();
         var floor = address.getFloor();
@@ -346,12 +493,14 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         var notes = address.getNote();
         var primary = address.isPrimary();
 
-        if (StringUtils.isBlank(street)) street = notSpecfied;
+/*         if (StringUtils.isBlank(street))         mBinding.etAddAddressStreet.setHint(notSpecfied);
+
         if (StringUtils.isBlank(building)) building = notSpecfied;
         if (StringUtils.isBlank(floor)) floor = notSpecfied;
         if (StringUtils.isBlank(apartment)) apartment = notSpecfied;
         if (StringUtils.isBlank(landmark)) landmark = notSpecfied;
-        if (StringUtils.isBlank(notes)) notes = notSpecfied;
+        if (StringUtils.isBlank(notes)) notes = notSpecfied; */
+
 
         mBinding.actvAddAddressCity.setText(city);
         mBinding.actvAddAddressArea.setText(area);
@@ -362,52 +511,27 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         mBinding.etAddAddressLandmark.setText(landmark);
         mBinding.etAddAddressNotes.setText(notes);
         mBinding.cbAddAddressPrimary.setChecked(primary);
-        Log.e(TAG,"selectionCity" + mSelectionCity);
-     //   fetchAreaToAutoCompleteView(mSelectionCity);
+        //  Log.e(TAG, "selectionCity" + mSelectionCity);
 
         }
 
 
-    private void setupAddAddressObserver()
+    //---------------------------------------setup Screen edit address------------------------------
+
+    /**
+     * this show edit address screen.
+     */
+    private void setupUiEdit()
         {
-        var primary = mBinding.cbAddAddressPrimary.isChecked();
-        mAddressViewModel.getAddress().observe(getViewLifecycleOwner(), addressResource ->
-            {
-            switch (addressResource.mStatus)
-                {
 
-                case SUCCESS -> {
-                Log.e(TAG, "SUCCESS");
-                var id = addressResource.getMData().getId();
-                if (primary)
-                    {
-                    mAddressViewModel.setPrimaryAddress(id);
-                    }
-                messageSnackbar("Sucess");
-                actionToManageAddress();
-                hideProgress();
+        setupEditAddressObserver();
+        setupClickUpdateAddress();
 
-                }
-
-                case LOADING -> {
-                Log.e(TAG, "LOADING");
-
-
-                }
-                case ERROR, NULL -> {
-
-                Log.e(TAG, "ERROR");
-                Log.e(TAG, "ERROR" + addressResource.getMMessage());
-
-                }
-
-                }
-            });
         }
 
-    private void setupInfoAddressObserver()
+
+    private void setupEditAddressObserver()
         {
-        ShowProgress();
 
         mAddressViewModel.getAddress().observe(getViewLifecycleOwner(), addressResource ->
             {
@@ -415,18 +539,18 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
                 {
 
                 case SUCCESS -> {
-                Log.e(TAG, "SUCCESS");
+
                 var address = addressResource.getMData();
-                Log.e(TAG, "SUCCESS + "  + address);
+                mAddressObservableField = new ObservableField<>(address);
+                Log.e(TAG, "setupEditAddressObserver, SUCCESS =  " + address);
 
-                initDataToFields(address);
-                setCity(address.getArea().getCity().getNameEn());
+                var lat = Double.parseDouble(address.getArea().getLat());
+                var lang = Double.parseDouble(address.getArea().getLang());
+                latLng = new LatLng(lat, lang);
 
-                var lat = Double.parseDouble(address.getArea().getCity().getLat());
-                var lang = Double.parseDouble(address.getArea().getCity().getLang());
-                var latLng = new LatLng(lat, lang);
-                setMarkerInfoAddress(latLng);
-                hideProgress();
+                fetchCitiesInUpdateAddressObserver();
+
+
                 }
 
                 case LOADING -> {
@@ -446,7 +570,7 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
         }
 
 
-    private void setupCitiesObserver()
+    private void fetchCitiesInUpdateAddressObserver()
         {
         mAddressViewModel.getCities().observe(getViewLifecycleOwner(), citiesResource ->
             {
@@ -455,270 +579,352 @@ public class AddAddressFragment extends Fragment implements OnMapReadyCallback, 
 
                 case SUCCESS -> {
                 Log.e(TAG, "SUCCESS");
-                Log.e(TAG, "SUCCESS = " + citiesResource.getMData());
-                setCitiesCovered(citiesResource.getMData());
-                setupCityAutoCompleteVIew();
-                }
-
-                case LOADING -> {
-                Log.e(TAG, "LOADING");
+                citiesCovered = citiesResource.getMData();
+                setupCityInUpdateAddressAutoCompleteView();
 
 
-                }
-                case ERROR, NULL -> {
+                var nameCity = mAddressObservableField.get().getArea().getCity().getName(LANGUAGE_TAGS);
+                setCityInUpdateAddress(nameCity);
 
-                Log.e(TAG, "ERROR");
+                initDataToFields(Objects.requireNonNull(mAddressObservableField.get()));
+
 
                 }
+
+                case LOADING -> Log.e(TAG, "LOADING");
+                case ERROR, NULL -> Log.e(TAG, "ERROR");
 
                 }
             });
         }
 
-    private void setupViewModel()
+    /**
+     * this show's cities covered for client supported .
+     */
+    private void setupCityInUpdateAddressAutoCompleteView()
         {
-        NavController navController = NavHostFragment.findNavController(this);
-        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_manage_address);
-        mAddressViewModel = new ViewModelProvider(backStackEntry).get(AddressViewModel.class);
+        currentLatCity = new ObservableField<>();
+        currentLangCity = new ObservableField<>();
 
-        }
-
-
-
-    private void setupCLickAddAddress()
-        {
-        mBinding.btnAddAddress.setOnClickListener(v ->
+        mCityAdapter = new HighLightArrayAdapter(getContext(), android.R.layout.simple_list_item_single_choice, getCities());
+        mBinding.actvAddAddressCity.setAdapter(mCityAdapter);
+        mBinding.actvAddAddressCity.setOnItemClickListener((parent, view, position, id) ->
             {
-            addAddress();
+            mBinding.actvAddAddressCity.setListSelection(position);
+            var currentSelectionCity = citiesCovered.get(position);
+            var currentLat = currentSelectionCity.getLat();
+            var currentLang = currentSelectionCity.getLang();
+            currentLatCity.set(currentLat);
+            currentLangCity.set(currentLang);
+            fetchAreaInUpdateAddressToAutoCompleteView(currentSelectionCity);
+            mCityAdapter.setSelection(position);
 
             });
         }
+
+    /**
+     * fetch areas to   in the city.
+     *
+     * @param city pass when user selected city
+     */
+    private void fetchAreaInUpdateAddressToAutoCompleteView(@NonNull City city)
+        {
+        var latitude = Double.parseDouble(city.getLat());
+        var lang = Double.parseDouble(city.getLang());
+        latLng = new LatLng(latitude, lang);
+
+       // setMarkerMap(latLng);
+
+        setupAreaInUpdateAddressAutoCompleteVIew(city);
+
+
+        }
+
+    private void setupAreaInUpdateAddressAutoCompleteVIew(City city)
+        {
+        mAreaAdapter = new HighLightArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_single_choice, getAreasToFetchInAreaAutoCompleteTextView(city));
+
+        mBinding.actvAddAddressArea.setEnabled(true);
+        mBinding.actvAddAddressArea.setAdapter(mAreaAdapter);
+        mBinding.actvAddAddressArea.setOnItemClickListener((parent, view, position, id) ->
+            {
+            var latitude = Double.parseDouble(city.getAreas().get(position).getLat());
+            var lang = Double.parseDouble(city.getAreas().get(position).getLang());
+            LatLng latlng = new LatLng(latitude, lang);
+            mIdAreaSelection = city.getAreas().get(position).getId();
+            mAreaAdapter.setSelection(position);
+
+            setMarkerMap(latlng);
+            });
+
+        }
+
+    private void getIdAreaWithNameArea(@NonNull  String area, @NonNull City city)
+        {
+        city.getAreas().forEach(currentCity ->
+            {
+            if (currentCity.getNameEn().equals(area))
+                {
+                mIdAreaSelection = currentCity.getId();
+                Log.e(TAG, "getIdAreaWithNameArea = " + mIdAreaSelection);
+
+                }
+
+            });
+        }
+    private void setCityInUpdateAddress(String city)
+        {
+        Log.e(TAG, "city cover = " + citiesCovered);
+        if (StringUtils.isNotBlank(city))
+            {
+            for (City currentCity : citiesCovered)
+                {
+                if (currentCity.getName(LANGUAGE_TAGS).equals(city))
+                    {
+                    //  mSelectionCity = currentCity;
+                    fetchAreaInUpdateAddressToAutoCompleteView(currentCity);
+                    var area = mAddressObservableField.get().getArea().getNameEn();
+                    Log.e(TAG, "area = " + area);
+                    getIdAreaWithNameArea(area, currentCity);
+                    break;
+                    }
+                //  Log.e(TAG, " setCity selectionCity" + mSelectionCity);
+
+                }
+            }
+
+
+        }
+
+
+    @NonNull
+    private List<String> getAreasToFetchInAreaAutoCompleteTextView(City city)
+        {
+
+        var nameAreas = new ArrayList<String>();
+        city.getAreas().forEach(areas -> nameAreas.add(areas.getName(LANGUAGE_TAGS)));
+        return nameAreas;
+
+        }
+
+
+    @NonNull
+    private List<String> getCities()
+        {
+
+        var nameCity = new ArrayList<String>();
+        citiesCovered.forEach(city -> nameCity.add(city.getName(LANGUAGE_TAGS)));
+        return nameCity;
+        }
+
 
     private void setupClickUpdateAddress()
         {
-        mBinding.btnAddAddress.setOnClickListener(v ->
-            {
-            addAddress();
+        mBinding.btnAddAddress.setOnClickListener(v -> updateAddress());
+        }
 
+    private void updateAddress()
+        {
+        if (checkEmptyCityAndArea())
+            {
+            var latCity = currentLatCity.get();
+            var langCity = currentLangCity.get();
+
+            var idArea = mIdAreaSelection;
+
+            var street = Objects.requireNonNull(mBinding.etAddAddressStreet.getText()).toString();
+            var building = Objects.requireNonNull(mBinding.etAddAddressBuilding.getText()).toString();
+            var floor = Objects.requireNonNull(mBinding.etAddAddressFloor.getText()).toString();
+            var apartment = Objects.requireNonNull(mBinding.etAddAddressApartment.getText()).toString();
+            var landmark = Objects.requireNonNull(mBinding.etAddAddressLandmark.getText()).toString();
+            var notes = Objects.requireNonNull(mBinding.etAddAddressNotes.getText()).toString();
+
+
+            Log.e(TAG, "TAG_EDIT ok = " + TAG_EDIT);
+            Log.e(TAG, "IDArea = " + idArea);
+
+            var updateAddress = new Address.UpdateAddress(apartment,
+                    street, idArea, building, floor, langCity, latCity, landmark, notes);
+            mAddressViewModel.setUpdateAddress(updateAddress);
+            setupUpdateAddressObserver();
+            } else
+            {
+            Log.e(TAG, "false");
+
+            }
+        }
+
+
+    private void setupUpdateAddressObserver()
+        {
+        var checkedIsPrimary = mBinding.cbAddAddressPrimary.isChecked();
+        var oldIsPrimary = mAddressObservableField.get().isPrimary();
+        mAddressViewModel.getUpdateAddress().observe(getViewLifecycleOwner(), addressResource ->
+            {
+            switch (addressResource.mStatus)
+                {
+
+                case SUCCESS -> {
+                var id = mAddressObservableField.get().getId();
+                if (checkedIsPrimary ^ oldIsPrimary)
+                    {
+                    setupUpdatePrimaryAddress(id);
+                    Log.e(TAG, "setPrimaryAddress , success , update primary");
+                    }else
+                    {
+                    Log.e(TAG, "setPrimaryAddress , no update primary");
+                    messageSnackbar("Success update address");
+                    actionToManageAddressScreen();
+                    }
+
+
+
+                }
+
+                case LOADING -> {
+                Log.e(TAG, "setupUpdateAddressObserver, LOADING");
+
+
+                }
+                case ERROR -> {
+                messageSnackbar("ERROR  update address");
+
+                Log.e(TAG, "setupUpdateAddressObserver ,ERROR" + addressResource.getMMessage());
+
+                }
+
+                }
+            });
+        }
+    private void setupUpdatePrimaryAddress(int id)
+        {
+
+        mAddressViewModel.setPrimaryAddress(id).observe(getViewLifecycleOwner(), addressResource ->
+            {
+            switch (addressResource.mStatus)
+                {
+
+                case SUCCESS -> {
+
+                    Log.e(TAG, "setupUpdatePrimaryAddress , success , update primary");
+                    messageSnackbar("Success update primary address");
+                    actionToManageAddressScreen();
+
+
+
+
+
+                }
+
+                case LOADING -> {
+                Log.e(TAG, "setupUpdatePrimaryAddress, LOADING");
+
+
+                }
+                case ERROR -> {
+                messageSnackbar("ERROR  update primary address");
+
+                Log.e(TAG, "setupUpdatePrimaryAddress ,ERROR" + addressResource.getMMessage());
+
+                }
+
+                }
             });
         }
 
-    private void actionToManageAddress()
-        {
-        var action
-                = AddAddressFragmentDirections.actionNewAddressFragmentToNavHomeManageAddress();
-        Navigation.findNavController(requireView()).navigate(action);
-        }
-
-    private void setupMap()
-        {
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.f_add_address_map);
-
-        if (mapFragment != null)
-            {
-            mapFragment.getMapAsync(this);
-            }
-        geocoder = new Geocoder(requireContext());
-
-        }
-
-    private void ShowProgress()
+    private void showProgress()
         {
         mBinding.cpiAddAddress.setVisibility(View.VISIBLE);
-       // mBinding.fAddAddressMap.setVisibility(View.GONE);
+        mBinding.mapAddAddress.setVisibility(View.GONE);
         mBinding.clAddAddressContainer.setVisibility(View.GONE);
         }
 
     private void hideProgress()
         {
-    //    mBinding.fAddAddressMap.setVisibility(View.VISIBLE);
+        mBinding.mapAddAddress.setVisibility(View.VISIBLE);
         mBinding.clAddAddressContainer.setVisibility(View.VISIBLE);
         mBinding.cpiAddAddress.setVisibility(View.GONE);
 
         }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap)
-        {
-        double latitudeFloat = 21.492500;
-        double langFloat = 39.177570;
-        var latLang = new LatLng(latitudeFloat, langFloat);
-        mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-
-        if (argCheck == 1 || argCheck == 3)
-            {
-
-            mMap.setOnMapClickListener(this);
-            mMap.setOnMarkerDragListener(this);
-            setMarkerMap(latLang);
-            /* try
-                {
-
-                List<Address> addresses = geocoder.getFromLocation(latitudeFloat, langFloat, 1);
-
-
-                if (addresses.size() > 0)
-                    {
-
-                    Address address = addresses.get(0);
-                    LatLng jaddah = new LatLng(address.getLatitude(), address.getLongitude());
-                    MarkerOptions markerOptions = new MarkerOptions()
-                            .position(jaddah)
-                            .draggable(true)
-
-                            .alpha(0.7f)
-                            .zIndex(1.0f)
-                            .title(address.getLocality());
-                    mMap.addMarker(markerOptions);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jaddah, 12));
-
-                    }
-                } catch (IOException e)
-                {
-                e.printStackTrace();
-                } */
-
-
-            }
-        }
-
-    private void setMarkerInfoAddress(LatLng latLng)
-        {
-
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(latLng);
-
-        mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-
-        }
-
-    private void setMarkerMap(@NonNull LatLng latLng)
-        {
-
-        try
-            {
-            mMap.clear();
-            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            if (addresses.size() > 0)
-                {
-                Address address = addresses.get(0);
-                String streetAddress = address.getAddressLine(0);
-                Log.e(TAG, "streeAddress = " + streetAddress);
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(streetAddress)
-                        .draggable(true)
-                );
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-
-                }
-            } catch (IOException e)
-            {
-            e.printStackTrace();
-            }
-
-        }
-
-    @Override
-    public void onMapClick(@NonNull LatLng latLng)
-        {
-        setMarkerMap(latLng);
-     /*    try
-            {
-            mMap.clear();
-            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            if (addresses.size() > 0)
-                {
-                Address address = addresses.get(0);
-                String streetAddress = address.getAddressLine(0);
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(streetAddress)
-                        .draggable(true)
-                );
-
-
-                }
-            } catch (IOException e)
-            {
-            e.printStackTrace();
-            } */
-        }
-
-    @Override
-    public void onMarkerDragStart(@NonNull Marker marker)
-        {
-        Log.d(TAG, "onMarkerDragStart: ");
-        }
-
-    @Override
-    public void onMarkerDrag(@NonNull Marker marker)
-        {
-        Log.d(TAG, "onMarkerDrag: ");
-        }
-
-    @Override
-    public void onMarkerDragEnd(@NonNull Marker marker)
-        {
-        Log.d(TAG, "onMarkerDragEnd: ");
-        LatLng latLng = marker.getPosition();
-        setMarkerMap(latLng);
-     /*    try
-            {
-            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            if (addresses.size() > 0)
-                {
-                Address address = addresses.get(0);
-                String streetAddress = address.getAddressLine(0);
-                marker.setTitle(streetAddress);
-                }
-            } catch (IOException e)
-            {
-            e.printStackTrace();
-            } */
-        }
-
     private void messageSnackbar(@NonNull String message)
         {
 
-        Snackbar.make(mBinding.clAddAddressRoot, message, LENGTH_LONG)
-                .setAnchorView(mBinding.btnAddAddress).show();
+        Snackbar.make(mBinding.clAddAddressRoot, message, LENGTH_LONG).setAnchorView(mBinding.btnAddAddress).show();
 
         }
 
-
-    class HighLightArrayAdapter extends ArrayAdapter<CharSequence> {
-
-    private int mSelectedIndex = -1;
-
-
-    public void setSelection(int position) {
-    mSelectedIndex =  position;
-    notifyDataSetChanged();
-    }
-
-    public HighLightArrayAdapter(Context context, int resource, List objects) {
-    super(context, resource, objects);
-    }
-
+    @Override
+    public void onStart()
+        {
+        super.onStart();
+        mBinding.mapAddAddress.onStart();
+        }
 
     @Override
-    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-    View itemView =  super.getDropDownView(position, convertView, parent);
+    public void onResume()
+        {
+        mBinding.mapAddAddress.onResume();
+        super.onResume();
+        }
 
-    if (position == mSelectedIndex) {
-    itemView.setBackgroundColor(Color.RED);
-    } else {
-    itemView.setBackgroundColor(Color.TRANSPARENT);
-    }
+    @Override
+    public void onPause()
+        {
+        super.onPause();
+        mBinding.mapAddAddress.onPause();
+        }
 
-    return itemView;
-    }
-    }
+    @Override
+    public void onDestroy()
+        {
+        super.onDestroy();
+        mBinding.mapAddAddress.onDestroy();
+        mBinding = null;
+
+        }
+
+    @Override
+    public void onLowMemory()
+        {
+        super.onLowMemory();
+        mBinding.mapAddAddress.onLowMemory();
+        mBinding = null;
+        }
+
+
+    static class HighLightArrayAdapter extends ArrayAdapter<CharSequence>
+        {
+
+        private int mSelectedIndex = -1;
+
+
+        public HighLightArrayAdapter(Context context, int resource, List objects)
+            {
+            super(context, resource, objects);
+            }
+
+        public void setSelection(int position)
+            {
+            mSelectedIndex = position;
+            notifyDataSetChanged();
+            }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
+            {
+            View itemView = super.getDropDownView(position, convertView, parent);
+
+            if (position == mSelectedIndex)
+                {
+                itemView.setBackgroundColor(Color.RED);
+                } else
+                {
+                itemView.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+            return itemView;
+            }
+        }
     }
