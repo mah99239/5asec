@@ -3,19 +3,28 @@ A mobile ordering delivery processing and tracking system for an international l
 
 ## Table of Contents
 
-- [Description](#Description)
-- [Technologies](#Technologies)
 - [Features](#Features)
+- [Technologies](#Technologies)
+- [UI](#UI)
 - [Setup](#Setup)
 
-## Description
-5asec app used to ordering delivery procesing and tracking system for order.
+# Features
+5asec  displays content from Rest API. Users can browse for category services and Manage addresses show info profile, user can browse your orders, Users can browse for website 5asec in app. Users can also Change langeuage for app and show notification for order.
 
-## Technologies
+## Screenshots
 
 
-## Features
-Installation instructions.
+# Technologies
+  Used UI element for Material Design.
+  Used Retofit for fetching data from Rest API and used RxJava to manage request in background, used Glide to fetching images from Rest API.
+  used Refresh Access Token with OkHttpClient and memorized token in Shared Preferences.
+  used Room and sqlite to save order when user add cart.
+  Used Google Maps to get Address and manage address from user.
+  
+  
 
-## Usage
-A step by step series of examples that tell you how to get a development env running.
+# UI
+The app was designed using Material 3 guidelines. more about the design process and 
+browse the design files in the [5asec ui in figma](https://www.figma.com/file/sWpZuIOc94IHfa4AoJwjaB/5asec?node-id=261%3A5136)
+
+The app uses adaptive layouts and support differnt screen size.
