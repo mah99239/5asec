@@ -6,7 +6,7 @@ A mobile ordering delivery processing and tracking system for an international l
 - [Features](#Features)
 - [Technologies](#Technologies)
 - [UI](#UI)
-- [Setup](#Setup)
+
 
 # Features
 5asec  displays content from Rest API. Users can browse for category services and Manage addresses show info profile, user can browse your orders, Users can browse for website 5asec in app. Users can also Change langeuage for app and show notification for order.
