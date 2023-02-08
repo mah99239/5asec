@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <dimen name="margin_all_guideline">16dp</dimen>
+
+    <!-- Login Activity-->
+    <dimen name="guideline_all_margin">16dp</dimen>
+    <dimen name="padding_all_element">8dp</dimen>
+    <dimen name="margin_terms_text">8dp</dimen>
+    <!--Activity SignUp -->
+    <dimen name="margin_signUp">32dp</dimen>
+
+
+    <!--Home Activity -->
+    <dimen name="height_nav_header">176dp</dimen>
+
+    <!--Order -->
+    <dimen name="margin_order">8dp</dimen>
+    <dimen name="margin_order_info">8dp</dimen>
+    <dimen name="padding_order_info_end">16dp</dimen>
+    <dimen name="padding_order_info_start">4dp</dimen>
+    <dimen name="size_order_image">24dp</dimen>
+
+
+    <!--Price list Fragment -->
+    <dimen name="margin_price_list_recycle">16dp</dimen>
+
+    <!--item price-->
+    <dimen name="size_item_price_card">100dp</dimen>
+    <dimen name="height_item_price_card">120dp</dimen>
+    <dimen name="default_corner_radius">12dp</dimen>
+    <dimen name="padding_price_image">4dp</dimen>
+    <dimen name="padding_price_banner">8dp</dimen>
+    <!-- Services Fragment -->
+    <dimen name="height_services_image">200dp</dimen>
+    <dimen name="testsize_services_image">24sp</dimen>
+
+
+    <!--Laundry Services Fragment -->
+
+    <!-- laundry services content -->
+    <dimen name="height_layout_laundry_services_container">320dp</dimen>
+    <dimen name="margin_all_layout_laundry_services_small">8dp</dimen>
+    <dimen name="textsize_layout_laundry_services_text">14sp</dimen>
+    <dimen name="size_layout_laundry_services_button">48dp</dimen>
+
+
+    <!--item_services -->
+    <dimen name="margin_item_services_container">8dp</dimen>
+    <dimen name="padding_all_item_services_text">8dp</dimen>
+    <dimen name="size_item_services_image">48dp</dimen>
+
+    <!--item laundry services -->
+    <dimen name="size_item_laundry_services_card">96dp</dimen>
+    <dimen name="size_item_laundry_match">0dp</dimen>
+    <dimen name="height_item_laundry_services_image">48dp</dimen>
+    <dimen name="height_item_laundry_services_text">24dp</dimen>
+    <dimen name="padding_item_laundry_services_text">4dp</dimen>
+
+    <!--Profile Fragment -->
+    <dimen name="margin_profile_head_element">32dp</dimen>
+    <dimen name="margin_profile_element">16dp</dimen>
+    <dimen name="margin_profile">8dp</dimen>
+    <dimen name="margin_profile_button_bottom">8dp</dimen>
+
+    <!--Contact Fragment -->
+    <dimen name="margin_contact_divider">8dp</dimen>
+    <dimen name="margin_contact_top">16dp</dimen>
+    <dimen name="margin_contact_start">8dp</dimen>
+    <dimen name="margin_contact_top_element">32dp</dimen>
+    <dimen name="size_contact_icon">24dp</dimen>
+    <dimen name="size_contact_button_icon">48dp</dimen>
+
+    <!--Cart Fragment -->
+    <dimen name="margin_cart_recycle">16dp</dimen>
+    <!--item Cart  -->
+    <dimen name="margin_cart_card">8dp</dimen>
+    <dimen name="margin_cart_text">8dp</dimen>
+
+    <!--setting Fragment -->
+    <dimen name="textsize_setting_text">10sp</dimen>
+</resources>

@@ -23,7 +23,8 @@ public class OrderViewModel extends ViewModel
     {
     private static final String TAG = "OrderHistoryViewModel";
     private MutableLiveData<Resource<List<Order>>> orderHistory = new MutableLiveData<>();
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private MutableLiveData<Resource<Order>> mItemsHistoryOrder = new MutableLiveData<>();
+    final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private OrderRepository mOrderRepository;
 
     public OrderViewModel()
@@ -60,7 +61,6 @@ public class OrderViewModel extends ViewModel
                             public void onSuccess(@NonNull List<Order> orderHistories)
                                 {
                                 orderHistory.postValue(Resource.success(orderHistories));
-                                compositeDisposable.remove(this);
 
 
                                 }
@@ -69,6 +69,7 @@ public class OrderViewModel extends ViewModel
                             public void onError(@NonNull Throwable e)
                                 {
                                 Log.e(TAG, ApiError.handleApiError(e));
+                                Log.e(TAG, e.getMessage());
                                 orderHistory.postValue(Resource.error(ApiError.handleApiError(e), null));
                                 compositeDisposable.remove(this);
 
@@ -78,6 +79,17 @@ public class OrderViewModel extends ViewModel
                             }));
 
 
+        }
+
+    public void setItemHistoryOrder(Resource<Order> item)
+        {
+        mItemsHistoryOrder.postValue(Resource.loading(null));
+        mItemsHistoryOrder.postValue(item);
+
+        }
+    public LiveData<Resource<Order>> getItemHistoryOrder()
+        {
+        return mItemsHistoryOrder;
         }
 
     @Override

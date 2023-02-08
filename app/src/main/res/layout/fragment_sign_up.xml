@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:barrierDirection="bottom">
 
-    <data>
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_signUp_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_sign_up"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:layout_marginBottom="@dimen/padding_all_element"
+            app:layout_constraintBottom_toTopOf="@+id/barrier_sign_up_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/gl_sign_up_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_sign_up_start"
+            app:layout_constraintTop_toTopOf="@+id/gl_sign_up_top">
+
+            <LinearLayout
+                android:id="@+id/cl_signUp_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_login_logo" />
+
+                <include
+                    android:id="@+id/include_signUp_content"
+                    layout="@layout/layout_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/cpi_signUp"
@@ -19,45 +51,57 @@
             android:indeterminate="true"
             android:isScrollContainer="true"
             android:visibility="invisible"
+            tools:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/gl_sign_up_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_sign_up_start" />
 
         <Button
             android:id="@+id/btn_sign_up"
-            style="@style/Widget_App_secondaryButton"
+            style="@style/Widget.5asec.secondaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:isScrollContainer="true"
             android:text="@string/sign_up_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/gl_sign_up_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/gl_sign_up_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_sign_up_start" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsv_sign_up"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_sign_up_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/guideline_all_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_sign_up_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/guideline_all_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_sign_up_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_all_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_sign_up_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_all_margin" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_sign_up_bottom"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/margin_all_guideline"
-
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:id="@+id/cl_signUp_child"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:tag="binding_1">
-
-                <include
-                    android:id="@+id/include_signUp_contant"
-                    layout="@layout/layout_sign_up"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="btn_sign_up,cpi_signUp"
+            app:layout_constraintBottom_toBottomOf="@id/cpi_signUp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

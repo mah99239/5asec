@@ -4,7 +4,7 @@
 
     <com.google.android.material.card.MaterialCardView
 
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="@dimen/size_item_price_card"
         android:layout_height="@dimen/height_item_price_card">
 
@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:fontFamily="@font/rubik_light"
                 android:gravity="center"
                 android:padding="4dp"
                  />

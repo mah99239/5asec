@@ -16,7 +16,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_home"
-                style="@style/Widget_App_Toolbar"
+                style="@style/Widget.5asec.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/menu_home" />
@@ -34,7 +34,7 @@
             android:background="@color/md_theme_light_shadow"
             android:gravity="center"
             android:text="@string/all_network_error"
-            android:textColor="@color/md_theme_light_outlineVariant"
+            android:textColor="@color/md_theme_light_onSurface"
             android:visibility="gone"
             tools:visibility="visible" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

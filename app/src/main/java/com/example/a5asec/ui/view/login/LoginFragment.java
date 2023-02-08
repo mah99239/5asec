@@ -12,14 +12,13 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
@@ -28,10 +27,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.a5asec.R;
+import com.example.a5asec.data.local.prefs.TokenPreferences;
+import com.example.a5asec.data.model.api.Users;
 import com.example.a5asec.data.remote.api.UserClient;
 import com.example.a5asec.data.remote.api.UserHelper;
-import com.example.a5asec.data.model.api.Users;
-import com.example.a5asec.data.local.prefs.TokenPreferences;
 import com.example.a5asec.databinding.FragmentLoginBinding;
 import com.example.a5asec.ui.base.UserViewModelFactory;
 import com.example.a5asec.ui.view.home.HomeActivity;
@@ -39,8 +38,6 @@ import com.example.a5asec.ui.view.viewmodel.UserViewModel;
 import com.example.a5asec.utility.NetworkConnection;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,15 +50,8 @@ public class LoginFragment extends Fragment implements LifecycleObserver
     {
     private static final String TAG = "LoginFragment";
 
-    private FragmentLoginBinding mBinding;
-    private TextInputLayout mTextInputLayoutEmail;
-    private TextInputLayout mTextInputLayoutPassword;
-    private TextInputEditText mTextInputEditTextEmail;
-    private TextInputEditText mTextInputEditTextPassword;
-    private Button mButtonLogin;
-    private Button mButtonForgotPassword;
-    private Button mButtonSignUp;
-    private Button mButtonSkip;
+    FragmentLoginBinding mBinding;
+
     private UserViewModel mUserViewModel;
 
     @Override
@@ -69,7 +59,6 @@ public class LoginFragment extends Fragment implements LifecycleObserver
                              Bundle savedInstanceState)
         {
         // Inflate the layout for this fragment
-        TokenPreferences tokenPreferences = new TokenPreferences(getActivity());
 
         //this initialize view with DataBindingUtil
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
@@ -82,30 +71,27 @@ public class LoginFragment extends Fragment implements LifecycleObserver
                               @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
+        new TokenPreferences(getActivity());
         setupUI();
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
         }
 
     private void setupUI()
         {
-        initView();
         setupViewModel();
         setupClickedButtons();
-        networkAvailable();
         checkDateValidateWithUser();
+        networkAvailable();
         }
 
-    private void initView()
+
+    private void setupViewModel()
         {
-        mTextInputLayoutEmail = mBinding.tilLoginEmail;
-        mTextInputLayoutPassword = mBinding.tilLoginPassword;
-        mTextInputEditTextEmail = mBinding.tietLoginEmail;
-        mTextInputEditTextPassword = mBinding.tietLoginPassword;
-        mButtonLogin = mBinding.btnLoginLogin;
-        mButtonForgotPassword = mBinding.btnLoginForgotPassword;
-        mButtonSignUp = mBinding.btnLoginSignup;
-        mButtonSkip = mBinding.btnLoginSkip;
+        NavController navController = NavHostFragment.findNavController(this);
+        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_login);
+
+        mUserViewModel = new ViewModelProvider(backStackEntry,
+                new UserViewModelFactory(new UserHelper(new UserClient()))).get(UserViewModel.class);
         }
 
     /**
@@ -114,140 +100,38 @@ public class LoginFragment extends Fragment implements LifecycleObserver
     private void setupClickedButtons()
         {
 
-        mButtonLogin.setOnClickListener(v ->
+        mBinding.btnLoginLogin.setOnClickListener(v ->
                 checkLoginValidAPI());
-        mButtonForgotPassword.setOnClickListener(v ->
+        mBinding.etLoginPassword.setOnEditorActionListener((v, actionId, event) ->
+            {
+            checkLoginValidAPI();
+            return false;
+            });
+        mBinding.btnLoginForgotPassword.setOnClickListener(v ->
             {
             NavDirections action =
                     LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment();
 
-            Navigation.findNavController(mBinding.flLoginRoot).navigate(action);
+            Navigation.findNavController(mBinding.getRoot()).navigate(action);
 
             });
 
-        mButtonSignUp.setOnClickListener(v ->
+        mBinding.btnLoginSignup.setOnClickListener(v ->
             {
             NavDirections action =
                     LoginFragmentDirections.actionLoginFragmentToSignUpFragment();
 
-            Navigation.findNavController(mBinding.flLoginRoot).navigate(action);
+            Navigation.findNavController(mBinding.getRoot()).navigate(action);
             });
 
-        mButtonSkip.setOnClickListener(v ->
-                getLogin());
 
-
-        }
-
-
-    private void checkDateValidateWithUser()
-        {
-
-        mTextInputEditTextEmail.addTextChangedListener(new TextWatcher()
-            {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-                // Do nothing because not change before text
-                }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-                if (TextUtils.isEmpty(s))
-                    {
-                    mTextInputLayoutEmail.setBoxStrokeColor(getColorNotValid());
-                    mTextInputLayoutEmail.setError(null);
-                    } else if (!s.toString().trim().matches(String.valueOf(Patterns.EMAIL_ADDRESS)))
-                    {
-                    mTextInputLayoutEmail.setError(getString(R.string.login_email_invaild));
-                    mTextInputLayoutEmail.setBoxStrokeColor(getColorNotValid());
-                    } else
-                    {
-                    mTextInputLayoutEmail.setBoxStrokeColor(getColorValid());
-                    mTextInputLayoutEmail.setError(null);
-                    }
-                }
-
-            @Override
-            public void afterTextChanged(Editable s)
-                {
-
-                }
-            });
-        mTextInputEditTextPassword.addTextChangedListener(new TextWatcher()
-            {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-
-                }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-                if (TextUtils.isEmpty(s))
-                    {
-                    mTextInputLayoutPassword.setBoxStrokeColor(getColorNotValid());
-                    } else
-                    {
-                    mTextInputLayoutPassword.setError(null);
-
-                    mTextInputLayoutPassword.setBoxStrokeColor(getColorValid());
-                    }
-                }
-
-            @Override
-            public void afterTextChanged(Editable s)
-                {
-
-                }
-            });
-        }
-
-    /**
-     * @param login    check login is not match and empty
-     * @param password check is  empty
-     * @return If user and password are valid return true
-     */
-    private boolean isCheckValidate(String login, String password)
-        {
-        mTextInputEditTextPassword.setError(null);
-        mTextInputEditTextPassword.setError(null);
-        // Check login and pass are empty
-        if (TextUtils.isEmpty(login) && TextUtils.isEmpty(password))
-            {
-            messageSnackbar(getString(R.string.login_empty));
-            return false;
-            }
-        // Check login is empty return false
-        if (TextUtils.isEmpty(login))
-            {
-            mTextInputEditTextEmail.setError(getString(R.string.login_email_empty));
-            messageSnackbar(getString(R.string.login_email_empty));
-            return false;
-            }
-        // Check password is empty return false
-        if (TextUtils.isEmpty(password))
-            {
-            mTextInputEditTextPassword.setError(getString(R.string.login_password_empty));
-            messageSnackbar(getString(R.string.login_password_empty));
-            return false;
-            }
-        // Check login is not match return false
-        if (!login.trim().matches(String.valueOf(Patterns.EMAIL_ADDRESS)))
-            {
-            messageSnackbar(getString(R.string.login_email_match));
-            return false;
-            }
-        return true;
         }
 
     private void checkLoginValidAPI()
         {
-
-        String login = Objects.requireNonNull(mTextInputEditTextEmail.getText()).toString();
-        String password = Objects.requireNonNull(mTextInputEditTextPassword.getText()).toString();
+        emptyTextError();
+        String login = Objects.requireNonNull(mBinding.etLoginEmail.getText()).toString();
+        String password = Objects.requireNonNull(mBinding.etLoginPassword.getText()).toString();
 
         if (isCheckValidate(login, password))
             {
@@ -257,6 +141,49 @@ public class LoginFragment extends Fragment implements LifecycleObserver
             }
 
 
+        }
+
+
+    /**
+     * @param login    check login is not match and empty
+     * @param password check is  empty
+     * @return If user and password are valid return true
+     */
+    private boolean isCheckValidate(String login, String password)
+        {
+        mBinding.etLoginEmail.setError(null);
+        mBinding.etLoginPassword.setError(null);
+        // Check login and pass are empty
+        if (TextUtils.isEmpty(login) && TextUtils.isEmpty(password))
+            {
+            mBinding.setMessage(getString(R.string.login_empty));
+
+            return false;
+            }
+        // Check login is empty return false
+        if (TextUtils.isEmpty(login))
+            {
+            mBinding.etLoginEmail.setError(getString(R.string.login_email_empty));
+            mBinding.setMessage(getString(R.string.login_email_empty));
+
+            return false;
+            }
+        // Check password is empty return false
+        if (TextUtils.isEmpty(password))
+            {
+            mBinding.etLoginPassword.setError(getString(R.string.login_password_empty));
+            mBinding.setMessage(getString(R.string.login_password_empty));
+            return false;
+            }
+        // Check login is not match return false
+        if (!login.trim().matches(String.valueOf(Patterns.EMAIL_ADDRESS)))
+            {
+            messageSnackbar(getString(R.string.login_email_match));
+            mBinding.setMessage(getString(R.string.login_email_match));
+
+            return false;
+            }
+        return true;
         }
 
     private void loginAPI(Users login)
@@ -272,51 +199,51 @@ public class LoginFragment extends Fragment implements LifecycleObserver
             switch (authorizationResource.mStatus)
                 {
 
-                case SUCCESS -> {
-                Log.e(TAG, "SUCCESS");
-                Log.e(TAG, "SUCCESS = " + authorizationResource.getMData());
+                case SUCCESS ->
+                    {
+                    Log.e(TAG, "SUCCESS");
+                    Log.e(TAG, "SUCCESS = " + authorizationResource.getMData());
 
-                String token = authorizationResource.getMData().getAccess_token();
-                String refreshToken = authorizationResource.getMData().getRefresh_token();
-                long expireIn = authorizationResource.getMData().getExpires_in();
+                    String token = authorizationResource.getMData().getAccess_token();
+                    String refreshToken = authorizationResource.getMData().getRefresh_token();
+                    long expireIn = authorizationResource.getMData().getExpires_in();
 
-                TokenPreferences.setToken(token, refreshToken, expireIn);
-                TokenPreferences.setPassword(mTextInputEditTextPassword.getText().toString());
-                new Handler(Looper.getMainLooper()).postDelayed
-                        (this::openHomeActivity, 1000);
+                    TokenPreferences.setToken(token, refreshToken, expireIn);
+                    TokenPreferences.setPassword(mBinding.etLoginPassword.getText().toString());
+                    new Handler(Looper.getMainLooper()).postDelayed
+                            (this::openHomeActivity, 500);
 
-                }
-
-
-                case ERROR -> {
-
-                Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
-                //Handle Error
-
-                messageSnackbar(authorizationResource.getMMessage()); // SHow message in UI
-                completeLoading();
+                    }
 
 
-                }
-                case LOADING -> {
+                case ERROR ->
+                    {
 
-                Log.e(TAG, "loading:" + authorizationResource.getMMessage());
+                    Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
+                    //Handle Error
 
-                showLoading();
-                }
-                case NULL -> {
-                Log.e(TAG, "NULL:" + authorizationResource.getMMessage());
+                    messageSnackbar(authorizationResource.getMMessage()); // SHow message in UI
 
-                }
+                    completeLoading();
+
+
+                    }
+                case LOADING ->
+                    {
+
+                    Log.e(TAG, "loading:" + authorizationResource.getMMessage());
+
+                    showLoading();
+                    }
+                case NULL ->
+                    {
+                    Log.e(TAG, "NULL:" + authorizationResource.getMMessage());
+
+                    }
 
                 }
             });
 
-
-        }
-
-    public void getLogin()
-        {
 
         }
 
@@ -325,6 +252,72 @@ public class LoginFragment extends Fragment implements LifecycleObserver
         Intent intent = new Intent(getContext(), HomeActivity.class);
         startActivity(intent);
         getActivity().finish();
+        }
+
+
+    private void checkDateValidateWithUser()
+        {
+
+        mBinding.etLoginEmail.addTextChangedListener(new TextWatcher()
+            {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                {
+                // Do nothing because not change before text
+                }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+                {
+                if (TextUtils.isEmpty(s))
+                    {
+                    mBinding.tilLoginEmail.setBoxStrokeColor(getColorNotValid());
+                    mBinding.tilLoginEmail.setError(null);
+                    } else if (!s.toString().trim().matches(String.valueOf(Patterns.EMAIL_ADDRESS)))
+                    {
+                    mBinding.tilLoginEmail.setError(getString(R.string.login_email_invaild));
+                    mBinding.tilLoginEmail.setBoxStrokeColor(getColorNotValid());
+                    } else
+                    {
+                    mBinding.tilLoginEmail.setBoxStrokeColor(getColorValid());
+                    mBinding.tilLoginEmail.setError(null);
+                    }
+                }
+
+            @Override
+            public void afterTextChanged(Editable s)
+                {
+
+                }
+            });
+        mBinding.etLoginPassword.addTextChangedListener(new TextWatcher()
+            {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                {
+
+                }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+                {
+                if (TextUtils.isEmpty(s))
+                    {
+                    mBinding.tilLoginPassword.setBoxStrokeColor(getColorNotValid());
+                    } else
+                    {
+                    mBinding.tilLoginPassword.setError(null);
+
+                    mBinding.tilLoginPassword.setBoxStrokeColor(getColorValid());
+                    }
+                }
+
+            @Override
+            public void afterTextChanged(Editable s)
+                {
+
+                }
+            });
         }
 
 
@@ -342,7 +335,7 @@ public class LoginFragment extends Fragment implements LifecycleObserver
             {
             message = getString(R.string.login_invaild);
             }
-
+        mBinding.setMessage(message);
         Snackbar.make(mBinding.getRoot(), message, BaseTransientBottomBar.LENGTH_LONG)
                 .setAnchorView(mBinding.btnLoginLogin).show();
         }
@@ -352,8 +345,8 @@ public class LoginFragment extends Fragment implements LifecycleObserver
      */
     private void showLoading()
         {
-        mBinding.llLoginContainerProgress.setVisibility(View.VISIBLE);
-        mButtonLogin.setEnabled(false);
+        mBinding.cpiLogin.setVisibility(View.VISIBLE);
+        mBinding.btnLoginLogin.setEnabled(false);
         }
 
     /**
@@ -361,8 +354,7 @@ public class LoginFragment extends Fragment implements LifecycleObserver
      */
     private void completeLoading()
         {
-        mBinding.flLoginRoot.setBackground(null);
-        mBinding.llLoginContainerProgress.setVisibility(View.GONE);
+        mBinding.cpiLogin.setVisibility(View.GONE);
         mBinding.btnLoginLogin.setEnabled(true);
         }
 
@@ -379,6 +371,10 @@ public class LoginFragment extends Fragment implements LifecycleObserver
 
         }
 
+    private void emptyTextError()
+        {
+        mBinding.setMessage("");
+        }
 
     /**
      * Check network is available
@@ -407,14 +403,23 @@ public class LoginFragment extends Fragment implements LifecycleObserver
                 }
             });
         }
-    private void setupViewModel()
-        {
-        NavController navController = NavHostFragment.findNavController(this);
-        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_login);
 
-        mUserViewModel = new ViewModelProvider(backStackEntry,
-                new UserViewModelFactory(new UserHelper(new UserClient()))).get(UserViewModel.class);
+    @Override
+    public void onResume()
+        {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
         }
+
+    @Override
+    public void onStop()
+        {
+        super.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+        }
+
     @Override
     public void onDestroy()
         {

@@ -3,6 +3,9 @@ plugins {
     id "androidx.navigation.safeargs"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'org.jetbrains.kotlin.android'
+/*    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'*/
+
 
 
 }
@@ -44,7 +47,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        resConfigs "ar", "en"
+        resConfigs 'ar', 'en'
 
         applicationId "com.example.a5asec"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -84,6 +87,14 @@ android {
 
 dependencies {
 
+/*    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'*/
+
     api androidXDependencies.splashScreen
     api androidXDependencies.appcompat
     api androidXDependencies.constraintlayout
@@ -105,7 +116,7 @@ dependencies {
     api androidXDependencies.lifecylceCommon
     api androidXDependencies.lifecylceService
     api androidXDependencies.lifecylceProcess
-    implementation 'androidx.fragment:fragment:1.4.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     annotationProcessor androidXDependencies.annotation
 

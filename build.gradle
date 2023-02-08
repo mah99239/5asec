@@ -9,10 +9,14 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+      /*  classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'*/
+        classpath 'com.android.tools.build:gradle:7.4.0'
+
         classpath 'org.projectlombok:lombok:1.18.24'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3"
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21'
 
 
     }
@@ -35,7 +39,6 @@ ext {
                     appcompat                : "androidx.appcompat:appcompat:1.7.0-alpha01",
                     constraintlayout         : 'androidx.constraintlayout:constraintlayout:2.1.4',
                     legacy                   : "androidx.legacy:legacy-support-v4:1.0.0",
-                    recycleViewSelection     : "androidx.recyclerview:recyclerview-selection:1.1.0",
                     recycleViewSelection     : "androidx.recyclerview:recyclerview-selection:1.1.0",
                     navigationFragment       : "androidx.navigation:navigation-fragment:2.5.3",
                     navigationUi             : "androidx.navigation:navigation-ui:2.5.3",

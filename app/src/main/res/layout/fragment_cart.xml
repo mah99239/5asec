@@ -69,7 +69,7 @@
 
         <Button
             android:id="@+id/btn_cart_check_out"
-            style="@style/Widget_App_primaryButton"
+            style="@style/Widget.5asec.primaryButton"
             android:layout_width="0dp"
 
             android:layout_height="wrap_content"

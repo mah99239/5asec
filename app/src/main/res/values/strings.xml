@@ -73,12 +73,12 @@
     <string name="laundry_service_content_available_services">available service:</string>
     <string name="laundry_service_content_cart_button">add to cart</string>
     <string name="laundry_service_content_cart_updata_button">update cart</string>
-    <string name="login_button_signUp">sign Up</string>
+    <string name="login_button_signUp">Sign Up</string>
     <string name="login_email">E-mail</string>
     <string name="login_forgotPassword">Forgot password?</string>
-    <string name="login_login">login in</string>
+    <string name="login_login">Login in</string>
     <string name="login_password">Password</string>
-    <string name="login_sign_up">don\'t have an account</string>
+    <string name="login_sign_up">Don\'t have an account</string>
     <string name="login_skip">Or skip login</string>
     <string name="login_tittle">Login</string>
 
@@ -126,10 +126,33 @@
     <string name="order_tabitem_current">Current order</string>
     <string name="order_tabitem_history">History order</string>
     <string name="order_tittle">My order</string>
+    <string name="order_history_empty">History order is empty!</string>
 
     <string name="order_info_title">Order Info</string>
     <string name="order_status_title">Order Status</string>
     <string name="order_id_title">Id order:</string>
+
+    <string name="order_info_id">Order no</string>
+    <string name="order_info_ref">Ref no</string>
+    <string name="order_info_type">Order type</string>
+    <string name="order_info_payment">Payment</string>
+    <string name="order_info_transport">Transport</string>
+    <string name="order_info_date">Order date</string>
+    <string name="order_info_status">Status</string>
+
+    <string name="order_info_address">Address</string>
+    <string name="order_info_items">Items</string>
+
+    <string name="order_info_notes">Order notes</string>
+    <string name="order_info_notes_empty">No notes</string>
+
+    <string name="order_info_payment_title">Payment</string>
+    <string name="order_info_payment_items">Items total</string>
+    <string name="order_info_payment_delivery">Delivery cost</string>
+    <string name="order_info_payment_precentage">VAT precentage</string>
+    <string name="order_info_payment_value">VAT value</string>
+    <string name="order_info_payment_delivery_fees">Cash on delvery fees</string>
+    <string name="order_info_payment_tota">TOTAL</string>
 
     <string name="address_primary_address">Primary address</string>
     <string name="address_other_address">address #</string>
@@ -165,5 +188,9 @@
     <string name="setting_address_error_dialog_title">Sorry</string>
     <string name="setting_address_error_dialog_message">can\'t remove primary address</string>
     <string name="setting_address_delete_message"> removed item address</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_up_pass_hint">Must be at least: 8 characters</string>
+    <string name="sign_up_email_hint">Example: email@gmail.com</string>
 
 </resources>

@@ -49,114 +49,27 @@
             app:layout_constraintStart_toStartOf="@+id/gl_order_status_start"
             app:layout_constraintTop_toTopOf="@+id/gl_order_status_top" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_order_status_container"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@color/md_theme_light_primary"
-            app:layout_constraintEnd_toStartOf="@+id/gl_order_status_end"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/gl_order_status_start"
-            app:layout_constraintTop_toBottomOf="@+id/imv_order_status_logo">
+            android:text="Order rejce"
+            app:layout_constraintEnd_toEndOf="@+id/imv_order_status_logo"
+            app:layout_constraintStart_toStartOf="@+id/imv_order_status_logo"
+            app:layout_constraintTop_toBottomOf="@+id/imv_order_status_logo" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:backgroundTint="@color/md_theme_light_onPrimary"
-                android:src="@drawable/ic_contact_call_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/md_theme_light_onPrimary" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="12-12-22222 17:22"
-                android:textColor="@color/md_theme_light_onPrimary"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="no Notes!"
-                android:textColor="@color/md_theme_light_onPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="order canceled by client"
-                android:textColor="@color/md_theme_light_onPrimary"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Rejection notes"
-                android:textColor="@color/md_theme_light_onPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_order_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/md_theme_light_secondary"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/gl_order_status_end"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/gl_order_status_start"
-            app:layout_constraintTop_toBottomOf="@+id/cl_order_status_container">
-
-            <ImageView
-                android:id="@+id/imv_order_status_create"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_contact_call_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/md_theme_light_onSecondary" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Order is created"
-                android:textColor="@color/md_theme_light_onSecondary"
-                app:layout_constraintStart_toEndOf="@+id/imv_order_status_create"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="24-23-232-23"
-                android:textColor="@color/md_theme_light_onSecondary"
-                app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_status"
+            tools:listitem="@layout/list_item_order_status" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

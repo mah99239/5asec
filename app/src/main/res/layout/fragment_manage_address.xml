@@ -68,7 +68,7 @@
 
         <Button
             android:id="@+id/btn_mange_address"
-            style="@style/Widget_App_primaryButton"
+            style="@style/Widget.5asec.primaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="add address"

@@ -22,17 +22,16 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     private static final String TAG = OrderHistoryAdapter.class.getSimpleName();
 
-    private List<Order> list = new ArrayList<>();
+    private List<Order> mHistoryItem = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public OrderHistoryAdapter()
         {
         }
 
-    public OrderHistoryAdapter(List<Order> list, OnItemClickListener onItemClickListener)
+    public OrderHistoryAdapter( OnItemClickListener onItemClickListener)
         {
 
-        this.list = list;
         this.onItemClickListener = onItemClickListener;
         }
 
@@ -41,8 +40,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         this.onItemClickListener = listener;
         }
 
+    @NonNull
     @Override
-    public OrderHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public OrderHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
         {
 
         ListItemOrderHistoryBinding ListItemOrderHistoryBinding = DataBindingUtil.inflate(LayoutInflater
@@ -54,24 +54,27 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position)
         {
-        Order item = list.get(position);
+        Order item = mHistoryItem.get(position);
         holder.bind(item);
         }
 
     @Override
     public int getItemCount()
         {
-        return list.size();
+        return mHistoryItem.size();
         }
 
     public void setData(List<Order> newList)
         {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallback(newList, this.list));
-        this.list.clear();
-        this.list.addAll(newList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallback(newList, this.mHistoryItem));
+        this.mHistoryItem.clear();
+        this.mHistoryItem.addAll(newList);
         diffResult.dispatchUpdatesTo(this);
         }
-
+    public Order getHistoryOrderItem(int position)
+        {
+        return mHistoryItem.get(position);
+        }
     public interface OnItemClickListener
         {
         void onItemClick(View view, int position);
@@ -92,8 +95,17 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         public void bind(final Order model)
             {
             mItemBinding.getRoot().setOnClickListener(this);
-            //TODO: setup data in view
-            var idOrder = model.getId();
+            var id =  model.getId();
+            String idOrder = "#" +  String.valueOf(id);
+            String date = model.getCreatedDate();
+            var count =String.valueOf(model.getItemsCount());
+            String status = model.getStatus();
+
+            mItemBinding.tvOrderHistoryId.setText(idOrder);
+            mItemBinding.tvOrderHistoryDate.setText(date);
+            mItemBinding.tvOrderHistoryCount.setText(count);
+            mItemBinding.tvOrderHistoryStatus.setText(status);
+
 
 
             }

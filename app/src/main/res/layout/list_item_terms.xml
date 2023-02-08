@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,8 +16,9 @@
             android:id="@+id/tv_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/md_theme_light_onSecondaryContainer"
-            android:textSize="24sp" />
+            tools:text="1. Placing an order"
+            android:textAppearance="@style/TextAppearance.5asec.TitleMedium"
+            />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
@@ -27,6 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/margin_terms_text"
-            android:textColor="@color/md_theme_light_onSecondaryContainer" />
+            android:paddingStart="@dimen/margin_terms_text"
+            android:paddingEnd="@dimen/margin_terms_text"
+            android:textAppearance="@style/TextAppearance.5asec.BodyMedium"
+            tools:text="1.1 Submission of an order does not create a contract between us. The contract exists when you receive a notification through the app that order is confirmed. The notification through the app will include
+the billing information."
+           />
     </LinearLayout>
 </layout>

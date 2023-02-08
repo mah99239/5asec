@@ -56,6 +56,7 @@ public class AddressFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
+        assert getArguments() != null;
         var argCheck =AddressFragmentArgs.fromBundle(getArguments()).getArgLatLang();
         if(argCheck != null)
             {
@@ -126,10 +127,7 @@ public class AddressFragment extends Fragment
 
                 }
 
-                case LOADING -> {
-                Log.e(TAG, "LOADING");
 
-                }
                 case ERROR, NULL -> {
 
                 Log.e(TAG, "ERROR");
@@ -137,6 +135,8 @@ public class AddressFragment extends Fragment
 
                 }
 
+                default ->
+                        Log.e(TAG, "LOADING");
                 }
             });
         }

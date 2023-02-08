@@ -1,93 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_name"
-        style="@style/Widget_App_TextInputLayout"
+        style="@style/Widget.5asec.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_full_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_name"
+            android:id="@+id/et_sign_up_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_sign_up_email"
+        style="@style/Widget.5asec.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
+        android:hint="@string/sign_up_email"
+        app:helperText="Example: email@gmail.com"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_sign_up_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sign_up_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailSubject" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_sign_up_email"
-        style="@style/Widget_App_TextInputLayout"
-        android:layout_height="wrap_content"
-        android:hint="@string/sign_up_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_sign_up_name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_phone"
-        style="@style/Widget_App_TextInputLayout"
+        style="@style/Widget.5asec.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_phone"
         app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:helperText="+966 12345678"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_sign_up_email"
         app:prefixText="+966"
-        app:prefixTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:prefixTextColor="#97c8c8c8">
+
+        >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_phone"
+            android:id="@+id/et_sign_up_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_pass"
-        style="@style/Widget_App_TextInputLayout"
+        style="@style/Widget.5asec.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_pass"
+        app:counterEnabled="true"
+        app:counterMaxLength="60"
+        app:helperText="@string/sign_up_pass_hint"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_sign_up_phone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_pass"
+            android:id="@+id/et_sign_up_pass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_confirmPass"
-        style="@style/Widget_App_TextInputLayout"
+        style="@style/Widget.5asec.TextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_confirm_password"
+        app:counterEnabled="true"
+        app:counterMaxLength="60"
+        android:nextFocusDown="@+id/til_sign_up_gender"
+
+        android:nextFocusForward="@+id/til_sign_up_gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_sign_up_pass">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_confirmPass"
+            android:id="@+id/et_sign_up_confirmPass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/actv_sign_up_gender"
+            android:inputType="textPassword"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_gender"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        style="@style/Widget.5asec.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_gender"
-        app:errorEnabled="true"
+
         app:helperTextTextColor="@color/md_theme_light_error"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,32 +130,35 @@
             android:id="@+id/actv_sign_up_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:inputType="none"
-            android:background="@color/md_theme_light_onPrimary" />
+            tools:ignore="LabelFor" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_sign_up_birthdate"
-        style="@style/Widget_App_TextInputLayout"
+        style="@style/Widget.5asec.TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:focusable="auto"
+        android:layout_marginTop="@dimen/padding_all_element"
         android:hint="@string/sign_up_birthdate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_sign_up_gender">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_sign_up_birthdate"
+            android:id="@+id/et_sign_up_birthdate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false" />
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:minHeight="40dp"
+        android:layout_marginTop="@dimen/padding_all_element"
+
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +169,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.5asec.BodySmall"
+
             android:text="@string/sign_up_privacy_terms" />
 
         <CheckBox

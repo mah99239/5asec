@@ -2,10 +2,13 @@ package com.example.a5asec.ui.view.login;
 
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,9 +39,11 @@ public class NewPasswordFragment extends Fragment
     private static final String TAG = "NewPasswordFragment";
     private FragmentNewPasswordBinding mBinding;
     private ChangePasswordViewModel mChangePasswordViewModel;
+    private int redColor;
+    private int validColor;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
         {
 
@@ -50,35 +56,129 @@ public class NewPasswordFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
+        validInputUser();
         setupViewModel();
         setupUi();
         networkAvailable();
 
         }
+    private void validInputUser()
+        {
 
+        redColor = ContextCompat.getColor(requireContext(),
+                R.color.md_theme_light_onError);
+        validColor = ContextCompat.getColor(requireContext(),
+                R.color.md_theme_light_onSurface);
+        final int boxStrokeError = (int) (3 * Resources.getSystem().getDisplayMetrics().density);
+        final int boxStrokeDefault = (int) (2 * Resources.getSystem().getDisplayMetrics().density);
+
+        validatePassword(boxStrokeError, boxStrokeDefault);
+
+
+        }
+    private void validatePassword(int boxStrokeError, int boxStrokeDefault)
+        {
+        final String[] password = {null};
+
+        mBinding.etNewPassPass.addTextChangedListener(new TextWatcher()
+            {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                {
+                mBinding.tilNewPassNewPass.setBoxStrokeWidthFocused(boxStrokeDefault);
+                }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+                {
+                if (TextUtils.isEmpty(s))
+                    {
+                    mBinding.tilNewPassNewPass.setBoxStrokeColor(redColor);
+                    mBinding.tilNewPassNewPass.setBoxStrokeWidthFocused(boxStrokeError);
+                    } else if (s.length() < 8)
+                    {
+                    mBinding.tilNewPassNewPass.setError(getString(R.string.sign_up_error_password));
+                    } else
+                    {
+                    mBinding.tilNewPassNewPass.setError(null);
+
+                    mBinding.tilNewPassNewPass.setBoxStrokeColor(validColor);
+                    }
+                }
+
+            @Override
+            public void afterTextChanged(Editable s)
+                {
+                password[0] = s.toString().trim();
+                }
+            });
+        mBinding.etNewPassConfirmPass.addTextChangedListener(new TextWatcher()
+            {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                {
+                mBinding.tilNewPassConfirmPass.setBoxStrokeWidthFocused(boxStrokeDefault);
+                }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+                {
+                if (TextUtils.isEmpty(s))
+                    {
+                    mBinding.tilNewPassConfirmPass.setBoxStrokeColor(redColor);
+                    mBinding.tilNewPassConfirmPass.setBoxStrokeWidthFocused(boxStrokeError);
+                    } else if (!s.toString().trim().matches(String.valueOf(password[0])))
+                    {
+
+                    mBinding.tilNewPassConfirmPass.setError(getString(R.string.sign_up_dontmatch_password));
+                    } else
+                    {
+                    mBinding.tilNewPassConfirmPass.setBoxStrokeColor(validColor);
+                    }
+                if (s.toString().trim().matches(String.valueOf(password[0])))
+                    {
+                    mBinding.tilNewPassConfirmPass.setError(null);
+                    }
+                }
+
+            @Override
+            public void afterTextChanged(Editable s)
+                {
+                // add document why this method is empty
+                }
+            });
+
+        }
     private void setupUi()
         {
-        mBinding.btnNewPassConfirm.setOnClickListener(v ->
+        mBinding.btnNewPass.setOnClickListener(v ->
                 validateEmail()
         );
+
+        mBinding.etNewPassConfirmPass.setOnEditorActionListener((v, actionId, event) ->
+            {
+            validateEmail();
+            return false;
+            });
         }
 
     private void validateEmail()
         {
         var code = Objects.requireNonNull(mBinding.etNewPassCode.getText()).toString();
         var password = Objects.requireNonNull(mBinding.etNewPassPass.getText()).toString();
+        var confirmPassword = Objects.requireNonNull(mBinding.etNewPassConfirmPass.getText()).toString();
 
-        if (isValidEmail(code, password))
+        if (isValidEmail(code, password, confirmPassword))
             {
             addUserSignUpInAPI(code, password);
             }
         }
 
-    private boolean isValidEmail(String code, String password)
+    private boolean isValidEmail(String code, String password, String confirmPassword)
         {
         if ((TextUtils.isEmpty(code) ||
                 TextUtils.isEmpty(password))
-                || password.length() < 8)
+                || password.length() < 8 || !confirmPassword.equals(password))
             {
 
             if (TextUtils.isEmpty(code))
@@ -141,8 +241,8 @@ public class NewPasswordFragment extends Fragment
         {
 
         var message = getString(R.string.newPassword_error_code);
-        Snackbar.make(mBinding.btnNewPassConfirm, message, LENGTH_LONG)
-                .setAnchorView(mBinding.btnNewPassConfirm).show();
+        Snackbar.make(mBinding.btnNewPass, message, LENGTH_LONG)
+                .setAnchorView(mBinding.btnNewPass).show();
         }
 
     private void successFinishResetPassword()
@@ -168,11 +268,11 @@ public class NewPasswordFragment extends Fragment
             {
             if (!isConnected)
                 {
-                mBinding.btnNewPassConfirm.setVisibility(View.INVISIBLE);
+                mBinding.btnNewPass.setVisibility(View.INVISIBLE);
 
                 } else
                 {
-                mBinding.btnNewPassConfirm.setVisibility(View.VISIBLE);
+                mBinding.btnNewPass.setVisibility(View.VISIBLE);
 
 
                 }

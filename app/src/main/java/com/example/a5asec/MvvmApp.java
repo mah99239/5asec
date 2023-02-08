@@ -18,11 +18,16 @@ import com.google.android.material.color.DynamicColors;
 
 public class MvvmApp extends Application
     {
-
+    private static final String TAG = "MvvmApp";
     @Override
     public void onCreate()
         {
         super.onCreate();
+
+
+
+
+
         //Complete:(1) custom language in app
         //TODO:(2) setting notification in app
         DynamicColors.applyToActivitiesIfAvailable(this);

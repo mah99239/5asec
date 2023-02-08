@@ -9,7 +9,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_address_container"
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_all_guideline"
@@ -44,7 +44,7 @@
                 <Button
                     android:id="@+id/btn_address_setting"
 
-                    style="@style/Widget_App_iconButton"
+                    style="@style/Widget.5asec.iconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|clip_horizontal|center|clip_vertical|center_horizontal|fill|fill_horizontal|left|fill_vertical"
@@ -93,10 +93,9 @@
             <Button
                 android:id="@+id/btn_address_location"
 
-                style="@style/Widget_App_iconButton"
+                style="@style/Widget.5asec.iconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|clip_horizontal|center|clip_vertical|center_horizontal|fill|fill_horizontal|left|fill_vertical"
                 android:layout_marginEnd="8dp"
                 app:backgroundTint="@color/md_theme_light_primaryContainer"
                 app:icon="@drawable/ic_address_location_24"

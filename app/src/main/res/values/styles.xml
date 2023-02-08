@@ -15,35 +15,99 @@
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
     </style>
 
-    <style name="SplashTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+
+    </style> <style name="SplashThemeOld" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="colorPrimary">@color/md_theme_light_primary</item>
     </style>
 
-    <style name="TextAppearance_App_BodySmall" parent="@style/TextAppearance.Material3.BodySmall">
-        <item name="android:fontFamily">@font/rubik_light</item>
-        <item name="fontFamily">@font/rubik_light</item>
+
+
+    <style name="TextAppearance.5asec.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
     </style>
 
-    <style name="TextAppearance_App_LabelLarge" parent="@style/TextAppearance.Material3.LabelLarge">
-        <item name="android:fontFamily">@font/rubik_light</item>
-        <item name="fontFamily">@font/rubik_light</item>
+    <style name="TextAppearance.5asec.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
     </style>
 
-    <style name="TextAppearance_App_TitleMedium" parent="@style/TextAppearance.Material3.TitleMedium">
-        <item name="android:fontFamily">@font/rubik_light</item>
-        <item name="fontFamily">@font/rubik_light</item>
+    <style name="TextAppearance.5asec.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
     </style>
 
-    <style name="TextAppearance_App_TitleSmall" parent="@style/TextAppearance.Material3.TitleSmall">
-        <item name="android:fontFamily">@font/rubik_light</item>
-        <item name="fontFamily">@font/rubik_light</item>
+    <style name="TextAppearance.5asec.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+
+    </style>
+
+    <style name="TextAppearance.5asec.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.5asec.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.5asec.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/work_sans_regular</item>
+        <item name="android:fontFamily">@font/work_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.5asec.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.5asec.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.5asec.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/work_sans_medium</item>
+        <item name="android:fontFamily">@font/work_sans_medium</item>
     </style>
 
 
-    <style name="Widget_App_CardView" parent="@style/Widget.Material3.CardView.Filled">
+    <style name="Widget.5asec.CardView" parent="Widget.Material3.CardView.Filled">
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:layout_margin">4dp</item>
@@ -55,24 +119,32 @@
         <item name="strokeWidth">1dp</item>
     </style>
 
-    <style name="Widget_App_ExposedDropdownMenu" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="errorEnabled">true</item>
+    <style name="Widget.5asec.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="errorEnabled">false</item>
         <item name="helperTextEnabled">true</item>
-        <item name="hintTextColor">?attr/colorOnSurface</item>
     </style>
 
 
-    <style name="Widget_App_TextInputLayout" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="errorEnabled">true</item>
+    <style name="Widget.5asec.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+
+        <item name="errorEnabled">false</item>
         <item name="helperTextEnabled">true</item>
-        <item name="hintTextColor">?attr/colorOnSurface</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.5asec.TitleMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.5asec.BodySmall</item>
+        <item name="hintTextColor">@color/md_theme_light_onSurface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+
+
+    </style>
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
     </style>
 
-    <style name="Widget_App_Toolbar" parent="@style/Widget.Material3.Toolbar">
+    <style name="Widget.5asec.Toolbar" parent="Widget.Material3.Toolbar">
         <item name="android:background">@color/md_theme_light_primary</item>
         <item name="collapseIcon">@drawable/ic_nav_back</item>
         <item name="navigationIconTint">@color/md_theme_light_onPrimary</item>
@@ -80,50 +152,51 @@
         <item name="titleTextColor">@color/md_theme_light_onPrimary</item>
     </style>
 
-    <style name="Widget_App_button" parent="@style/Widget.Material3.Button.IconButton.Filled.Tonal">
+    <style name="Widget.5asec.button" parent="Widget.Material3.Button.IconButton.Filled.Tonal">
         <item name="android:paddingLeft">24dp</item>
         <item name="android:paddingRight">24dp</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+
         <item name="android:textAlignment">center</item>
         <item name="cornerRadius">24dp</item>
     </style>
 
 
-    <style name="Widget_App_primaryButton" parent="@style/Widget_App_button">
+    <style name="Widget.5asec.primaryButton" parent="Widget.5asec.button">
         <item name="android:textColor">@color/md_theme_light_onPrimary</item>
         <item name="android:backgroundTint">@color/md_theme_light_primary</item>
         <item name="rippleColor">@color/md_theme_light_onPrimary</item>
     </style>
 
-    <style name="Widget_App_secondaryButton" parent="@style/Widget_App_button">
+    <style name="Widget.5asec.secondaryButton" parent="Widget.5asec.button">
         <item name="android:textColor">@color/md_theme_light_onSecondary</item>
         <item name="android:backgroundTint">@color/md_theme_light_secondary</item>
         <item name="rippleColor">@color/md_theme_light_onSecondaryContainer</item>
     </style>
 
-    <style name="Widget_App_tertiaryButton" parent="@style/Widget_App_button">
+    <style name="Widget.5asec.tertiaryButton" parent="Widget.5asec.button">
         <item name="android:textColor">@color/md_theme_light_onTertiary</item>
         <item name="android:backgroundTint">@color/md_theme_light_tertiary</item>
         <item name="rippleColor">@color/md_theme_light_onTertiaryContainer</item>
     </style>
 
+    <style name="Widget.5asec.iconButton" parent="Widget.Material3.Button.IconButton.Filled"></style>
 
-    <style name="Widget_asec_NavigationVIew" parent="@style/Widget.Material3.NavigationView">
+
+    <style name="Widget.5asec.NavigationVIew" parent="Widget.Material3.NavigationView">
         <item name="android:background">@color/md_theme_light_onPrimaryContainer</item>
         <item name="itemIconTint">@color/navigation_item_color</item>
         <item name="itemShapeFillColor">@color/navigation_item_background_color</item>
         <item name="itemTextColor">@color/navigation_item_color</item>
-        <item name="textAppearanceLabelLarge">@style/TextAppearance_App_LabelLarge</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance_App_TitleSmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.5asec.LabelLarge</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.5asec.TitleSmall</item>
     </style>
 
     <style name="customDatePicker" parent="@style/Widget.MaterialComponents.MaterialCalendar">
         <item name="android:calendarViewShown">false</item>
         <item name="android:datePickerMode">spinner</item>
     </style>
-    <style name="Widget_App_iconButton" parent="@style/Widget.Material3.Button.IconButton.Filled">
-    </style>
+
+
     <style name="customDatePickerStyle" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:datePickerStyle">@style/customDatePicker</item>
     </style>

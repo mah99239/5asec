@@ -22,11 +22,12 @@ import com.example.a5asec.R;
 import com.example.a5asec.databinding.FragmentForgetPasswordBinding;
 import com.example.a5asec.ui.view.viewmodel.ChangePasswordViewModel;
 import com.example.a5asec.utility.NetworkConnection;
+import com.example.a5asec.utility.Status;
 
 import java.util.Objects;
 
 /**
- * first UI for rest password.
+ *  UI for Forget password.
  */
 public class ForgetPasswordFragment extends Fragment
     {
@@ -60,13 +61,17 @@ public class ForgetPasswordFragment extends Fragment
 
     private void setupUi()
         {
-        mBinding.btnForgetPasswordConfirm.setOnClickListener(v -> validateEmail() );
-
+        mBinding.btnForgetPassword.setOnClickListener(v -> validateEmail() );
+        mBinding.etForgetPasswordEmail.setOnEditorActionListener((v, actionId, event) ->
+            {
+            validateEmail();
+            return false;
+            });
         }
 
     private void validateEmail()
         {
-        var email = Objects.requireNonNull(mBinding.tietForgetPasswordEmail.getText()).toString();
+        var email = Objects.requireNonNull(mBinding.etForgetPasswordEmail.getText()).toString();
 
         if(isValidEmail(email))
             {
@@ -104,28 +109,17 @@ public class ForgetPasswordFragment extends Fragment
 
             Log.e(TAG, String.valueOf(authorizationResource.mStatus));
 
-            switch (authorizationResource.mStatus)
+            if (authorizationResource.mStatus == Status.SUCCESS)
                 {
-
-                case SUCCESS -> {
                 Log.e(TAG, "SUCCESS");
-                Log.e(TAG, "authorizationResource");
 
 
                 new Handler(Looper.getMainLooper()).postDelayed
-                        (this::openNewPasswordFragment, 1000);
-
-                }
-
-
-                case ERROR -> {
-
+                        (this::openNewPasswordFragment, 500);
+                } else if (authorizationResource.mStatus == Status.ERROR)
+                {
                 Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
                 //Handle Error
-
-                }
-
-
                 }
             });
 
@@ -155,11 +149,11 @@ public class ForgetPasswordFragment extends Fragment
             {
             if (!isConnected)
                 {
-                mBinding.btnForgetPasswordConfirm.setVisibility(View.INVISIBLE);
+                mBinding.btnForgetPassword.setVisibility(View.INVISIBLE);
 
                 } else
                 {
-                mBinding.btnForgetPasswordConfirm.setVisibility(View.VISIBLE);
+                mBinding.btnForgetPassword.setVisibility(View.VISIBLE);
 
 
                 }

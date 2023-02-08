@@ -7,7 +7,7 @@
 </data>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_laundry_services_services"
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_item_laundry_services_card">
 

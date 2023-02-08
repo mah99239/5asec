@@ -34,7 +34,7 @@ public abstract class Client
                 //   .cache(cache)
                 .build();
 
-        var retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
 
@@ -43,7 +43,6 @@ public abstract class Client
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 
                 .build();
-        return retrofit;
         }
 
     @NonNull

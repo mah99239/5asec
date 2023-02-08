@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_history_order_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.home.HistoryOrderFragment">
+        tools:context=".ui.view.home.HistoryOrderFragment"
+       >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_order_history"
@@ -22,6 +20,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_order_history" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cpi_order_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_order_history"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imv_order_history_empty"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_services_image"
+            android:layout_marginTop="120dp"
+            android:backgroundTint="@color/md_theme_dark_inversePrimary"
+            android:backgroundTintMode="screen"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_bar_shopping"
+            app:tint="@color/md_theme_dark_inversePrimary"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_order_history_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_history_empty"
+            android:textColor="@color/md_theme_dark_inversePrimary"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imv_order_history_empty"
+            tools:ignore="MissingConstraints"
+            tools:visibility="visible" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

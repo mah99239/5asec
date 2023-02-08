@@ -10,7 +10,7 @@
 
     <com.google.android.material.card.MaterialCardView
 
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_item_price_card"
         android:layout_margin="4dp"
@@ -45,7 +45,7 @@
 
     <com.google.android.material.card.MaterialCardView
 
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_item_price_card"
         android:layout_margin="4dp"

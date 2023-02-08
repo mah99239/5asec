@@ -12,14 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.a5asec.R;
+import com.example.a5asec.data.model.api.Terms;
 import com.example.a5asec.data.remote.api.TermsClient;
 import com.example.a5asec.data.remote.api.TermsHelper;
-import com.example.a5asec.data.model.api.Terms;
 import com.example.a5asec.databinding.FragmentTermsBinding;
 import com.example.a5asec.ui.adapters.TermAdapter;
 import com.example.a5asec.ui.base.TermsViewModelFactory;
@@ -35,9 +34,9 @@ public class TermsFragment extends Fragment implements LifecycleObserver
     {
 
     private static final String TAG = "TermsFragment";
-    TermAdapter mAdapter;
-    TermsViewModel termsViewModel;
-    FragmentTermsBinding mBinding;
+  private   TermAdapter mAdapter;
+    private TermsViewModel mTermsViewModel;
+    private FragmentTermsBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -54,8 +53,6 @@ public class TermsFragment extends Fragment implements LifecycleObserver
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
-
         setupUI();
         }
 
@@ -69,13 +66,13 @@ public class TermsFragment extends Fragment implements LifecycleObserver
         {
         mAdapter = new TermAdapter();
 
-        mBinding.lvTerms.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.lvTerms.setAdapter(mAdapter);
+        mBinding.rvTerms.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.rvTerms.setAdapter(mAdapter);
         }
 
     private void checkConnectionsToInitTerms()
         {
-        NetworkConnection networkConnection = new NetworkConnection(getActivity());
+        NetworkConnection networkConnection = new NetworkConnection( requireActivity());
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
             {
             // if internet not connect, Show message try connection internet
@@ -103,7 +100,7 @@ public class TermsFragment extends Fragment implements LifecycleObserver
         {
 
 
-        termsViewModel.getTerms().observe(getViewLifecycleOwner(), termsObserve ->
+        mTermsViewModel.getTerms().observe(getViewLifecycleOwner(), termsObserve ->
             {
             Log.e(TAG, String.valueOf(termsObserve.mStatus));
             switch (termsObserve.mStatus)
@@ -143,7 +140,7 @@ public class TermsFragment extends Fragment implements LifecycleObserver
 
     private void setupViewModel()
         {
-        termsViewModel = new ViewModelProvider(this,
+        mTermsViewModel = new ViewModelProvider(this,
                 new TermsViewModelFactory(new TermsHelper(new TermsClient()))).get(TermsViewModel.class);
         }
 
@@ -160,9 +157,6 @@ public class TermsFragment extends Fragment implements LifecycleObserver
     private void restartFragment()
         {
 
-  /*       var fragmentId = Navigation.findNavController(getView()).getCurrentDestination().getId();
-        Navigation.findNavController(getView()).popBackStack(fragmentId, true);
-        Navigation.findNavController(getView()).navigate(fragmentId); */
 
 
         }

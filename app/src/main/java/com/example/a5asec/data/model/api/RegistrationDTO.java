@@ -1,7 +1,5 @@
 package com.example.a5asec.data.model.api;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AccessLevel;
@@ -35,7 +33,7 @@ public class RegistrationDTO
     private String birthDate;
 
     public RegistrationDTO(String fullName, String email, String password, String mobile, String gender,
-                           String birthDate)
+                           String birthDate, String langKey)
         {
 
         this.fullName = fullName;
@@ -44,7 +42,7 @@ public class RegistrationDTO
         this.mobile = mobile;
         setGender(gender);
         this.birthDate = birthDate;
-        this.langKey = AppCompatDelegate.getApplicationLocales().toLanguageTags().toUpperCase();
+        this.langKey = langKey;
         }
 
     public void setGender(String gender)

@@ -43,7 +43,7 @@
 
         <Button
             android:id="@+id/btn_laundry_services_minus"
-            style="@style/Widget_App_iconButton"
+            style="@style/Widget.5asec.iconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> fragment.minusCount()}"
@@ -70,7 +70,7 @@
 
         <Button
             android:id="@+id/btn_laundry_services_add"
-            style="@style/Widget_App_iconButton"
+            style="@style/Widget.5asec.iconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{()  ->  fragment.plusCount()}"
@@ -85,7 +85,7 @@
 
         <Button
             android:id="@+id/btn_laundry_services_cart"
-            style="@style/Widget_App_secondaryButton"
+            style="@style/Widget.5asec.secondaryButton"
             android:layout_width="0dp"
 
             android:layout_height="wrap_content"

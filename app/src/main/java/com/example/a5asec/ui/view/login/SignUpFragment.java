@@ -18,18 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -40,42 +34,24 @@ import com.example.a5asec.databinding.FragmentSignUpBinding;
 import com.example.a5asec.ui.view.viewmodel.SignUpViewModel;
 import com.example.a5asec.utility.NetworkConnection;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 
-public class SignUpFragment extends Fragment implements LifecycleObserver
+public class SignUpFragment extends Fragment
     {
 
     private static final String TAG = "SignUpFragment";
-   private FragmentSignUpBinding mBinding;
-    DataPickerFragment mDataPickerFragment;
+    private FragmentSignUpBinding mBinding;
+    private DataPickerFragment mDataPickerFragment;
     private SignUpViewModel mSignUpViewModel;
-    private TextInputLayout mTextInputLayoutName;
-    private TextInputLayout mTextInputLayoutEmail;
-    private TextInputLayout mTextInputLayoutPhone;
-    private TextInputLayout mTextInputLayoutPassword;
-    private TextInputLayout mTextInputLayoutConfirmPassword;
 
-
-    private TextInputEditText mTextInputEditTextName;
-    private TextInputEditText mTextInputEditTextEmail;
-    private TextInputEditText mTextInputEditTextPhone;
-    private TextInputEditText mTextInputEditTextPassword;
-    private TextInputEditText mTextInputEditTextConfirmPassword;
-    private AutoCompleteTextView mAutoCompleteTextViewGender;
-    private TextInputEditText mTextInputEditTextBirthDate;
-    private TextView mTextViewPrivacy;
-    private CheckBox mCheckBoxPrivacy;
-    private Button mButtonSignUp;
-
-    private int redColor ;
-    private  int validColor ;
+    private int redColor;
+    private int validColor;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -84,11 +60,8 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
         // Inflate the layout for this fragment
         mBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false);
-        View view = mBinding.getRoot();
 
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
-
-        return view;
+        return mBinding.getRoot();
         }
 
     @Override
@@ -103,47 +76,20 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
     private void setupUI()
         {
-        initView();
+        setupAutoCompleteVIew();
         setupDatePickerFragment();
         validInputUser();
-        onClickedSignUp();
         onClickedTerms();
+        onClickedSignUp();
         }
 
-
-    private void initView()
-        {
-        mTextInputLayoutName = mBinding.includeSignUpContant.tilSignUpName;
-        mTextInputLayoutEmail = mBinding.includeSignUpContant.tilSignUpEmail;
-        mTextInputLayoutPhone = mBinding.includeSignUpContant.tilSignUpPhone;
-        mTextInputLayoutPassword = mBinding.includeSignUpContant.tilSignUpPass;
-        mTextInputLayoutConfirmPassword = mBinding.includeSignUpContant.tilSignUpConfirmPass;
- /*        mTextInputLayoutGender = mBinding.includeSignUpContant.tilSignUpGender;
-        mTextInputLayoutBirthDate = mBinding.includeSignUpContant.tilSignUpBirthdate; */
-/*     private TextInputLayout mTextInputLayoutGender;
-    private TextInputLayout mTextInputLayoutBirthDate; */
-        mTextInputEditTextName = mBinding.includeSignUpContant.tietSignUpName;
-        mTextInputEditTextEmail = mBinding.includeSignUpContant.tietSignUpEmail;
-        mTextInputEditTextPhone = mBinding.includeSignUpContant.tietSignUpPhone;
-        mTextInputEditTextPassword = mBinding.includeSignUpContant.tietSignUpPass;
-        mTextInputEditTextConfirmPassword = mBinding.includeSignUpContant.tietSignUpConfirmPass;
-        mAutoCompleteTextViewGender = mBinding.includeSignUpContant.actvSignUpGender;
-        mTextInputEditTextBirthDate = mBinding.includeSignUpContant.tietSignUpBirthdate;
-
-        mTextViewPrivacy = mBinding.includeSignUpContant.tvSignUpPrivacy;
-        mCheckBoxPrivacy = mBinding.includeSignUpContant.cbSignUp;
-
-        mButtonSignUp = mBinding.btnSignUp;
-
-        setupAutoCompleteVIew();
-        }
 
     private void setupAutoCompleteVIew()
         {
         var adapter = new ArrayAdapter<>
                 (getContext(), android.R.layout.simple_list_item_single_choice,
                         getGenderArrayList());
-        mAutoCompleteTextViewGender.setAdapter(adapter);
+        mBinding.includeSignUpContent.actvSignUpGender.setAdapter(adapter);
         }
 
     /**
@@ -163,12 +109,12 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
     public void setupDatePickerFragment()
         {
 
-        mTextInputEditTextBirthDate.setOnClickListener(v ->
+        mBinding.includeSignUpContent.etSignUpBirthdate.setOnClickListener(v ->
             {
             mDataPickerFragment =
                     new DataPickerFragment();
             String dateSelected =
-                    Objects.requireNonNull(mTextInputEditTextBirthDate.getText()).toString();
+                    Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpBirthdate.getText()).toString();
 
 
             if (!dateSelected.isEmpty())
@@ -206,40 +152,19 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
                     if (requestKey.equals("REQUEST_KEY"))
                         {
                         var date = result.getString("SELECTED_DATE");
-                        mBinding.includeSignUpContant.tietSignUpBirthdate.setText(date);
+                        mBinding.includeSignUpContent.etSignUpBirthdate.setText(date);
                         }
                     });
 
         }
 
-    /**
-     * called when clicked terms and cond.
-     * open  Fragment Terms
-     */
-    private void onClickedTerms()
-        {
-        mTextViewPrivacy.setOnClickListener(
-                v ->
-                    {
-                    NavDirections action =
-                            SignUpFragmentDirections.actionSignUpFragmentToTermsFragment();
-
-                    Navigation.findNavController(requireView()).navigate(action);
-                    });
-        }
-
-    private void onClickedSignUp()
-        {
-        mButtonSignUp.setOnClickListener(v -> validateData());
-        }
-
     private void validInputUser()
         {
 
-        redColor=  ContextCompat.getColor(requireContext(),
-                R.color.md_theme_dark_onError);
+        redColor = ContextCompat.getColor(requireContext(),
+                R.color.md_theme_light_onError);
         validColor = ContextCompat.getColor(requireContext(),
-                R.color.valid);
+                R.color.md_theme_light_onSurface);
         final int boxStrokeError = (int) (3 * Resources.getSystem().getDisplayMetrics().density);
         final int boxStrokeDefault = (int) (2 * Resources.getSystem().getDisplayMetrics().density);
 
@@ -253,13 +178,13 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
     private void validateName(int boxStrokeError, int boxStrokeDefault)
         {
-        mTextInputEditTextName.addTextChangedListener(new TextWatcher()
+        mBinding.includeSignUpContent.etSignUpName.addTextChangedListener(new TextWatcher()
             {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
                 {
-                mTextInputLayoutName.setBoxStrokeWidthFocused(boxStrokeDefault);
+                mBinding.includeSignUpContent.tilSignUpName.setBoxStrokeWidthFocused(boxStrokeDefault);
                 }
 
             @Override
@@ -269,30 +194,30 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
                 if (TextUtils.isEmpty(s))
                     {
-                    mTextInputLayoutName.setBoxStrokeColor(redColor);
-                    mTextInputLayoutName.setBoxStrokeWidthFocused(boxStrokeError);
+                    mBinding.includeSignUpContent.tilSignUpName.setBoxStrokeColor(redColor);
+                    mBinding.includeSignUpContent.tilSignUpName.setBoxStrokeWidthFocused(boxStrokeError);
                     } else
                     {
-                    mTextInputLayoutName.setBoxStrokeColor(validColor);
+                    mBinding.includeSignUpContent.tilSignUpName.setBoxStrokeColor(validColor);
                     }
                 }
 
             @Override
             public void afterTextChanged(Editable s)
                 {
-                mTextInputLayoutName.setBoxStrokeWidthFocused(boxStrokeDefault);
+                mBinding.includeSignUpContent.tilSignUpName.setBoxStrokeWidthFocused(boxStrokeDefault);
                 }
             });
         }
 
     private void validatePhone(int boxStrokeError, int boxStrokeDefault)
         {
-        mTextInputEditTextPhone.addTextChangedListener(new TextWatcher()
+        mBinding.includeSignUpContent.etSignUpPhone.addTextChangedListener(new TextWatcher()
             {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
                 {
-                mTextInputLayoutPhone.setBoxStrokeWidthFocused(boxStrokeDefault);
+                mBinding.includeSignUpContent.tilSignUpPhone.setBoxStrokeWidthFocused(boxStrokeDefault);
                 }
 
             @Override
@@ -301,23 +226,23 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
                 if (TextUtils.isEmpty(s))
                     {
-                    mTextInputLayoutPhone.setBoxStrokeColor(redColor);
-                    mTextInputLayoutPhone.setBoxStrokeWidthFocused(boxStrokeError);
+                    mBinding.includeSignUpContent.tilSignUpPhone.setBoxStrokeColor(redColor);
+                    mBinding.includeSignUpContent.tilSignUpPhone.setBoxStrokeWidthFocused(boxStrokeError);
                     } else if (!s.toString().trim().matches(String.valueOf(Patterns.PHONE)))
                     {
-                    mTextInputLayoutPhone.setError(getString(R.string.sign_up_invalid_mobile));
-                    mTextInputLayoutPhone.setBoxStrokeColor(redColor);
+                    mBinding.includeSignUpContent.tilSignUpPhone.setError(getString(R.string.sign_up_invalid_mobile));
+                    mBinding.includeSignUpContent.tilSignUpPhone.setBoxStrokeColor(redColor);
                     } else
                     {
-                    mTextInputLayoutPhone.setBoxStrokeColor(validColor);
-                    mTextInputLayoutPhone.setError(null);
+                    mBinding.includeSignUpContent.tilSignUpPhone.setBoxStrokeColor(validColor);
+                    mBinding.includeSignUpContent.tilSignUpPhone.setError(null);
                     }
                 }
 
             @Override
             public void afterTextChanged(Editable s)
                 {
-                mTextInputLayoutPhone.setError(null);
+                mBinding.includeSignUpContent.tilSignUpPhone.setError(null);
                 }
             });
         }
@@ -326,12 +251,12 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
         {
         final String[] password = {null};
 
-        mTextInputEditTextPassword.addTextChangedListener(new TextWatcher()
+        mBinding.includeSignUpContent.etSignUpPass.addTextChangedListener(new TextWatcher()
             {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
                 {
-                mTextInputLayoutPassword.setBoxStrokeWidthFocused(boxStrokeDefault);
+                mBinding.includeSignUpContent.tilSignUpPass.setBoxStrokeWidthFocused(boxStrokeDefault);
                 }
 
             @Override
@@ -339,16 +264,16 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
                 {
                 if (TextUtils.isEmpty(s))
                     {
-                    mTextInputLayoutPassword.setBoxStrokeColor(redColor);
-                    mTextInputLayoutPassword.setBoxStrokeWidthFocused(boxStrokeError);
+                    mBinding.includeSignUpContent.tilSignUpPass.setBoxStrokeColor(redColor);
+                    mBinding.includeSignUpContent.tilSignUpPass.setBoxStrokeWidthFocused(boxStrokeError);
                     } else if (s.length() < 8)
                     {
-                    mTextInputLayoutPassword.setError(getString(R.string.sign_up_error_password));
+                    mBinding.includeSignUpContent.tilSignUpPass.setError(getString(R.string.sign_up_error_password));
                     } else
                     {
-                    mTextInputLayoutPassword.setError(null);
+                    mBinding.includeSignUpContent.tilSignUpPass.setError(null);
 
-                    mTextInputLayoutPassword.setBoxStrokeColor(validColor);
+                    mBinding.includeSignUpContent.tilSignUpPass.setBoxStrokeColor(validColor);
                     }
                 }
 
@@ -358,12 +283,12 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
                 password[0] = s.toString().trim();
                 }
             });
-        mTextInputEditTextConfirmPassword.addTextChangedListener(new TextWatcher()
+        mBinding.includeSignUpContent.etSignUpConfirmPass.addTextChangedListener(new TextWatcher()
             {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
                 {
-                mTextInputLayoutConfirmPassword.setBoxStrokeWidthFocused(boxStrokeDefault);
+                mBinding.includeSignUpContent.tilSignUpConfirmPass.setBoxStrokeWidthFocused(boxStrokeDefault);
                 }
 
             @Override
@@ -371,19 +296,19 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
                 {
                 if (TextUtils.isEmpty(s))
                     {
-                    mTextInputLayoutConfirmPassword.setBoxStrokeColor(redColor);
-                    mTextInputLayoutConfirmPassword.setBoxStrokeWidthFocused(boxStrokeError);
+                    mBinding.includeSignUpContent.tilSignUpConfirmPass.setBoxStrokeColor(redColor);
+                    mBinding.includeSignUpContent.tilSignUpConfirmPass.setBoxStrokeWidthFocused(boxStrokeError);
                     } else if (!s.toString().trim().matches(String.valueOf(password[0])))
                     {
 
-                    mTextInputLayoutConfirmPassword.setError(getString(R.string.sign_up_dontmatch_password));
+                    mBinding.includeSignUpContent.tilSignUpConfirmPass.setError(getString(R.string.sign_up_dontmatch_password));
                     } else
                     {
-                    mTextInputLayoutConfirmPassword.setBoxStrokeColor(validColor);
+                    mBinding.includeSignUpContent.tilSignUpConfirmPass.setBoxStrokeColor(validColor);
                     }
                 if (s.toString().trim().matches(String.valueOf(password[0])))
                     {
-                    mTextInputLayoutConfirmPassword.setError(null);
+                    mBinding.includeSignUpContent.tilSignUpConfirmPass.setError(null);
                     }
                 }
 
@@ -396,22 +321,77 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
         }
 
+
+    /**
+     * called when clicked terms and cond.
+     * open  Fragment Terms
+     */
+    private void onClickedTerms()
+        {
+        mBinding.includeSignUpContent.tvSignUpPrivacy.setOnClickListener(
+                v ->
+                    {
+                    NavDirections action =
+                            SignUpFragmentDirections.actionSignUpFragmentToTermsFragment();
+
+                    Navigation.findNavController(requireView()).navigate(action);
+                    });
+        }
+
+    private void onClickedSignUp()
+        {
+        mBinding.btnSignUp.setOnClickListener(v -> validateData());
+        }
+
+    private void validateData()
+        {
+        // optimize: add sign chcek in UI and SDK
+      /*   example:
+        mobile = +966 502134567
+                * birhdate = 2021 - 04 - 27 T19:
+        07:05.297 Z
+                * Not use arabia ٢٠٢١-٠٥-٠٨T١٩:٥٣:١٦.٤٣٢Z
+ */
+        var name = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpName.getText()).toString();
+        var email = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpEmail.getText()).toString();
+        var phone = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpPhone.getText()).toString();
+        var password = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpPass.getText()).toString();
+        var gender =
+                mBinding.includeSignUpContent.actvSignUpGender.getText().toString();
+        var currentLanguage = Locale.getDefault().getLanguage().toUpperCase();
+        var lang = currentLanguage.equals("AR") ? currentLanguage : "EN";
+
+
+        if (isValid())
+            {
+            var user =
+                    new RegistrationDTO(name, email, password, "+966" + phone, gender,
+                            DataPickerFragment.getSelectionDate(), lang);
+            Log.e(TAG, user.toString());
+
+            addUserSignUpInAPI(user);
+
+            }
+
+        }
+
+
     private boolean isValid()
         {
-        var name = Objects.requireNonNull(mTextInputEditTextName.getText()).toString();
-        var email = Objects.requireNonNull(mTextInputEditTextEmail.getText()).toString();
-        var phone = Objects.requireNonNull(mTextInputEditTextPhone.getText()).toString();
-        var password = Objects.requireNonNull(mTextInputEditTextPassword.getText()).toString();
-        var confirmPassword = Objects.requireNonNull(mTextInputEditTextConfirmPassword.getText()).toString();
+        var name = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpName.getText()).toString();
+        var email = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpEmail.getText()).toString();
+        var phone = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpPhone.getText()).toString();
+        var password = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpPass.getText()).toString();
+        var confirmPassword = Objects.requireNonNull(mBinding.includeSignUpContent.etSignUpConfirmPass.getText()).toString();
 
         var isCheck =
-                mCheckBoxPrivacy.isChecked();
+                mBinding.includeSignUpContent.cbSignUp.isChecked();
 
-        mTextInputLayoutName.setError(null);
-        mTextInputLayoutEmail.setError(null);
-        mTextInputLayoutPhone.setError(null);
-        mTextInputLayoutPassword.setError(null);
-        mTextInputLayoutConfirmPassword.setError(null);
+        mBinding.includeSignUpContent.tilSignUpName.setError(null);
+        mBinding.includeSignUpContent.tilSignUpEmail.setError(null);
+        mBinding.includeSignUpContent.tilSignUpPhone.setError(null);
+        mBinding.includeSignUpContent.tilSignUpPass.setError(null);
+        mBinding.includeSignUpContent.tilSignUpConfirmPass.setError(null);
 
         if (TextUtils.isEmpty(name)
                 || (TextUtils.isEmpty(email) ||
@@ -424,31 +404,31 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
             {
             if (TextUtils.isEmpty(name))
                 {
-                mTextInputLayoutName.setError(getString(R.string.sign_up_empty_name));
+                mBinding.includeSignUpContent.tilSignUpName.setError(getString(R.string.sign_up_empty_name));
                 }
             if (TextUtils.isEmpty(email))
                 {
-                mTextInputLayoutEmail.setError(getString(R.string.sign_up_empty_email));
+                mBinding.includeSignUpContent.tilSignUpEmail.setError(getString(R.string.sign_up_empty_email));
                 }
             if (TextUtils.isEmpty(phone))
                 {
-                mTextInputLayoutPhone.setError(getString(R.string.sign_up_empty_phone));
+                mBinding.includeSignUpContent.tilSignUpPhone.setError(getString(R.string.sign_up_empty_phone));
                 }
-            if(password.length() < 8 )
+            if (password.length() < 8)
                 {
-                mTextInputLayoutPassword.setError(getString(R.string.sign_up_error_password));
+                mBinding.includeSignUpContent.tilSignUpPass.setError(getString(R.string.sign_up_error_password));
                 }
             if (TextUtils.isEmpty(password))
                 {
-                mTextInputLayoutPassword.setError(getString(R.string.sign_up_empty_password));
+                mBinding.includeSignUpContent.tilSignUpPass.setError(getString(R.string.sign_up_empty_password));
                 }
             if (TextUtils.isEmpty(confirmPassword) || !confirmPassword.matches(password))
                 {
-                mTextInputLayoutConfirmPassword.setError(getString(R.string.sign_up_empty_confirmpassword));
+                mBinding.includeSignUpContent.tilSignUpConfirmPass.setError(getString(R.string.sign_up_empty_confirmpassword));
                 }
             if (!isCheck)
                 {
-                mCheckBoxPrivacy.setButtonTintList(
+                mBinding.includeSignUpContent.cbSignUp.setButtonTintList(
                         ColorStateList.valueOf(Color.RED));
                 }
             return false;
@@ -457,35 +437,6 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
         return true;
         }
 
-    private void validateData()
-        {
-        // optimize: add sign chcek in UI and SDK
-      /*   example:
-        mobile = +966 502134567
-                * birhdate = 2021 - 04 - 27 T19:
-        07:05.297 Z
-                * Not use arabia ٢٠٢١-٠٥-٠٨T١٩:٥٣:١٦.٤٣٢Z
- */
-        var name = Objects.requireNonNull(mTextInputEditTextName.getText()).toString();
-        var email = Objects.requireNonNull(mTextInputEditTextEmail.getText()).toString();
-        var phone = Objects.requireNonNull(mTextInputEditTextPhone.getText()).toString();
-        var password = Objects.requireNonNull(mTextInputEditTextPassword.getText()).toString();
-        var gender =
-                mAutoCompleteTextViewGender.getText().toString();
-
-
-        if (isValid())
-            {
-            var user =
-                    new RegistrationDTO(name, email, password, "+966" + phone, gender,
-                            DataPickerFragment.getSelectionDate());
-            Log.e(TAG, user.toString());
-
-            addUserSignUpInAPI(user);
-
-            }
-
-        }
 
     //Complete language: Set english and Arabic
     private void addUserSignUpInAPI(RegistrationDTO user)
@@ -501,59 +452,42 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
             switch (authorizationResource.mStatus)
                 {
 
-                case SUCCESS -> {
-                Log.e(TAG, "SUCCESS");
-                Log.e(TAG, "authorizationResource");
+                case SUCCESS ->
+                    {
+                    Log.e(TAG, "SUCCESS");
+                    Log.e(TAG, "authorizationResource");
 
 
-                 new Handler(Looper.getMainLooper()).postDelayed
-                        (this::successSignUp, 1000);
+                    new Handler(Looper.getMainLooper()).postDelayed
+                            (this::successSignUp, 1000);
 
-                }
-
-
-                case ERROR -> {
-
-                Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
-                //Handle Error
-
-                messageSnackbar(authorizationResource.getMMessage()); // SHow message in UI
-                completeLoading();
+                    }
 
 
-                }
-                case LOADING -> {
+                case ERROR ->
+                    {
 
-                Log.e(TAG, "loading:" + authorizationResource.getMMessage());
+                    Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
+                    //Handle Error
 
-                showLoading();
-                }
+                    messageSnackbar(authorizationResource.getMMessage()); // SHow message in UI
+                    completeLoading();
+
+
+                    }
+                case LOADING ->
+                    {
+
+                    Log.e(TAG, "loading:" + authorizationResource.getMMessage());
+
+                    showLoading();
+                    }
 
                 }
             });
 
         }
 
-    /**
-     * Check network is available
-     */
-    public void networkAvailable()
-        {
-        NetworkConnection networkConnection = new NetworkConnection(requireContext());
-        networkConnection.observe(getViewLifecycleOwner(), isConnected ->
-            {
-            if (!isConnected)
-                {
-                mButtonSignUp.setVisibility(View.INVISIBLE);
-
-                } else
-                {
-                mButtonSignUp.setVisibility(View.VISIBLE);
-
-
-                }
-            });
-        }
 
     private void successSignUp()
         {
@@ -562,32 +496,6 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
 
         Navigation.findNavController(requireView()).navigate(action);
         }
-
-
-    private void setupViewModel()
-        {
-
-        mSignUpViewModel =  new ViewModelProvider(this).get(SignUpViewModel.class);
-        }
-
-    /**
-     *     ProgressIndicator is show loading
-      */
-    private void showLoading()
-        {
-        mBinding.cpiSignUp.setVisibility(View.VISIBLE);
-        mButtonSignUp.setEnabled(false);
-        }
-
-    /**
-     *     ProgressIndicator is completed loading
-      */
-    private void completeLoading()
-        {
-        mBinding.cpiSignUp.setVisibility(View.INVISIBLE);
-        mButtonSignUp.setEnabled(true);
-        }
-
 
     private void messageSnackbar(@NonNull String message)
         {
@@ -605,15 +513,61 @@ public class SignUpFragment extends Fragment implements LifecycleObserver
             message = getString(R.string.sign_up_invalid_mobile);
             }
         Snackbar.make(mBinding.clSignUpRoot, message, LENGTH_LONG)
-                .setAnchorView(mButtonSignUp).show();
+                .setAnchorView(mBinding.btnSignUp).show();
+        }
+
+    /**
+     * ProgressIndicator is show loading
+     */
+    private void showLoading()
+        {
+        mBinding.cpiSignUp.setVisibility(View.VISIBLE);
+        mBinding.btnSignUp.setEnabled(false);
+        }
+
+    /**
+     * ProgressIndicator is completed loading
+     */
+    private void completeLoading()
+        {
+        mBinding.cpiSignUp.setVisibility(View.INVISIBLE);
+        mBinding.btnSignUp.setEnabled(true);
         }
 
 
+    /**
+     * Check network is available
+     */
+    public void networkAvailable()
+        {
+        NetworkConnection networkConnection = new NetworkConnection(requireContext());
+        networkConnection.observe(getViewLifecycleOwner(), isConnected ->
+            {
+            if (Boolean.FALSE.equals(isConnected))
+                {
+                mBinding.btnSignUp.setVisibility(View.INVISIBLE);
+
+                } else
+                {
+                mBinding.btnSignUp.setVisibility(View.VISIBLE);
 
 
+                }
+            });
+        }
 
+    private void setupViewModel()
+        {
 
+        mSignUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        }
 
-
+    @Override
+    public void onDestroy()
+        {
+        super.onDestroy();
+        mBinding = null;
+        mDataPickerFragment = null;
+        }
     }
 

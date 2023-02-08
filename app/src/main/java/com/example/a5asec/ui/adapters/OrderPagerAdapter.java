@@ -21,13 +21,11 @@ public class OrderPagerAdapter extends FragmentStateAdapter
     @Override
     public Fragment createFragment(int position)
         {
-            switch(position)
-                {
-                case 1:
-                    return new HistoryOrderFragment();
-                    default:
-                        return new CurrentOrderFragment();
-                }
+        if (position == 1)
+            {
+            return new HistoryOrderFragment();
+            }
+        return new CurrentOrderFragment();
 
         }
 

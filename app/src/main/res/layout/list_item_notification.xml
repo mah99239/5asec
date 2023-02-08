@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imv_notifaciont"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_bar_notifaction" />
+
+    <TextView
+        android:id="@+id/tv_notification_app_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="5asec-KSA"
+        app:layout_constraintStart_toEndOf="@+id/imv_notifaciont"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_notification_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="your date #121 created"
+        app:layout_constraintStart_toStartOf="@+id/tv_notification_app_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notification_app_title" />
+
+    <TextView
+        android:id="@+id/tv_notification_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="23-232-2222"
+        app:layout_constraintStart_toStartOf="@+id/tv_notification_message"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notification_message" />
+</androidx.constraintlayout.widget.ConstraintLayout>

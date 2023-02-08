@@ -10,9 +10,8 @@
         android:id="@+id/cv_cart_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget_App_CardView"
+        style="@style/Widget.5asec.CardView"
         android:addStatesFromChildren="true"
-
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout

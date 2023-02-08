@@ -139,7 +139,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_street"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_building"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_floor"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_apartment"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_landmark"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -231,7 +231,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_add_address_notes"
-                    style="@style/Widget_App_TextInputLayout"
+                    style="@style/Widget.5asec.TextInputLayout"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
 
                 <Button
                     android:id="@+id/btn_add_address"
-                    style="@style/Widget_App_primaryButton"
+                    style="@style/Widget.5asec.primaryButton"
                     android:isScrollContainer="true"
                     android:text="@string/add_address_save"
                     app:layout_constraintBottom_toTopOf="@+id/gl_add_address_down"

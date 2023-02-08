@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.val;
+import java.util.Locale;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder>
     {
@@ -80,10 +78,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
         private void bind(Terms terms)
             {
-            val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-
-            String name = terms.getName(language);
-            String content = terms.getContent(language);
+            var currentLanguage = Locale.getDefault().getLanguage();
+            var lang = currentLanguage.equals("ar") ? currentLanguage : "en";
+            String name = terms.getName(lang);
+            String content = terms.getContent(lang);
 
             mItemTermsBinding.tvItemName.setText(name);
             mItemTermsBinding.tvItemContent.setText(content);
