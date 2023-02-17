@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -19,10 +20,12 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
+import androidx.window.layout.WindowMetrics;
+import androidx.window.layout.WindowMetricsCalculator;
 
+import com.example.a5asec.PriceAndServiceFragment;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Banners;
 import com.example.a5asec.data.model.api.Category;
@@ -76,7 +79,71 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
         super.onViewCreated(view, savedInstanceState);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         setupUi();
+        setupTwoPane();
 
+        }
+    private void setupTwoPane()
+        {
+        WindowMetrics metrics = WindowMetricsCalculator.getOrCreate()
+                .computeCurrentWindowMetrics(requireActivity());
+
+        float widthDp = metrics.getBounds().width() /
+                getResources().getDisplayMetrics().density;
+        Log.e(TAG, "setupTwoPane:  widthDP = " + widthDp);
+        if (widthDp >= 600f)
+            {  requireActivity().getOnBackPressedDispatcher().addCallback(
+                    getViewLifecycleOwner(),
+                    new PriceOnBackPressedCallback(mBinding.splPrice));
+           // mCategoryViewModel.setItemCategoryWithTwoPane();
+            mBinding.splPrice.open();
+            } else
+            {
+          //  mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
+
+            }
+        }
+
+    class PriceOnBackPressedCallback extends OnBackPressedCallback
+            implements SlidingPaneLayout.PanelSlideListener
+        {
+
+        private final SlidingPaneLayout mSlidingPaneLayout;
+
+        PriceOnBackPressedCallback(@NonNull SlidingPaneLayout slidingPaneLayout)
+            {
+            // Set the default 'enabled' state to true only if it is slideable (i.e., the panes
+            // are overlapping) and open (i.e., the detail pane is visible).
+            super(slidingPaneLayout.isSlideable() && slidingPaneLayout.isOpen());
+            mSlidingPaneLayout = slidingPaneLayout;
+            slidingPaneLayout.addPanelSlideListener(this);
+            }
+
+        @Override
+        public void handleOnBackPressed()
+            {
+            // Return to the list pane when the system back button is pressed.
+            mSlidingPaneLayout.closePane();
+            }
+
+        @Override
+        public void onPanelSlide(@NonNull View panel, float slideOffset)
+            {
+            }
+
+        @Override
+        public void onPanelOpened(@NonNull View panel)
+            {
+            // Intercept the system back button when the detail pane becomes visible.
+            setEnabled(true);
+            }
+
+        @Override
+        public void onPanelClosed(@NonNull View panel)
+            {
+            // Disable intercepting the system back button when the user returns to the
+            // list pane.
+            setEnabled(false);
+            }
         }
 
     @Override
@@ -87,12 +154,9 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
         }
 
 
-    /**
-     *
-     */
+
     private void setupUi()
         {
-
         setupShimmerAnimation();
         setupRefreshView();
         setupAdapter();
@@ -197,7 +261,7 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
     private void setupObserverBanners()
         {
-
+        startAnimation();
         mBannersViewModel.getBanners().observe(getViewLifecycleOwner(), bannersObserve ->
             {
 
@@ -207,6 +271,7 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
                 case SUCCESS -> {
                 Log.e(TAG, "setupObserverBanners:" + "SUCCESS");
                 renderListBanners(bannersObserve);
+                stopAnimation();
 
                 }
                 case LOADING -> Log.e(TAG, "setupObserverBanners : " + "LOADING");
@@ -303,10 +368,10 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
     private void setupCategoryViewModel()
         {
-        NavController navController = NavHostFragment.findNavController(this);
+         NavController navController = NavHostFragment.findNavController(this);
         NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_priceList);
 
-        mCategoryViewModel = new ViewModelProvider(backStackEntry,
+        mCategoryViewModel = new ViewModelProvider(backStackEntry ,
                 new CategoryViewModelFactory(new CategoryHelper(new CategoryClient())))
                 .get(CategoryViewModel.class);
         }
@@ -323,7 +388,7 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
      */
     private void checkConnectionsToInitCategory()
         {
-        NetworkConnection networkConnection = new NetworkConnection(getActivity());
+        NetworkConnection networkConnection = new NetworkConnection(requireActivity());
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
             {
             // if internet not connect,

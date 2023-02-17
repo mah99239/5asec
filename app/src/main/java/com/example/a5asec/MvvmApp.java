@@ -15,17 +15,14 @@ import com.google.android.material.color.DynamicColors;
  * @version : 1.0
  */
 
-
 public class MvvmApp extends Application
     {
     private static final String TAG = "MvvmApp";
+
     @Override
     public void onCreate()
         {
         super.onCreate();
-
-
-
 
 
         //Complete:(1) custom language in app
@@ -36,6 +33,7 @@ public class MvvmApp extends Application
 
 
         }
+
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig)
         {

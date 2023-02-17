@@ -12,8 +12,6 @@ L
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-z
-Japp/src/main/java/com/example/a5asec/utility/OkHttpLibraryGlideModule.java,1\e\1eec974af067f831a55537a37028e7fac30e1b2d
 r
 Bapp/src/main/java/com/example/a5asec/utility/MyAppGlideModule.java,c\2\c272588c183479e03a97f892454e39e068c1f1b9
 O
@@ -143,8 +141,6 @@ Sapp/src/main/java/com/example/a5asec/ui/view/viewmodel/ChangePasswordViewModel.
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 s
-Capp/src/main/java/com/example/a5asec/ui/view/home/HomeActivity.java,f\b\fbe34b9a7194c5596ee280bf729a9786ab870e26
-s
 Capp/src/main/java/com/example/a5asec/ui/view/home/LogOutDialog.java,0\b\0bd7213074223b8c2db8b32672427ff05bae18c1
 
 Oapp/src/main/java/com/example/a5asec/ui/adapters/LaundryServiceCartAdapter.java,3\1\314c31f74137a5d48e8f4fb98cb6c38bce33da84
@@ -192,8 +188,6 @@ Capp/src/main/java/com/example/a5asec/data/local/db/AppDatabase.java,4\c\4c7967
 Papp/src/main/java/com/example/a5asec/data/local/db/dao/LocalOrderDataSource.java,4\6\4654a93d93110d69a3581eaf9a71b65a9dd772eb
 {
 Kapp/src/main/java/com/example/a5asec/data/local/prefs/TokenPreferences.java,2\d\2d6e41385eafadfabd92821382e71d69e12f2e5f
-p
-@app/src/main/java/com/example/a5asec/data/model/api/Address.java,9\7\970842ebdee927a017d890c71cf3f434b4318763
 y
 Iapp/src/main/java/com/example/a5asec/ui/view/home/AddAddressFragment.java,9\0\90cb44ca9563043e5cc4bfd98e986b15292270c9
 y
@@ -206,9 +200,5 @@ r
 Bapp/src/main/java/com/example/a5asec/data/remote/api/OrderApi.java,f\a\faf3b6cce6d6059b88f3d916c54472037ac58d77
 r
 Bapp/src/main/java/com/example/a5asec/ui/adapters/PriceAdapter.java,b\8\b8c8c0f7352237171f0e3c56adb349b1eb23af1b
-}
-Mapp/src/main/java/com/example/a5asec/ui/view/viewmodel/CategoryViewModel.java,5\3\537dedd22bbe1386a50f25cdb53172c67820633d
-x
-Happ/src/main/java/com/example/a5asec/ui/view/home/PriceListFragment.java,2\6\26dd4b2c6d6f7c519466096d2e60907938803d9c
 v
 Fapp/src/main/java/com/example/a5asec/ui/view/element/MaskedCardView.kt,f\9\f9361c499dcf3297cd1e8a9c0d2396d96ccbe48c

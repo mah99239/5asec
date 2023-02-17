@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.OptIn;
@@ -16,12 +17,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.os.LocaleListCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.window.layout.WindowMetrics;
+import androidx.window.layout.WindowMetricsCalculator;
 
 import com.example.a5asec.R;
 import com.example.a5asec.data.local.prefs.TokenPreferences;
@@ -43,19 +46,23 @@ import com.example.a5asec.utility.Status;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
+
 
 @OptIn(markerClass = ExperimentalBadgeUtils.class)
 public class HomeActivity extends AppCompatActivity
     {
 
+    public enum WindowSizeClass
+        {COMPACT, MEDIUM, EXPANDED}
 
     private static final String TAG = "HomeActivity";
     NavController navController;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding mBinding;
-    private Toolbar mToolbar;
+
     private SettingViewModel mSettingViewModel;
     private BadgeDrawable badgeDrawable;
 
@@ -68,14 +75,20 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         mBinding = ActivityHomeBinding.inflate(getLayoutInflater());
-        var view = mBinding.getRoot();
-        setContentView(view);
 
-        mToolbar = mBinding.iHomeAppBar.toolbarHome;
-        setSupportActionBar(mToolbar);
+        setContentView(mBinding.getRoot());
+        ViewGroup container = mBinding.clHomeContainer;
+        container.addView(new View(this)
+            {
+            @Override
+            protected void onConfigurationChanged(Configuration newConfig)
+                {
+                super.onConfigurationChanged(newConfig);
+                computeWindowSizeClasses();
+                }
+            });
+        computeWindowSizeClasses();
 
-        setupToolBar();
-        setupNavigation();
         checkConnections();
 
         new TokenPreferences(this);
@@ -90,13 +103,99 @@ public class HomeActivity extends AppCompatActivity
         {
         super.onConfigurationChanged(newConfig);
         AppCompatDelegate.getApplicationLocales();
+
+
         }
 
-
-    private void setupNavigation()
+    private void computeWindowSizeClasses()
         {
+        WindowMetrics metrics = WindowMetricsCalculator.getOrCreate()
+                .computeCurrentWindowMetrics(this);
 
-        DrawerLayout drawer = mBinding.drawerHome;
+        float widthDp = metrics.getBounds().width() /
+                getResources().getDisplayMetrics().density;
+        WindowSizeClass widthWindowSizeClass;
+
+        if (widthDp < 600f)
+            {
+            widthWindowSizeClass = WindowSizeClass.COMPACT;
+            } else if (widthDp < 840f)
+            {
+            widthWindowSizeClass = WindowSizeClass.MEDIUM;
+            } else
+            {
+            widthWindowSizeClass = WindowSizeClass.EXPANDED;
+            }
+
+
+        if (widthWindowSizeClass == WindowSizeClass.COMPACT)
+            {
+            setupNavigationForCompact();
+            } else
+            {
+            setupNavigationForRail();
+            }
+
+  /*   float heightDp = metrics.getBounds().height() /
+            getResources().getDisplayMetrics().density;
+    WindowSizeClass heightWindowSizeClass;
+
+    if (heightDp < 480f) {
+    heightWindowSizeClass = WindowSizeClass.COMPACT;
+    } else if (heightDp < 900f) {
+    heightWindowSizeClass = WindowSizeClass.MEDIUM;
+    } else {
+    heightWindowSizeClass = WindowSizeClass.EXPANDED;
+    } */
+
+        // Use widthWindowSizeClass and heightWindowSizeClass.
+        }
+
+    private void setupNavigationForCompact()
+        {
+        setSupportActionBar(mBinding.toolbarHome);
+        setupToolBar();
+        setupNavigationBottom();
+
+
+        }
+
+    private void setupNavigationBottom()
+        {
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home_priceList, R.id.nav_home_orders, R.id.nav_home_setting)
+                .build();
+        var navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
+
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController( this,navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(mBinding.navViewHome, navController);
+        }
+    private void setupNavigationForRail()
+        {
+        setupNavigationRil();
+        setupHeaderNavigationRail();
+        }
+    private void setupNavigationRil()
+        {
+        setSupportActionBar(mBinding.toolbarHome);
+         getSupportActionBar().hide();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home_priceList, R.id.nav_home_orders, R.id.nav_home_setting)
+                .build();
+        var navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
+
+         navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
+            NavigationUI.setupWithNavController(mBinding.navRailHome, navController);
+
+        }
+
+    private void setupNavigationDrawer()
+        {
+/*
+        BottomNavigationView drawer = mBinding.drawerHome;
         NavigationView navigationView = mBinding.ngvHome;
 
 
@@ -118,7 +217,7 @@ public class HomeActivity extends AppCompatActivity
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(navigationView, navController); */
 /*
         NavigationUI.setupWithNavController(mToolbar, navController, mAppBarConfiguration);
 */
@@ -130,7 +229,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onSupportNavigateUp()
         {
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
         }
@@ -146,35 +245,55 @@ public class HomeActivity extends AppCompatActivity
     private void setupToolBar()
         {
 
-
-        mToolbar.setOnMenuItemClickListener(item ->
+        if (mBinding.toolbarHome != null)
             {
-            switch (item.getItemId())
+            mBinding.toolbarHome.setOnMenuItemClickListener(item ->
                 {
-                case R.id.action_home_notification:
-                    // User chose the "notification" item, show the app settings UI...
-                    Snackbar.make(getParent(), mBinding.getRoot(), "not", 300).show();
-                    navController.navigateUp();
+                switch (item.getItemId())
+                    {
+                    case R.id.action_home_notification:
+                        // User chose the "notification" item, show the app settings UI...
+                        Snackbar.make(getParent(), mBinding.getRoot(), "not", 300).show();
+                        navController.navigateUp();
 
-                    navController.navigate(R.id.nav_home_notification);
-                    return true;
+                        navController.navigate(R.id.nav_home_notification);
+                        return true;
 
-                case R.id.action_home_cart:
-                    // User chose the "cart" action, mark the current item
-                    // as a favorite...
+                    case R.id.action_home_cart:
+                        // User chose the "cart" action, mark the current item
+                        // as a favorite...
+                        navController.navigateUp();
+
+                        navController.navigate(R.id.nav_home_cart);
+
+                        return true;
+
+                    default:
+                        // If we got here, the user's action was not recognized.
+                        // Invoke the superclass to handle it.
+                        return HomeActivity.super.onOptionsItemSelected(item);
+                    }
+                });
+            }
+
+        }
+
+    private void setupHeaderNavigationRail()
+        {
+        mBinding.navHeaderHome.btnRailHeaderCart.setOnClickListener(
+                v ->
+                    {
                     navController.navigateUp();
 
                     navController.navigate(R.id.nav_home_cart);
+                    });
+        mBinding.navHeaderHome.btnRailHeaderNotifaction.setOnClickListener(v ->
+            {
+            Snackbar.make(getParent(), mBinding.getRoot(), "btnRailHeader Notifaction", 300).show();
+            navController.navigateUp();
 
-                    return true;
-
-                default:
-                    // If we got here, the user's action was not recognized.
-                    // Invoke the superclass to handle it.
-                    return HomeActivity.super.onOptionsItemSelected(item);
-                }
+            navController.navigate(R.id.nav_home_notification);
             });
-
         }
 
     private void setupCartBadge()
@@ -184,22 +303,23 @@ public class HomeActivity extends AppCompatActivity
             {
             switch (observeCount.getMStatus())
                 {
-                case SUCCESS ->{
-                var count = observeCount.getMData();
-                Log.e(TAG, "count = " + count );
-                if (count > 0)
+                case SUCCESS ->
                     {
-                    badgeDrawable = BadgeDrawable.create(this);
+                    var count = observeCount.getMData();
+                    Log.e(TAG, "count = " + count);
+                    if (count > 0)
+                        {
+                        badgeDrawable = BadgeDrawable.create(this);
 
-                    badgeDrawable.setNumber(count);}
-                BadgeUtils.attachBadgeDrawable(badgeDrawable, mToolbar, R.id.action_home_cart);
+                        badgeDrawable.setNumber(count);
+                        }
+                    BadgeUtils.attachBadgeDrawable(badgeDrawable, mBinding.toolbarHome, R.id.action_home_cart);
 
-                }
+                    }
 
                 }
             });
         }
-
 
 
     private void setupObservers()
@@ -232,16 +352,17 @@ public class HomeActivity extends AppCompatActivity
             switch (userResource.mStatus)
                 {
 
-                case SUCCESS -> {
-                String keyLanguage =
-                        userResource.getMData().getLangKey();
-                LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(keyLanguage);
-                AppCompatDelegate.setApplicationLocales(appLocale);
+                case SUCCESS ->
+                    {
+                    String keyLanguage =
+                            userResource.getMData().getLangKey();
+                    LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(keyLanguage);
+                    AppCompatDelegate.setApplicationLocales(appLocale);
 
-                Log.e(TAG + ", setupUserObserver", "suc:" + userResource.getMData());
+                    Log.e(TAG + ", setupUserObserver", "suc:" + userResource.getMData());
 
 
-                }
+                    }
 
                 case LOADING -> Log.e(TAG + ":user", "LOADING");
                 case ERROR -> Log.e(TAG + ":user", "ERROR");
@@ -297,10 +418,10 @@ public class HomeActivity extends AppCompatActivity
 
             if (!isConnected)
                 {
-                mBinding.iHomeAppBar.tvHomeNetwork.setText(errorNetworkMessage);
-                mBinding.iHomeAppBar.tvHomeNetwork.setBackgroundColor(baseColor);
-                mBinding.iHomeAppBar.tvHomeNetwork.setTextColor(textBaseColor);
-                mBinding.iHomeAppBar.tvHomeNetwork.setVisibility(View.VISIBLE);
+                mBinding.tvHomeNetwork.setText(errorNetworkMessage);
+                mBinding.tvHomeNetwork.setBackgroundColor(baseColor);
+                mBinding.tvHomeNetwork.setTextColor(textBaseColor);
+                mBinding.tvHomeNetwork.setVisibility(View.VISIBLE);
                 } else
                 {
                 try
@@ -314,12 +435,12 @@ public class HomeActivity extends AppCompatActivity
                     {
                     Log.e(TAG, e.toString());
                     }
-                mBinding.iHomeAppBar.tvHomeNetwork.setBackgroundColor(vaildColor);
-                mBinding.iHomeAppBar.tvHomeNetwork.setTextColor(baseColor);
+                mBinding.tvHomeNetwork.setBackgroundColor(vaildColor);
+                mBinding.tvHomeNetwork.setTextColor(baseColor);
 
-                mBinding.iHomeAppBar.tvHomeNetwork.setText(backNetworkMessage);
+                mBinding.tvHomeNetwork.setText(backNetworkMessage);
                 new Handler(Looper.getMainLooper()).postDelayed(() ->
-                        mBinding.iHomeAppBar.tvHomeNetwork.setVisibility(View.GONE), 1000);
+                        mBinding.tvHomeNetwork.setVisibility(View.GONE), 1000);
 
                 }
             });

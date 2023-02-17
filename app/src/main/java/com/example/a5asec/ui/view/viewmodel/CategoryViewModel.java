@@ -26,7 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * {@link com.example.a5asec.ui.view.home.PriceListFragment}
  * {@link com.example.a5asec.ui.view.home.LaundryServicesFragment}
  * {@link ServicesFragment}
- * This viewmodel uses  {@link MutableLiveData }s {@link CompositeDisposable}s in this case and
+ * This view-model uses  {@link MutableLiveData }s {@link CompositeDisposable}s in this case and
  * {@link Resource<Category>}s to manage data in the screen,
  * {@link CategoryRepository}
  */
@@ -34,9 +34,9 @@ public class CategoryViewModel extends ViewModel
     {
     private static final String TAG = "CategoryViewModel";
 
-    private MutableLiveData<Resource<List<Category>>> mCategory = new MutableLiveData<>();
+    private  MutableLiveData<Resource<List<Category>>> mCategory = new MutableLiveData<>();
     private MutableLiveData<Resource<List<Category.ItemsEntity>>> mItemsCategory = new MutableLiveData<>();
-    private MutableLiveData<Resource<Category.ItemsEntity>> mItemService = new MutableLiveData<>();
+    private  MutableLiveData<Resource<Category.ItemsEntity>> mItemService = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     private CategoryRepository mCategoryRepository;
     private MutableLiveData<List<Integer>> mItemServiceChecked = new MutableLiveData<>();
@@ -211,6 +211,13 @@ public class CategoryViewModel extends ViewModel
         {
         mItemsCategory.postValue(Resource.loading(null));
         mItemsCategory.postValue(items);
+
+        }
+    public void setItemCategoryWithTwoPane()
+        {
+        mItemsCategory.postValue(Resource.loading(null));
+        var item =  Resource.success(  mCategory.getValue().getMData().get(0).getItems());
+        mItemsCategory.postValue(item);
 
         }
 

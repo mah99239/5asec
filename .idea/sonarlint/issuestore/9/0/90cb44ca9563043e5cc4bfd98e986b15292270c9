@@ -1,37 +1,0 @@
-
-_
-java:S1192ã"HDefine a constant instead of duplicating this literal "LOADING" 5 times.(„‹„›
-b
-java:S1192ä"FDefine a constant instead of duplicating this literal "ERROR" 8 times.(ŒÿÐ÷þÿÿÿÿ
-Q	java:S125T"<This block of commented-out lines of code should be removed.(Þ§Ø÷
-Q	java:S125u"<This block of commented-out lines of code should be removed.(úå•ž
-V	java:S125x"<This block of commented-out lines of code should be removed.(œùÜ’þÿÿÿÿ
-8	java:S131·""Add a default case to this switch.(öÅ†×
-t	java:S131Ø"YComplete cases by adding the missing enum constants or add a default case to this switch.(¥·˜½ýÿÿÿÿ
-W	java:S125Ž"<This block of commented-out lines of code should be removed.(ÃÈªùÿÿÿÿ
-t	java:S131û"YComplete cases by adding the missing enum constants or add a default case to this switch.(íù³‰þÿÿÿÿ
-8
-java:S6205‰"Remove this redundant block.(Ö…‚Ðûÿÿÿÿ
-t	java:S131À"YComplete cases by adding the missing enum constants or add a default case to this switch.(íù³‰þÿÿÿÿ
-8
-java:S6205Ñ"Remove this redundant block.(Ö…‚Ðûÿÿÿÿ
-W	java:S125ã"<This block of commented-out lines of code should be removed.(à´‘ùÿÿÿÿ
-R	java:S125ð"<This block of commented-out lines of code should be removed.(¸ÁÔã
-W	java:S125‚"<This block of commented-out lines of code should be removed.(Òú‰Êøÿÿÿÿ
-t	java:S131š"YComplete cases by adding the missing enum constants or add a default case to this switch.(íù³‰þÿÿÿÿ
-8
-java:S6205¬"Remove this redundant block.(Ö…‚Ðûÿÿÿÿ
-t	java:S131Á"YComplete cases by adding the missing enum constants or add a default case to this switch.(¥·˜½ýÿÿÿÿ
-W	java:S125ü"<This block of commented-out lines of code should be removed.(ÃÈªùÿÿÿÿ
-W	java:S125­"<This block of commented-out lines of code should be removed.(Œ¡ª„üÿÿÿÿ
-W	java:S125´"<This block of commented-out lines of code should be removed.(Ñî¨‡ýÿÿÿÿ
-t	java:S131ý"YComplete cases by adding the missing enum constants or add a default case to this switch.(íù³‰þÿÿÿÿ
-8
-java:S6205‘"Remove this redundant block.(Ö…‚Ðûÿÿÿÿ
-t	java:S131¥"YComplete cases by adding the missing enum constants or add a default case to this switch.(íù³‰þÿÿÿÿ
-8
-java:S6205´"Remove this redundant block.(Ö…‚Ðûÿÿÿÿ
-H
-java:S1144Ä"1Remove this unused private "showProgress" method.(³šçÄ
-H
-java:S1144Ë"1Remove this unused private "hideProgress" method.(™ä¨¯
