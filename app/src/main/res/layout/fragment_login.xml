@@ -23,7 +23,8 @@
             app:layout_constraintDimensionRatio="w,21:9"
             app:layout_constraintEnd_toStartOf="@+id/gl_login_end"
             app:layout_constraintStart_toStartOf="@+id/gl_login_start"
-            app:layout_constraintTop_toTopOf="@+id/gl_login_top" />
+            app:layout_constraintTop_toTopOf="@+id/gl_login_top"
+            android:contentDescription="@null" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_login_email"

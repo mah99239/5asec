@@ -16,9 +16,11 @@ public  class Authorization
     @SerializedName("authorization")
     private AuthorizationEntity authorization;
 
+
     @Data
     public  class AuthorizationEntity
         {
+
         @Expose
         @SerializedName("scope")
         private String scope;

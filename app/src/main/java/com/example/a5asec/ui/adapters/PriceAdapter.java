@@ -76,6 +76,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
 
     public void addCategory(List<Category> category)
         {
+        mCategoryList.clear();
         mCategoryList.addAll(category);
         notifyDataSetChanged();
         }
@@ -90,7 +91,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
     @Override
     public int getItemCount()
         {
-        if (mCategoryList.size() == 0) return 0;
+        if (mCategoryList.isEmpty()) return 0;
         return mCategoryList.size();
         }
 
@@ -108,8 +109,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
         {
 
         private ListItemPriceBinding mItemPriceBinding;
-        private TextView mNameCategoryTextView;
-        private ShapeableImageView mShapeableImageView;
+
 
         public PriceViewHolder(@NonNull ListItemPriceBinding itemPriceBinding)
             {
@@ -117,12 +117,11 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
             this.mItemPriceBinding = itemPriceBinding;
             itemPriceBinding.getRoot().setOnClickListener(this);
 
-            mNameCategoryTextView = mItemPriceBinding.tvItemPrice;
-            mShapeableImageView = mItemPriceBinding.ivItemPrice;
+
             var radius = itemPriceBinding.ivItemPrice.getContext().getResources()
                     .getDimension(R.dimen.default_corner_radius);
-            mShapeableImageView.setShapeAppearanceModel(
-                    mShapeableImageView.getShapeAppearanceModel()
+            mItemPriceBinding.ivItemPrice.setShapeAppearanceModel(
+                    mItemPriceBinding.ivItemPrice.getShapeAppearanceModel()
                             .toBuilder()
                             .setBottomLeftCorner(CornerFamily.ROUNDED, radius)
                             .setBottomRightCorner(CornerFamily.ROUNDED, radius)
@@ -135,11 +134,10 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
             var context = mItemPriceBinding.getRoot().getContext();
             var shimmer = new Shimmer.ColorHighlightBuilder()
                     .setHighlightColor(ContextCompat.getColor(context,
-                            R.color.md_theme_light_inversePrimary))
-                    .setBaseColor(ContextCompat.getColor(context,
-                            R.color.md_theme_light_primaryContainer))
+                            R.color.md_theme_light_surfaceVariant))
 
-                    .setDuration(4000L) // how long the shimmering animation takes to do one full sweep
+
+                    .setDuration(2000L) // how long the shimmering animation takes to do one full sweep
                     .setBaseAlpha(0.6f) //the alpha of the underlying children
                     .setHighlightAlpha(0.7f) // the shimmer alpha amount
                     .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
@@ -161,14 +159,14 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
                         .error(shimmerDrawables)
                         .fallback(shimmerDrawables)
                         .fitCenter()
-                        .into(mShapeableImageView);
+                        .into(mItemPriceBinding.ivItemPrice);
                 } catch (Exception e)
                 {
                 e.printStackTrace();
                 Log.e(TAG, e.getMessage());
                 }
-            mNameCategoryTextView.invalidateDrawable(shimmerDrawables);
-            mNameCategoryTextView.setText(name);
+            mItemPriceBinding.ivItemPrice.invalidateDrawable(shimmerDrawables);
+            mItemPriceBinding.tvItemPrice.setText(name);
             }
 
         @Override

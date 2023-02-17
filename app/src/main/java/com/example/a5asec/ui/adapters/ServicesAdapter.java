@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ServicesAdapter extends BaseAdapter
     {
-    private List<Category.ItemsEntity> mItemsCategory;
+    private  List<Category.ItemsEntity> mItemsCategory;
     private Fragment mFragment;
 
     public ServicesAdapter(Fragment fragment)
@@ -75,7 +75,7 @@ public class ServicesAdapter extends BaseAdapter
 
     public void addServices(@NonNull List<Category.ItemsEntity> category)
         {
-
+        mItemsCategory.clear();
         mItemsCategory.addAll(category);
         notifyDataSetChanged();
         }
@@ -91,7 +91,7 @@ public class ServicesAdapter extends BaseAdapter
                 R.layout.list_item_services, parent, false);
         convertView = binding.getRoot();
 
-        if (mItemsCategory.size() == 0) return convertView;
+        if (mItemsCategory.isEmpty()) return convertView;
 
         int costInt = mItemsCategory.get(position).getCost();
         String name = mItemsCategory.get(position).getName(mLanguage);
@@ -103,7 +103,7 @@ public class ServicesAdapter extends BaseAdapter
             {
             binding.tvItemServicesName.setText(name);
             binding.tvItemServicesPrice.setText(cost);
-            binding.ivItemServices.setImageResource(R.drawable.ic_menu_price);
+            //binding.ivItemServices.setImageResource(R.drawable.ic_menu_price);
             }
 
         return convertView;

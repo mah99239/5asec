@@ -67,7 +67,7 @@
     <string name="cart_button_label">تاكيد الطلب</string>
     <string name="cart_text_name_service">Thobe</string>
     <string name="cart_text_services">الخدمه المطلوبه:</string>
-    <string name="cart_text_total_service">احمالى السعر</string>
+    <string name="all_total_service">احمالى السعر</string>
     <string name="cart_text_count"> الكميه:</string>
     <string name="cart_text_empty">عربة التسوق فارغة!</string>
 
@@ -88,7 +88,7 @@
     <string name="laundry_Service_base_name">الخدمه الاساسيه</string>
     <string name="laundry_service_content_available_services">الخدمات المتاحه:</string>
     <string name="laundry_service_content_cart_button">أضف إلى السلة</string>
-    <string name="laundry_service_content_cart_updata_button">تحديث السله</string>
+    <string name="laundry_service_content_cart_update_button">تحديث السله</string>
 
 
 

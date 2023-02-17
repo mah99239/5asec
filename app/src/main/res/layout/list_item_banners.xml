@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="image"
+            type="com.example.a5asec.data.model.api.Banners" />
     </data>
 
     <LinearLayout
@@ -15,6 +18,7 @@
             android:layout_height="match_parent"
             android:background="@color/seed"
             android:padding="@dimen/padding_price_banner"
+            app:setImage="@{movie.}"
 
             android:scaleType="centerCrop"
            />

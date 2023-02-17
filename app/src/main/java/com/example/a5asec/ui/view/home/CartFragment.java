@@ -87,8 +87,8 @@ public class CartFragment extends Fragment implements CartAdapter.RvClickListene
         mItemsCategory.setItemService(id);
         mCartViewModel.addItemToUpdateService(item);
 
-        LaundryServicesFragment laundryServicesFragment = new LaundryServicesFragment();
-        laundryServicesFragment.show(getParentFragmentManager(), LaundryServicesFragment.TAG_UPDATE);
+        LaundryServicesBottomSheet laundryServicesFragment = new LaundryServicesBottomSheet();
+        laundryServicesFragment.show(getParentFragmentManager(), LaundryServicesBottomSheet.TAG_UPDATE);
          mAdapter.notifyItemChanged(position);
         }
 
@@ -177,7 +177,7 @@ public class CartFragment extends Fragment implements CartAdapter.RvClickListene
                 {
 
                 case SUCCESS -> {
-                var total = getString(R.string.cart_text_total_service) + " " + totalAllOrder.getMData()
+                var total = getString(R.string.all_total_service) + " " + totalAllOrder.getMData()
                         + " " + getString(R.string.all_cost_label);
                 mBinding.tvCartTotal.setVisibility(View.VISIBLE);
 

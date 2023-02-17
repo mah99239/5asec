@@ -2,8 +2,7 @@ package com.example.a5asec.ui.view.login;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,19 +14,19 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.transition.Slide;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.example.a5asec.R;
 import com.example.a5asec.databinding.ActivityMainBinding;
 import com.example.a5asec.utility.NetworkConnection;
-import com.google.android.material.appbar.MaterialToolbar;
 
 
 public class MainActivity extends AppCompatActivity
     {
-    private static final String TAG = "MainActivity";
     AppBarConfiguration appBarConfiguration;
     ActivityMainBinding mBinding;
-    MaterialToolbar mToolbar;
     NavController navController;
 
     @Override
@@ -44,8 +43,7 @@ public class MainActivity extends AppCompatActivity
     private void setupUI()
         {
 
-        mToolbar = this.mBinding.tbMain;
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(mBinding.tbMain);
 
         setupNavigationUi();
         checkConnections();
@@ -75,12 +73,12 @@ public class MainActivity extends AppCompatActivity
         {
         NetworkConnection networkConnection = new NetworkConnection(getApplication());
         var baseColor = ContextCompat.getColor(getApplication(),
-                R.color.md_theme_light_shadow);
+                R.color.md_theme_light_onSurface);
         var textBaseColor = ContextCompat.getColor(getApplication(),
-                R.color.md_theme_light_outlineVariant);
+                R.color.md_theme_light_surface);
 
         var vaildColor = ContextCompat.getColor(getApplication(),
-                R.color.md_theme_light_inversePrimary);
+                R.color.md_theme_light_primaryContainer);
 
         networkConnection.observe(this, isConnected ->
             {
@@ -88,26 +86,35 @@ public class MainActivity extends AppCompatActivity
             var backNetworkMessage = getResources().getString(R.string.all_network_back);
 
 
-            if (!isConnected) // if internet not connect, Show message try connection internet
+            if (Boolean.FALSE.equals(isConnected)) // if internet not connect, Show message try connection internet
                 {
                 mBinding.tvMainNetwork.setText(errorNetworkMessage);
                 mBinding.tvMainNetwork.setBackgroundColor(baseColor);
                 mBinding.tvMainNetwork.setTextColor(textBaseColor);
-                mBinding.tvMainNetwork.setVisibility(View.VISIBLE);
+                slideAnimation(false, 250L); // isConnected is false
                 } else  // internet is connect,
                 {
-
+                slideAnimation(isConnected, 3000L);// isConnected is true
                 mBinding.tvMainNetwork.setBackgroundColor(vaildColor);
                 mBinding.tvMainNetwork.setTextColor(baseColor);
 
                 mBinding.tvMainNetwork.setText(backNetworkMessage);
-                new Handler(Looper.getMainLooper()).postDelayed(() ->
-                        mBinding.tvMainNetwork.setVisibility(View.GONE), 1000);
+
 
                 }
             });
         }
 
+    private void slideAnimation(boolean show, long duration) {
+
+
+    Transition transition = new Slide(Gravity.BOTTOM);
+    transition.setDuration(duration);
+    transition.addTarget(mBinding.tvMainNetwork);
+
+    TransitionManager.beginDelayedTransition(mBinding.clMain, transition);
+    mBinding.tvMainNetwork.setVisibility(!show ? View.VISIBLE : View.GONE);
+    }
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig)
         {

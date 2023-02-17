@@ -37,7 +37,7 @@ public class UserViewModel extends ViewModel
     private final MutableLiveData<Resource<Users>> mUser = new MutableLiveData<>();
     private final MutableLiveData<Users> mLoginUser = new MutableLiveData<>();
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-    private MutableLiveData<Resource<Authorization.AuthorizationEntity>> authorization;
+    private MutableLiveData<Resource<Authorization.AuthorizationEntity>> authorization = new MutableLiveData<>();
     private MutableLiveData<Resource<ResponseEntity>> mStatusCode;
     private UserRepository mUserRepository;
 
@@ -57,7 +57,6 @@ public class UserViewModel extends ViewModel
     public LiveData<Resource<Authorization.AuthorizationEntity>> getAuthenticateUsers()
         {
 
-        authorization = new MutableLiveData<>();
 
         authenticateUsers();
         return authorization;
@@ -221,9 +220,10 @@ public class UserViewModel extends ViewModel
                             @Override
                             public void onError(@NonNull Throwable e)
                                 {
-                                authorization.postValue(Resource.error(ApiError.handleApiError(e), null));
-                                mCompositeDisposable.remove(this);
-                                Log.e(TAG, "refreshToken() - onError " + e.getMessage());
+                                Log.e(TAG, "refreshToken() - onError :" + e.getMessage());
+                                Log.e(TAG, "refreshToken() - onError = " + e );
+                              //Resource.error(ApiError.handleApiError(e)
+                                authorization.postValue(Resource.error("masse", null));
 
                                 }
                             }));

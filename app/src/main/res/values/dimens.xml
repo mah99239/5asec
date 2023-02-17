@@ -5,7 +5,9 @@
     <!-- Login Activity-->
     <dimen name="guideline_all_margin">16dp</dimen>
     <dimen name="padding_all_element">8dp</dimen>
+    <dimen name="margin_card">8dp</dimen>
     <dimen name="margin_terms_text">8dp</dimen>
+
     <!--Activity SignUp -->
     <dimen name="margin_signUp">32dp</dimen>
 
@@ -23,11 +25,13 @@
 
     <!--Price list Fragment -->
     <dimen name="margin_price_list_recycle">16dp</dimen>
+    <dimen name="height_price_list_banner">100dp</dimen>
 
     <!--item price-->
     <dimen name="size_item_price_card">100dp</dimen>
     <dimen name="height_item_price_card">120dp</dimen>
-    <dimen name="default_corner_radius">12dp</dimen>
+    <dimen name="height_shimmer_price_image">90dp</dimen>
+    <dimen name="default_corner_radius">8dp</dimen>
     <dimen name="padding_price_image">4dp</dimen>
     <dimen name="padding_price_banner">8dp</dimen>
     <!-- Services Fragment -->
@@ -36,6 +40,7 @@
 
 
     <!--Laundry Services Fragment -->
+    <dimen name="margin_bottom_sheet">16dp</dimen>
 
     <!-- laundry services content -->
     <dimen name="height_layout_laundry_services_container">320dp</dimen>
@@ -50,7 +55,7 @@
     <dimen name="size_item_services_image">48dp</dimen>
 
     <!--item laundry services -->
-    <dimen name="size_item_laundry_services_card">96dp</dimen>
+    <dimen name="height_item_laundry_services_card">96dp</dimen>
     <dimen name="size_item_laundry_match">0dp</dimen>
     <dimen name="height_item_laundry_services_image">48dp</dimen>
     <dimen name="height_item_laundry_services_text">24dp</dimen>

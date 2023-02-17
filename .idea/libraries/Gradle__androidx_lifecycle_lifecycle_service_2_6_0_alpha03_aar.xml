@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.lifecycle:lifecycle-service:2.6.0-alpha03@aar">
     <CLASSES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/transforms-3/9979b15563ac7acaead53c6571f955ca/transformed/jetified-lifecycle-service-2.6.0-alpha03/jars/classes.jar!/" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/9979b15563ac7acaead53c6571f955ca/transformed/jetified-lifecycle-service-2.6.0-alpha03/res" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/9979b15563ac7acaead53c6571f955ca/transformed/jetified-lifecycle-service-2.6.0-alpha03/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/18d7ca50d44a6424ed051b0ce22f2167/transformed/jetified-lifecycle-service-2.6.0-alpha03/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/18d7ca50d44a6424ed051b0ce22f2167/transformed/jetified-lifecycle-service-2.6.0-alpha03/res" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/18d7ca50d44a6424ed051b0ce22f2167/transformed/jetified-lifecycle-service-2.6.0-alpha03/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-service/2.6.0-alpha03/1be95a2b00fd4a7f88c01acae9f6635504f6a5ef/lifecycle-service-2.6.0-alpha03-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-service/2.6.0-alpha03/1be95a2b00fd4a7f88c01acae9f6635504f6a5ef/lifecycle-service-2.6.0-alpha03-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

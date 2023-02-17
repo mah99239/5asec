@@ -91,7 +91,8 @@
         <Button
             android:id="@+id/btn_profile_manage_address"
             style="@style/Widget.5asec.secondaryButton"
-
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_profile"
             android:text="@string/profile_button_manage_address"
             app:layout_constraintEnd_toStartOf="@+id/gl_profile_verticalRight"
@@ -101,7 +102,8 @@
         <Button
             android:id="@+id/btn_profile_mobile"
             style="@style/Widget.5asec.tertiaryButton"
-
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@string/profile_button_verify_mobile"
             app:layout_constraintBottom_toTopOf="@+id/btn_profile_password"
             app:layout_constraintEnd_toStartOf="@+id/gl_profile_verticalRight"
@@ -109,7 +111,8 @@
 
         <Button
             android:id="@+id/btn_profile_password"
-
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             style="@style/Widget.5asec.primaryButton"
 
             android:layout_marginBottom="@dimen/margin_profile"

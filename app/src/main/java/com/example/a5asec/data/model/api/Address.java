@@ -91,6 +91,7 @@ public  class Address
             this.lat= lat;
             this.nearLandmark = nearLandmark;
             this.note = notes;
+
             }
         }
 

@@ -30,11 +30,13 @@
             android:id="@+id/tv_home_network"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/md_theme_light_shadow"
+            android:background="@color/md_theme_light_onSurface"
             android:gravity="center"
+            android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
+            android:layout_gravity="bottom"
+
             android:text="@string/all_network_error"
-            android:textColor="@color/md_theme_light_onSurface"
+            android:textColor="@color/md_theme_light_surface"
             android:visibility="gone"
             tools:visibility="visible" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

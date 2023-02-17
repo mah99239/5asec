@@ -8,17 +8,58 @@
         android:id="@+id/cl_services_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_all_guideline"
+
+        android:layout_marginStart="@dimen/margin_all_guideline"
+        android:layout_marginTop="@dimen/margin_all_guideline"
 
 
         tools:context=".ui.view.home.ServicesFragment">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sh_service"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
         <ListView
             android:id="@+id/lv_services"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,11 +75,12 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/height_services_image"
             android:layout_marginTop="120dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_menu_discount" />
+            app:srcCompat="@drawable/ic_menu_discount"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/tv_services_empty"
@@ -47,9 +89,8 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/services_text_empty"
-            android:textColor="@color/md_theme_dark_background"
-            android:textSize="@dimen/testsize_services_image"
-            android:visibility="gone"
+            android:textColor="@color/md_theme_light_scrim"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/imv_services_empty"
             app:layout_constraintStart_toStartOf="@+id/imv_services_empty"
             app:layout_constraintTop_toBottomOf="@+id/imv_services_empty" />

@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha03@aar">
     <CLASSES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/transforms-3/fdb6f1a9442b92b8a4afeb6b52a8ff15/transformed/lifecycle-viewmodel-2.6.0-alpha03/jars/classes.jar!/" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/fdb6f1a9442b92b8a4afeb6b52a8ff15/transformed/lifecycle-viewmodel-2.6.0-alpha03/res" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/fdb6f1a9442b92b8a4afeb6b52a8ff15/transformed/lifecycle-viewmodel-2.6.0-alpha03/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/9fb4374618a04ed4d77d32e0171152c8/transformed/lifecycle-viewmodel-2.6.0-alpha03/res" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/9fb4374618a04ed4d77d32e0171152c8/transformed/lifecycle-viewmodel-2.6.0-alpha03/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/9fb4374618a04ed4d77d32e0171152c8/transformed/lifecycle-viewmodel-2.6.0-alpha03/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-viewmodel/2.6.0-alpha03/87e3ea153a22909762775b6052c2caf13645d510/lifecycle-viewmodel-2.6.0-alpha03-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-viewmodel/2.6.0-alpha03/87e3ea153a22909762775b6052c2caf13645d510/lifecycle-viewmodel-2.6.0-alpha03-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

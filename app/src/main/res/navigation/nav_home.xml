@@ -11,10 +11,10 @@
         <action
             android:id="@+id/action_priceListFragment_to_servicesItemFragment"
             app:destination="@+id/nav_home_servicesItem"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out"
-            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
-            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/nav_home_servicesItem"
@@ -163,4 +163,8 @@
         android:id="@+id/nav_home_order_status"
         android:name="com.example.a5asec.ui.view.home.OrderStatusFragment"
         android:label="Order Status" />
+    <fragment
+        android:id="@+id/nav_home_priceList_and_service"
+        android:name="com.example.a5asec.PriceAndServiceFragment"
+        android:label="@string/price_list_title"/>
 </navigation>

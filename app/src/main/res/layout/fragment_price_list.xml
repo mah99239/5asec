@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
 
+        <variable
+            name="bannerViewModel"
+            type="com.example.a5asec.ui.view.viewmodel.BannersViewModel" />
+
+        <variable
+            name="bannerAdapter"
+            type="com.example.a5asec.ui.adapters.BannersAdapter" />
+    </data>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+        android:id="@+id/swipe_price_list_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_price_list_container"
+            android:id="@+id/cl_price_list_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
@@ -21,66 +31,74 @@
                 android:id="@+id/avf_price_list_banner"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/md_theme_light_tertiaryContainer"
-                android:visibility="visible"
-                app:layout_constraintDimensionRatio="w,6:16"
+                 app:setAdapter="@{bannerAdapter}"
+                app:submitList="@{bannerViewModel.banners}"
+                android:background="@color/md_theme_light_primary"
+                app:layout_constraintDimensionRatio="H,3:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                tools:visibility="visible">
 
-            <LinearLayout
+            </AdapterViewFlipper>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_price_list"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="@dimen/guideline_all_margin"
+
+                android:paddingStart="@dimen/margin_card"
+                android:paddingEnd="@dimen/margin_all_guideline"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_price_list_top"
+                tools:listitem="@layout/list_item_price"
+                tools:visibility="visible" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sh_price"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avf_price_list_banner">
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/sh_price"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="gone">
+                    >
 
-                    <LinearLayout
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="gone">
+                        android:layout_height="@dimen/height_price_list_banner"
+                        android:background="@color/md_theme_light_primary"
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:background="@color/md_theme_light_tertiaryContainer"
+                        />
 
-                            />
+                    <include layout="@layout/shimmer_price" />
 
-                        <include layout="@layout/shimmer_price" />
+                    <include layout="@layout/shimmer_price" />
 
-                        <include layout="@layout/shimmer_price" />
+                    <include layout="@layout/shimmer_price" />
 
-                        <include layout="@layout/shimmer_price" />
+                    <include layout="@layout/shimmer_price" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                        <include layout="@layout/shimmer_price" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_price_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_price_list_recycle"
-
-                    android:visibility="visible"
-                    tools:listitem="@layout/list_item_price"
-                    tools:visibility="visible" />
-            </LinearLayout>
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_price_list_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="avf_price_list_banner" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

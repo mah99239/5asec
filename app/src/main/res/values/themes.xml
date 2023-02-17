@@ -42,7 +42,11 @@
         <item name="textAppearanceLabelLarge">@style/TextAppearance.5asec.LabelLarge</item>
         <item name="textAppearanceLabelMedium">@style/TextAppearance.5asec.LabelMedium</item>
         <item name="textAppearanceLabelSmall">@style/TextAppearance.5asec.LabelSmall</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Material3.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Material3.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Material3.LargeComponent</item>
 
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
     </style>
 </resources>

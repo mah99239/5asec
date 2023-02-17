@@ -8,21 +8,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
+import androidx.window.layout.WindowMetrics;
+import androidx.window.layout.WindowMetricsCalculator;
 
+import com.bumptech.glide.Glide;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Banners;
 import com.example.a5asec.data.model.api.Category;
@@ -37,6 +43,7 @@ import com.example.a5asec.ui.base.BannersViewModelFactory;
 import com.example.a5asec.ui.base.CategoryViewModelFactory;
 import com.example.a5asec.ui.view.viewmodel.BannersViewModel;
 import com.example.a5asec.ui.view.viewmodel.CategoryViewModel;
+import com.example.a5asec.utility.AdaptiveUtils;
 import com.example.a5asec.utility.NetworkConnection;
 import com.example.a5asec.utility.Resource;
 import com.example.a5asec.utility.Status;
@@ -44,14 +51,19 @@ import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
+import java.util.Objects;
+
+import lombok.val;
+import timber.log.Timber;
 
 
 /**
  * Main Fragment for the price screen
  */
-public class PriceListFragment extends Fragment implements PriceAdapter.ItemClickListener, LifecycleObserver
+public class PriceListFragment extends Fragment implements LifecycleObserver
     {
     private static final String TAG = "PriceListFragment";
+
     private FragmentPriceListBinding mBinding;
     private PriceAdapter mPriceAdapter;
     private BannersAdapter mBannersAdapter;
@@ -75,38 +87,69 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
         {
         super.onViewCreated(view, savedInstanceState);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
-        setupUi();
-
-        }
-
-    @Override
-    public void onPause()
-        {
-        mShimmerFrameLayout.stopShimmer();
-        super.onPause();
-        }
-
-
-    /**
-     *
-     */
-    private void setupUi()
-        {
-
         setupShimmerAnimation();
         setupRefreshView();
-        setupAdapter();
-        initCategory();
-        checkConnectionsToInitCategory();
+        setupViewModel();
+        setupBannersAdapter();
+        setupObserverBanners();
+        setupTwoPane();
+
+        }
+
+    private void setupTwoPane()
+        {
 
 
+        boolean isCompact = AdaptiveUtils.compactScreen(requireActivity());
+        Timber.tag(TAG).e("setupTwoPane:  isCompact = %s", isCompact);
+        setupUi(isCompact);
+        if (!isCompact)
+            {
+
+            if (mBinding.splPrice != null)
+                {
+
+                requireActivity().getOnBackPressedDispatcher().addCallback(
+                        getViewLifecycleOwner(),
+                        new PriceOnBackPressedCallback(mBinding.splPrice));
+
+                mBinding.splPrice.open();
+                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
+
+                }
+            } else
+            {
+
+            if (mBinding.splPrice != null)
+                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
+
+
+            }
+        }
+
+
+    private void setupUi(boolean isCompact)
+        {
+
+
+        if (!isCompact)
+            {
+            setupCategoryAdapterWithTwoPane();
+            setupObserverCategoryWithTwoPane();
+            } else
+            {
+            setupCategoryAdapter();
+
+            setupObserverCategory();
+            checkConnectionsToInitCategory();
+
+            }
         }
 
     private void setupShimmerAnimation()
         {
         var shimmer = new Shimmer.AlphaHighlightBuilder()
-                .setDuration(4000L) // how long the shimmering animation takes to do one full sweep
-
+                .setDuration(1000L) // how long the shimmering animation takes to do one full sweep
                 .setRepeatMode(ValueAnimator.REVERSE)
                 //  .setAutoStart(true)
                 .build();
@@ -119,55 +162,38 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
     private void setupRefreshView()
         {
-        mBinding.swipeContainer.setOnRefreshListener(() ->
+        mBinding.swipePriceListRoot.setOnRefreshListener(() ->
             {
             reloadDataUI();
-            mBinding.swipeContainer.setRefreshing(false);
+            mBinding.swipePriceListRoot.setRefreshing(false);
             });
 
         }
 
 
-
-    private void setupAdapter()
-        {
-        setupBannersAdapter();
-        setupCategoryAdapter();
-
-        }
-
     private void setupBannersAdapter()
         {
         mBannersAdapter = new BannersAdapter(getParentFragment());
-        var flipper = mBinding.avfPriceListBanner;
 
-
-        flipper.setAdapter(mBannersAdapter);
-        flipper.setFlipInterval(3000);
-        flipper.startFlipping();
-        flipper.setHorizontalScrollBarEnabled(true);
+        mBinding.avfPriceListBanner.setAdapter(mBannersAdapter);
+        mBinding.avfPriceListBanner.setFlipInterval(4000);
+        mBinding.avfPriceListBanner.startFlipping();
+        mBinding.avfPriceListBanner.setHorizontalScrollBarEnabled(true);
         }
 
     private void setupCategoryAdapter()
         {
-        var recyclerView = mBinding.rvPriceList;
-
-
-
-      //  recyclerView.setItemAnimator(new Slide());
 
         mPriceAdapter = new PriceAdapter(this);
-        mPriceAdapter.setClickListener(this);
+        mPriceAdapter.setClickListener(this::onItemClick);
 
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(mPriceAdapter);
+        mBinding.rvPriceList.setLayoutManager(gridLayoutManager);
+        mBinding.rvPriceList.setAdapter(mPriceAdapter);
 
         }
 
-
-    @Override
     public void onItemClick(View view, int position)
         {
 
@@ -179,44 +205,43 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
         }
 
-
-
-    private void initCategory()
+    private void setupCategoryAdapterWithTwoPane()
         {
-        setupViewModel();
-        setupObserver();
+        var recyclerView = mBinding.rvPriceList;
+
+
+        mPriceAdapter = new PriceAdapter(this);
+        mPriceAdapter.setClickListener(this::onItemClickWithTwoPane);
+
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mPriceAdapter);
+
         }
 
 
-    private void setupObserver()
+    public void onItemClickWithTwoPane(View view, int position)
         {
-        setupObserverBanners();
-        setupObserverCategory();
 
+        fetchItemsCategory(position);
         }
+
+
 
     private void setupObserverBanners()
         {
-
         mBannersViewModel.getBanners().observe(getViewLifecycleOwner(), bannersObserve ->
             {
 
-            switch (bannersObserve.mStatus)
+            if (Objects.requireNonNull(bannersObserve.mStatus) == Status.SUCCESS)
                 {
-
-                case SUCCESS -> {
-                Log.e(TAG, "setupObserverBanners:" + "SUCCESS");
+                Timber.tag(TAG).e("setupObserverBanners:" + "SUCCESS");
                 renderListBanners(bannersObserve);
-
-                }
-                case LOADING -> Log.e(TAG, "setupObserverBanners : " + "LOADING");
-
-                case ERROR -> {
-                Log.e(TAG, "setupObserverBanners : " + "ERROR");
-                Log.e(TAG, bannersObserve.mMessage);
-
-
-                }
+                } else if (bannersObserve.mStatus == Status.ERROR)
+                {
+                startAnimation();
+                Timber.tag(TAG).e(bannersObserve.mMessage);
                 }
             });
         }
@@ -224,33 +249,83 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
     private void setupObserverCategory()
         {
 
-        startAnimation();
 
         mCategoryViewModel.getCategory().observe(getViewLifecycleOwner(), categoryObserve ->
             {
-
+            val tagObserverCategory = "setupObserverCategory";
             switch (categoryObserve.mStatus)
                 {
 
-                case SUCCESS -> {
-                Log.e(TAG, "Category" + "SUCCESS");
-                Log.e(TAG, "Category" + "SUCCESS, = "  + categoryObserve.getMData());
-                stopAnimation();
-                renderListCategory(categoryObserve);
+                case SUCCESS ->
+                    {
+                    Timber.tag(TAG).e(tagObserverCategory + "SUCCESS, = " + categoryObserve.getMData());
+                    stopAnimation();
+                    renderListCategory(categoryObserve);
 
+                    }
+
+                case LOADING ->
+                    {
+                    Timber.tag(TAG).e("%sLOADING", tagObserverCategory);
+                    startAnimation();
+
+                    }
+                case ERROR ->
+                    {
+
+
+                    Timber.tag(TAG).e("%sERROR", tagObserverCategory);
+                    Timber.tag(TAG  ).e("%s%s", tagObserverCategory, categoryObserve.mMessage);
+                    startAnimation();
+                    }
+
+                case NULL ->
+                    {
+                    startAnimation();
+                    Timber.tag(TAG).e("%sNULL", tagObserverCategory);
+
+                    }
                 }
+            });
 
-                case LOADING -> {
-                stopAnimation();
-                Log.e(TAG, "Category" + "LOADING");
-                }
-                case ERROR -> {
+        }
 
+    private void setupObserverCategoryWithTwoPane()
+        {
 
-                Log.e(TAG, "setupObserverCategory" + "ERROR");
-                Log.e(TAG + "setupObserverCategory:", categoryObserve.mMessage);
-                startAnimation();
-                }
+        mCategoryViewModel.getCategory().observe(getViewLifecycleOwner(), categoryObserve ->
+            {
+            switch (categoryObserve.mStatus)
+                {
+
+                case SUCCESS ->
+                    {
+                    Timber.tag(TAG).e("setupObserverCategoryWithTwoPane, SUCCESS = %s",
+                            (categoryObserve.getMData()));
+
+                    renderListCategory(categoryObserve);
+                    mCategoryViewModel.setItemCategoryWithTwoPane();
+
+                    stopAnimation();
+                    }
+
+                case LOADING ->
+                    {
+                    Timber.tag(TAG).e("setupObserverCategoryWithTwoPane, LOADING");
+                    startAnimation();
+
+                    }
+                case ERROR ->
+                    {
+                    Timber.tag(TAG).e("setupObserverCategory:ERROR %s", categoryObserve.mMessage);
+                    startAnimation();
+                    }
+                case NULL ->
+                    {
+                    startAnimation();
+                    Timber.tag(TAG ).e( "setupObserverCategory:NULL%s",categoryObserve.mMessage);
+
+                    }
                 }
             });
 
@@ -258,8 +333,8 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
     private void startAnimation()
         {
-        mShimmerFrameLayout.startShimmer();
         mShimmerFrameLayout.setVisibility(View.VISIBLE);
+        mShimmerFrameLayout.startShimmer();
         mBinding.rvPriceList.setVisibility(View.GONE);
         mBinding.avfPriceListBanner.setVisibility(View.GONE);
         }
@@ -269,8 +344,8 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
         mBinding.rvPriceList.setVisibility(View.VISIBLE);
         mBinding.avfPriceListBanner.setVisibility(View.VISIBLE);
-
         mShimmerFrameLayout.stopShimmer();
+
         mShimmerFrameLayout.setVisibility(View.GONE);
         }
 
@@ -292,7 +367,7 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
 
     private void fetchItemsCategory(int position)
         {
-        mCategoryViewModel.setItemCategory(Resource.success(mPriceAdapter.getItemEntity(position)));
+        mCategoryViewModel.setItemCategory(position);
         }
 
     private void setupViewModel()
@@ -323,33 +398,40 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
      */
     private void checkConnectionsToInitCategory()
         {
-        NetworkConnection networkConnection = new NetworkConnection(getActivity());
+        NetworkConnection networkConnection = new NetworkConnection(requireActivity());
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
             {
             // if internet not connect,
             if (isConnected)
                 {
 
-                try
-                    {
 
-                    if (mCategoryViewModel.getCategory().getValue().getMStatus().equals(Status.ERROR)
+                mCategoryViewModel.hasData().observe(getViewLifecycleOwner(), hasData ->
+                    {
+                    if(!hasData)
+                        {
+                        Timber.tag(TAG).e("Connected:ERROR %s", mCategoryViewModel.getCategory().getValue());
+                        reloadDataUI();
+                        }
+                    });
+                  /*   if (mCategoryViewModel.getCategory().getValue().getMStatus().equals(Status.ERROR)
                             || mBannersViewModel.getBanners().getValue().getMStatus().equals(Status.ERROR))
                         {
-                        Log.e(TAG, "Connected:ERROR " + mCategoryViewModel.getCategory().getValue());
+                        Timber.tag(TAG).e("Connected:ERROR %s", mCategoryViewModel.getCategory().getValue());
                         reloadDataUI();
                         }
 
                     } catch (NullPointerException e)
                     {
-                    Log.e(TAG, "Connected:NullPointerException:" +e.getMessage());
-                    }
+                    Timber.tag(TAG).e("Connected:NullPointerException:%s", e.getMessage());
+                    } */
 
 
                 }
 
             });
         }
+
     private void reloadDataUI()
         {
         getViewModelStore().clear();
@@ -357,4 +439,63 @@ public class PriceListFragment extends Fragment implements PriceAdapter.ItemClic
         mBannersViewModel.reload();
         }
 
+
+    @Override
+    public void onStop()
+        {
+        stopAnimation();
+        super.onStop();
+        }
+
+    @Override
+    public void onDestroy()
+        {
+        super.onDestroy();
+        mBinding = null;
+        //  mShimmerFrameLayout = null;
+        }
+
+    static class PriceOnBackPressedCallback extends OnBackPressedCallback
+            implements SlidingPaneLayout.PanelSlideListener
+        {
+
+        private final SlidingPaneLayout mSlidingPaneLayout;
+
+        PriceOnBackPressedCallback(@NonNull SlidingPaneLayout slidingPaneLayout)
+            {
+            // Set the default 'enabled' state to true only if it is slideable (i.e., the panes
+            // are overlapping) and open (i.e., the detail pane is visible).
+            super(slidingPaneLayout.isSlideable() && slidingPaneLayout.isOpen());
+            mSlidingPaneLayout = slidingPaneLayout;
+            slidingPaneLayout.addPanelSlideListener(this);
+            }
+
+        @Override
+        public void handleOnBackPressed()
+            {
+            // Return to the list pane when the system back button is pressed.
+            mSlidingPaneLayout.closePane();
+            }
+
+        @Override
+        public void onPanelSlide(@NonNull View panel, float slideOffset)
+            {
+            //NO thing.
+            }
+
+        @Override
+        public void onPanelOpened(@NonNull View panel)
+            {
+            // Intercept the system back button when the detail pane becomes visible.
+            setEnabled(true);
+            }
+
+        @Override
+        public void onPanelClosed(@NonNull View panel)
+            {
+            // Disable intercepting the system back button when the user returns to the
+            // list pane.
+            setEnabled(false);
+            }
+        }
     }

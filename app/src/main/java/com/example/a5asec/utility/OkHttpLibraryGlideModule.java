@@ -23,8 +23,10 @@ public class OkHttpLibraryGlideModule  extends LibraryGlideModule
     @Override
     public void registerComponents(
             @NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
-    OkHttpClient client = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+/*     OkHttpClient client = UnsafeOkHttpClient.getUnsafeOkHttpClient();
     registry.replace(GlideUrl.class, InputStream.class,
-            new OkHttpUrlLoader.Factory((Call.Factory) client));
+            new OkHttpUrlLoader.Factory((Call.Factory) client)); */
+    registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
+
     }
 }

@@ -107,9 +107,8 @@ public class LaundryServiceCartAdapter extends RecyclerView.Adapter<LaundryServi
             this.mItemsBinding = itemLaundryServicesBinding;
 
             imageService = mItemsBinding.ivLaundryServices;
-            textTitle = mItemsBinding.tvLaundryServicesTitle;
+            textTitle = mItemsBinding.tvLaundryServicesContentTitle;
             textSalary = mItemsBinding.tvLaundryServicesSalary;
-            mItemsBinding.setWidth(1);
 
 
             }
@@ -121,7 +120,7 @@ public class LaundryServiceCartAdapter extends RecyclerView.Adapter<LaundryServi
             mItemsBinding.getRoot().setOnClickListener(this);
 
             var context = mItemsBinding.getRoot().getContext();
-            var width = context.getResources().getDimension(R.dimen.size_item_laundry_services_card);
+            var width = context.getResources().getDimension(R.dimen.height_item_laundry_services_card);
 
             mItemsBinding.cvLaundryServicesServices.getLayoutParams().width = (int) (width);
             val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -58,6 +59,15 @@ public class BannersAdapter extends BaseAdapter
         return 0;
         }
 
+    @BindingAdapter("loadImage")
+    public void loadImage(ImageView imageView, String url)
+        {
+        Glide
+                .with(mFragment)
+                .load(url)
+                .fitCenter()
+                .into(imageView);
+        }
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
         {
@@ -67,9 +77,9 @@ public class BannersAdapter extends BaseAdapter
                 R.layout.list_item_banners, parent, false);
         convertView = binding.getRoot();
 
-        var shimmer = new Shimmer.ColorHighlightBuilder()
+     /*    var shimmer = new Shimmer.ColorHighlightBuilder()
                 .setHighlightColor(ContextCompat.getColor(convertView.getContext(),
-                        R.color.md_theme_light_inversePrimary))
+                        R.color.md_theme_light_tertiaryContainer))
                 .setBaseColor(ContextCompat.getColor(convertView.getContext(),
                         R.color.md_theme_light_primaryContainer))
 
@@ -81,19 +91,21 @@ public class BannersAdapter extends BaseAdapter
                 .build();
 
         var shimmerDrawables = new ShimmerDrawable();
-        shimmerDrawables.setShimmer(shimmer);
-
+        shimmerDrawables.setShimmer(shimmer); */
+        https://www.youtube.com/watch?v=mTdlhVZ_1DM
+           // binding.se
         try
             {
             ImageView imageView = binding.imvBanners;
             String url = banners.getUrl();
-            Glide
+         /*    Glide
                     .with(mFragment)
                     .load(url)
+                    .fitCenter()
                     .placeholder(shimmerDrawables)
                     .error(shimmerDrawables)
                     .fallback(shimmerDrawables)
-                    .into(imageView);
+                    .into(imageView); */
             } catch (Exception e)
             {
             e.printStackTrace();

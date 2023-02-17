@@ -20,7 +20,7 @@
 
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
-        app:content="@+id/tv_laundry_services_title"
+        app:content="@+id/tv_laundry_services_content_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ph_template_image" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -8,8 +9,7 @@
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
-        android:paddingTop="@dimen/margin_item_services_container"
-        android:paddingBottom="@dimen/margin_item_services_container"
+        android:paddingBottom="@dimen/padding_all_element"
         >
 
         <LinearLayout
@@ -23,19 +23,23 @@
                 android:id="@+id/tv_item_services_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/padding_all_item_services_text"
-                android:paddingEnd="@dimen/padding_all_item_services_text"
+                android:paddingTop="@dimen/padding_all_element"
 
-                android:textSize="18sp"
+                android:paddingStart="@dimen/padding_all_element"
+                android:paddingEnd="@dimen/padding_all_element"
+                android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
+
                 tools:text="THOBE" />
 
             <TextView
                 android:id="@+id/tv_item_services_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/padding_all_item_services_text"
-                android:paddingTop="@dimen/padding_all_item_services_text"
-                android:paddingEnd="@dimen/padding_all_item_services_text"
+                android:paddingTop="@dimen/padding_all_element"
+
+                android:paddingStart="@dimen/padding_all_element"
+                android:paddingEnd="@dimen/padding_all_element"
+                android:textAppearance="@style/TextAppearance.5asec.BodyMedium"
 
                 tools:text="100SAR" />
 
@@ -50,7 +54,7 @@
 
             android:layout_weight="0"
             android:contentDescription="@null"
-            tools:srcCompat="@drawable/ic_menu_discount" />
+            app:srcCompat="@drawable/ic_arrow" />
 
     </LinearLayout>
 </layout>

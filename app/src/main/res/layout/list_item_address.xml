@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|clip_horizontal|center|clip_vertical|center_horizontal|fill|fill_horizontal|left|fill_vertical"
                     app:backgroundTint="@color/md_theme_light_secondary"
-                    app:icon="@drawable/ic_menu_settings"
+                    app:icon="@drawable/ic_setting"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

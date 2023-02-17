@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <com.example.a5asec.ui.view.element.MaskedCardView
+    <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </layout>

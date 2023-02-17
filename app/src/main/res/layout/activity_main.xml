@@ -7,9 +7,11 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/coordinatorLayout"
+        android:id="@+id/cl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+
         tools:context=".ui.view.login.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -44,10 +46,12 @@
             android:id="@+id/tv_main_network"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/md_theme_light_shadow"
+            android:background="@color/md_theme_light_onSurface"
             android:gravity="center"
+            android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
+
             android:text="@string/all_network_error"
-            android:textColor="@color/md_theme_light_outlineVariant"
+            android:textColor="@color/md_theme_light_surface"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/fc_main_container"
             app:layout_constraintEnd_toEndOf="parent"

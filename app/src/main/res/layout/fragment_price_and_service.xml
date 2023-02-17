@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.slidingpanelayout.widget.SlidingPaneLayout
+        android:id="@+id/spl_price_service"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+       >
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_price"
+            android:name="com.example.a5asec.ui.view.home.PriceListFragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_price_list"
+
+            />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_service"
+            android:name="com.example.a5asec.ui.view.home.ServicesFragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+
+            tools:layout="@layout/fragment_services"
+
+            />
+    </androidx.slidingpanelayout.widget.SlidingPaneLayout>
+</layout>

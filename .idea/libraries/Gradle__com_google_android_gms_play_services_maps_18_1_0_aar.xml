@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-maps:18.1.0@aar">
     <CLASSES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/transforms-3/9a67dfc0eba3e7e5576d3a39f4689695/transformed/jetified-play-services-maps-18.1.0/jars/classes.jar!/" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/9a67dfc0eba3e7e5576d3a39f4689695/transformed/jetified-play-services-maps-18.1.0/res" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/9a67dfc0eba3e7e5576d3a39f4689695/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/22a156a967ba033d44cd15ba456a7885/transformed/jetified-play-services-maps-18.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/22a156a967ba033d44cd15ba456a7885/transformed/jetified-play-services-maps-18.1.0/res" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/22a156a967ba033d44cd15ba456a7885/transformed/jetified-play-services-maps-18.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://C:/AndroidManager/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-maps/18.1.0/cf6ed5b45b101f094c3f0b439b59c0188572ffd9/play-services-maps-18.1.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-maps/18.1.0/cf6ed5b45b101f094c3f0b439b59c0188572ffd9/play-services-maps-18.1.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

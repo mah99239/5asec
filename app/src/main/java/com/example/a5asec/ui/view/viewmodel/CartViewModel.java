@@ -2,6 +2,7 @@ package com.example.a5asec.ui.view.viewmodel;
 
 import android.util.Log;
 
+import androidx.databinding.ObservableInt;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -29,8 +30,11 @@ public class CartViewModel extends ViewModel
     private static final String TAG = "CartViewModel";
     private OrderDataSource mDataSource;
     private MutableLiveData<Resource<List<ServiceAndLaundryService>>> mOrderMutableLiveData = new MutableLiveData<>();
+
+    private ObservableInt mCountObservable;
+
     private MutableLiveData<ServiceAndLaundryService> mOrder = new MutableLiveData<>();
-   private MutableLiveData<Resource<Integer>>mCountService = new MutableLiveData<>();
+    private MutableLiveData<Resource<Integer>> mCountService = new MutableLiveData<>();
     private MutableLiveData<Resource<Integer>> mSumAllOrder = new MutableLiveData<>();
     private MutableLiveData<Resource<Integer>> mSumOrder = new MutableLiveData<>();
     private MutableLiveData<Resource<ArrayList<Integer>>> mSumAllOrders = new MutableLiveData<>();
@@ -39,7 +43,27 @@ public class CartViewModel extends ViewModel
 
     public CartViewModel(OrderDataSource dataSource)
         {
+        setCountObservable();
         this.mDataSource = dataSource;
+        }
+
+    public ObservableInt getCountObservable()
+        {
+        return mCountObservable;
+        }
+    public void setCountObservable()
+        {
+         mCountObservable = new ObservableInt(1);
+        }
+
+    public void plusCount()
+        {
+        mCountObservable.set(mCountObservable.get() + 1);
+        }
+
+    public void minusCount()
+        {
+        if (mCountObservable.get() > 1) mCountObservable.set(mCountObservable.get() - 1);
         }
 
     public LiveData<Resource<List<ServiceAndLaundryService>>> getAllOrder()
@@ -258,14 +282,14 @@ public class CartViewModel extends ViewModel
                             public void onSuccess(@NonNull Integer count)
                                 {
                                 mCountService.postValue(Resource.success(count));
-                                Log.e(TAG, "getCountOrder, count = " + count );
+                                Log.e(TAG, "getCountOrder, count = " + count);
 
                                 }
 
                             @Override
                             public void onError(@NonNull Throwable e)
                                 {
-                                Log.e(TAG,"getCountOrder, ERROR"  + e.getMessage() );
+                                Log.e(TAG, "getCountOrder, ERROR" + e.getMessage());
                                 mCountService.postValue(Resource.empty(null));
 
                                 }

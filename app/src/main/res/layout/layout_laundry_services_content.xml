@@ -4,95 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.a5asec.ui.view.home.LaundryServicesFragment"/>
-        <variable name="fragment" type="com.example.a5asec.ui.view.home.LaundryServicesFragment"/>
+        <import type="com.example.a5asec.ui.view.home.LaundryServicesBottomSheet"/>
+        <variable name="model" type="com.example.a5asec.ui.view.viewmodel.CartViewModel"/>
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_laundry_services_content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
+        android:layout_height="wrap_content">
 
 
         <TextView
-            android:id="@+id/tv_laundry_services_titile"
+            android:id="@+id/tv_laundry_services_content_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/laundry_service_content_available_services"
-            android:textSize="@dimen/textsize_layout_laundry_services_text"
+            android:textAppearance="@style/TextAppearance.5asec.TitleMedium"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_laundry_services"
+            android:id="@+id/rv_laundry_services_content"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_laundry_services_add"
+            android:layout_marginTop="@dimen/padding_all_element"
+            app:layout_constraintBottom_toTopOf="@+id/tv_laundry_services_content_total"
+            app:layout_constraintDimensionRatio="H,3:2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_laundry_services_titile"
-            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/tv_laundry_services_content_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_laundry_services_content_title"
             tools:listitem="@layout/list_item_laundry_services" />
 
         <Button
-            android:id="@+id/btn_laundry_services_minus"
+            android:id="@+id/btn_laundry_services_content_minus"
             style="@style/Widget.5asec.iconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> fragment.minusCount()}"
 
-            android:contentDescription="@null"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+            android:onClick="@{() -> model.minusCount()}"
             app:icon="@drawable/ic_minus"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_laundry_services_count"
-            app:layout_constraintEnd_toStartOf="@+id/tv_laundry_services_count"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_laundry_services_content_count"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@+id/rv_laundry_services_content" />
 
         <TextView
-            android:id="@+id/tv_laundry_services_count"
+            android:id="@+id/tv_laundry_services_content_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_all_element"
             android:gravity="center"
-            android:text="@{String.valueOf(fragment.mCountObservable)}"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btn_laundry_services_add"
-            app:layout_constraintEnd_toStartOf="@+id/btn_laundry_services_add"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_laundry_services_minus" />
+            android:text="@{String.valueOf(model.getCountObservable())}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_laundry_services_content_minus"
+            app:layout_constraintEnd_toStartOf="@+id/btn_laundry_services_content_add"
+            app:layout_constraintStart_toEndOf="@+id/btn_laundry_services_content_minus"
+            tools:text="10000" />
 
 
         <Button
-            android:id="@+id/btn_laundry_services_add"
+            android:id="@+id/btn_laundry_services_content_add"
             style="@style/Widget.5asec.iconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()  ->  fragment.plusCount()}"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@null"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintBottom_toTopOf="@+id/btn_laundry_services_cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_laundry_services_count"
-            app:layout_constraintTop_toBottomOf="@+id/rv_laundry_services" />
+            android:layout_marginStart="@dimen/padding_all_element"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+
+            android:onClick="@{()  ->  model.plusCount()}"
+            app:icon="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_laundry_services_content_minus"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_laundry_services_content_count" />
 
         <Button
-            android:id="@+id/btn_laundry_services_cart"
+            android:id="@+id/btn_laundry_services_content_cart"
             style="@style/Widget.5asec.secondaryButton"
             android:layout_width="0dp"
 
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_all_element"
             android:text="@string/laundry_service_content_cart_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toStartOf="@+id/gl_laundry_servces_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_laundry_services_content_total" />
+
+        <TextView
+            android:id="@+id/tv_laundry_services_content_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_all_guideline"
+            android:text="@string/all_total_service"
+
+            android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
+            app:layout_constraintBottom_toTopOf="@+id/btn_laundry_services_content_cart"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/btn_laundry_services_content_cart"
+            app:layout_constraintTop_toBottomOf="@+id/rv_laundry_services_content" />
+
+        <TextView
+            android:id="@+id/tv_laundry_services_content_total_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="40 SAR"
+            android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
+
+            app:layout_constraintStart_toEndOf="@+id/tv_laundry_services_content_total"
+            app:layout_constraintTop_toTopOf="@+id/tv_laundry_services_content_total" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_laundry_servces_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

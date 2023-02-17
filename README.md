@@ -13,10 +13,13 @@ A mobile ordering delivery processing and tracking system for an international l
 
 ## Screenshots
 
+![ScreenShoot-log_in-mobile.png](images%2FScreenShoot-log_in-mobile.png) 
+![ScreenShoot-log_in-tablet.png](images%2FScreenShoot-log_in-tablet.png)
+
 
 # Technologies
   Used UI element for Material Design.
-  Used Retofit for fetching data from Rest API and used RxJava to manage request in background, used Glide to fetching images from Rest API.
+  Used Retrofit for fetching data from Rest API and used RxJava to manage request in background, used Glide to fetching images from Rest API.
   used Refresh Access Token with OkHttpClient and memorized token in Shared Preferences.
   used Room and sqlite to save order when user add cart.
   Used Google Maps to get Address and manage address from user.

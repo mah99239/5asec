@@ -54,7 +54,7 @@
     <string name="cart_button_label">GO to checkout</string>
     <string name="cart_text_name_service">Thobe</string>
     <string name="cart_text_services">Required service: </string>
-    <string name="cart_text_total_service">Total: </string>
+    <string name="all_total_service">Total: </string>
     <string name="cart_text_count">count: </string>
     <string name="cart_tittle">Cart</string>
     <string name="cart_text_empty">Your cart is empty!</string>
@@ -70,9 +70,9 @@
     <string name="forget_password_tittle">Forget password</string>
 
     <string name="laundry_Service_base_name">Basic service</string>
-    <string name="laundry_service_content_available_services">available service:</string>
-    <string name="laundry_service_content_cart_button">add to cart</string>
-    <string name="laundry_service_content_cart_updata_button">update cart</string>
+    <string name="laundry_service_content_available_services">Available service:</string>
+    <string name="laundry_service_content_cart_button">Add to cart</string>
+    <string name="laundry_service_content_cart_update_button">Update cart</string>
     <string name="login_button_signUp">Sign Up</string>
     <string name="login_email">E-mail</string>
     <string name="login_forgotPassword">Forgot password?</string>

@@ -43,16 +43,13 @@ public class Category
 
     public String getName(String language)
         {
-        return language.equals("en") ?nameEn: nameAr;
+        return language.equals("en") ? nameEn : nameAr;
         }
 
 
-
     @Data
-    public  class ItemsEntity
+    public class ItemsEntity
         {
-
-
         @Expose
         @SerializedName("id")
         private int id;
@@ -75,10 +72,11 @@ public class Category
 
         public String getName(String language)
             {
-            return language.equals("en") ?nameEn: nameAr;
+            return language.equals("en") ? nameEn : nameAr;
             }
 
         }
+
     @Data
     public static class ItemServicesEntity
         {
@@ -102,6 +100,7 @@ public class Category
             this.laundryService = entity;
             }
         }
+
     @Data
     public static class LaundryServiceEntity
         {
@@ -124,7 +123,7 @@ public class Category
 
         public String getName(String language)
             {
-            return language.equals("en") ?nameEn: nameAr;
+            return language.equals("en") ? nameEn : nameAr;
             }
 
         }

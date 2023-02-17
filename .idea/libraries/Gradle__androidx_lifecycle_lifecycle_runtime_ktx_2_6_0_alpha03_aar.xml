@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha03@aar">
     <CLASSES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/transforms-3/96645ae58214832aac1a0fe8a2054484/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/jars/classes.jar!/" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/96645ae58214832aac1a0fe8a2054484/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/res" />
-      <root url="file://C:/AndroidManager/.gradle/caches/transforms-3/96645ae58214832aac1a0fe8a2054484/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/047474fb341025df834cb1ef1abfc1a5/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/res" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/047474fb341025df834cb1ef1abfc1a5/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/caches/transforms-3/047474fb341025df834cb1ef1abfc1a5/transformed/jetified-lifecycle-runtime-ktx-2.6.0-alpha03/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://C:/AndroidManager/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-runtime-ktx/2.6.0-alpha03/6d338022f8fa82c24121d5d249fe5daeeb297742/lifecycle-runtime-ktx-2.6.0-alpha03-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-runtime-ktx/2.6.0-alpha03/6d338022f8fa82c24121d5d249fe5daeeb297742/lifecycle-runtime-ktx-2.6.0-alpha03-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

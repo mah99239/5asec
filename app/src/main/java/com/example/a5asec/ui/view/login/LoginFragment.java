@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.text.NoCopySpan;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -80,7 +81,7 @@ public class LoginFragment extends Fragment implements LifecycleObserver
         {
         setupViewModel();
         setupClickedButtons();
-        checkDateValidateWithUser();
+        checkDateValidate();
         networkAvailable();
         }
 
@@ -255,16 +256,12 @@ public class LoginFragment extends Fragment implements LifecycleObserver
         }
 
 
-    private void checkDateValidateWithUser()
+    private void checkDateValidate()
         {
 
-        mBinding.etLoginEmail.addTextChangedListener(new TextWatcher()
+        mBinding.etLoginEmail.addTextChangedListener(new TextWatcherLogin()
             {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
-                // Do nothing because not change before text
-                }
+
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
@@ -284,19 +281,11 @@ public class LoginFragment extends Fragment implements LifecycleObserver
                     }
                 }
 
-            @Override
-            public void afterTextChanged(Editable s)
-                {
 
-                }
             });
-        mBinding.etLoginPassword.addTextChangedListener(new TextWatcher()
+        mBinding.etLoginPassword.addTextChangedListener(new TextWatcherLogin()
             {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
 
-                }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
@@ -312,11 +301,7 @@ public class LoginFragment extends Fragment implements LifecycleObserver
                     }
                 }
 
-            @Override
-            public void afterTextChanged(Editable s)
-                {
 
-                }
             });
         }
 
@@ -427,5 +412,19 @@ public class LoginFragment extends Fragment implements LifecycleObserver
         mBinding = null;
         }
 
+    abstract class TextWatcherLogin implements TextWatcher
+        {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
+            }
+
+        @Override
+        public void afterTextChanged(Editable s)
+            {
+
+            }
+
+        }
     }
