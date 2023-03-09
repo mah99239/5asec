@@ -3,12 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-
+        <variable
+            name="category"
+            type="com.example.a5asec.data.model.api.Category" />
+        <variable
+            name="language"
+            type="String" />
+        <variable
+            name="position"
+            type="int" />
+        <variable
+            name="listener"
+            type="com.example.a5asec.ui.adapters.base.ItemClickListener" />
     </data>
     <com.google.android.material.card.MaterialCardView
 
         style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
+        android:onClick="@{(view) -> listener.onItemClick(view,position)}"
         android:layout_height="@dimen/height_item_price_card"
         android:layout_marginStart="@dimen/margin_card"
         android:layout_marginTop="@dimen/margin_card">
@@ -25,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingTop="@dimen/padding_all_element"
+                app:loadImage="@{category.iconUrl}"
                 android:paddingBottom="@dimen/padding_all_element"
 
                  />
@@ -40,6 +53,8 @@
                 android:paddingStart="@dimen/padding_all_element"
                 android:paddingEnd="@dimen/padding_all_element"
                 android:paddingBottom="@dimen/padding_all_element"
+                android:text="@{category.getName(language)}"
+
                 android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
                 tools:text="Thobe &amp; Abaya" />
         </LinearLayout>

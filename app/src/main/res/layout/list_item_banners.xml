@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="image"
+            name="banner"
             type="com.example.a5asec.data.model.api.Banners" />
     </data>
 
@@ -18,9 +19,11 @@
             android:layout_height="match_parent"
             android:background="@color/seed"
             android:padding="@dimen/padding_price_banner"
-            app:setImage="@{movie.}"
-
+            app:loadImage="@{banner.url}"
             android:scaleType="centerCrop"
-           />
+            android:contentDescription="@null" />
     </LinearLayout>
 </layout>
+<!--
+    app:setImage="@{movie.}"
+-->

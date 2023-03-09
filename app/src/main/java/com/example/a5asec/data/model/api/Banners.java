@@ -1,5 +1,13 @@
 package com.example.a5asec.data.model.api;
 
+import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.a5asec.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +19,8 @@ import lombok.Data;
  * used lombok to
  */
 @Data
-public class Banners {
+public class Banners
+    {
 
 
     @Expose
@@ -39,4 +48,5 @@ public class Banners {
     private String description;
 
 
-}
+
+    }

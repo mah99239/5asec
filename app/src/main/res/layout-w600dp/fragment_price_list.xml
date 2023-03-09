@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.a5asec.data.model.api.Banners" />
+
+        <import type="java.util.List" />
+
+        <variable
+            name="bannerAdapter"
+            type="com.example.a5asec.ui.adapters.BannersAdapter" />
+
+        <variable
+            name="bannerList"
+            type="List&lt;Banners>" />
+
+
+
+        <variable
+            name="categoryList"
+            type="List&lt;com.example.a5asec.data.model.api.Category>" />
+
+        <variable
+            name="priceAdapter"
+            type="com.example.a5asec.ui.adapters.PriceAdapter" />
+
+
+    </data>
+
+    <androidx.slidingpanelayout.widget.SlidingPaneLayout
+        android:id="@+id/spl_price"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_price_list_root"
+            android:layout_width="@dimen/width_price_list"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_price_list_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:context=".ui.view.home.PriceListFragment"
+                tools:visibility="visible">
+
+
+                <AdapterViewFlipper
+                    android:id="@+id/avf_price_list_banner"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+
+                    android:background="@color/md_theme_light_primary"
+                    app:adapterFlipper="@{bannerAdapter}"
+                    app:dataFlipper="@{bannerList}"
+                    app:layout_constraintDimensionRatio="H,3:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    tools:visibility="invisible">
+
+                </AdapterViewFlipper>
+
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_price_list_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="avf_price_list_banner" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_price_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier_price_list_top"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="1"
+                    app:setAdapter="@{priceAdapter}"
+                    app:setDataAtAdapter="@{categoryList}"
+                    />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sh_price"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_price_list_banner"
+                            android:layout_marginBottom="@dimen/margin_all_guideline"
+                            android:background="@color/md_theme_light_primary"
+
+                            />
+
+                        <include layout="@layout/shimmer_price" />
+
+                        <include layout="@layout/shimmer_price" />
+
+                        <include layout="@layout/shimmer_price" />
+
+                        <include layout="@layout/shimmer_price" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_service"
+            android:name="com.example.a5asec.ui.view.home.ServicesFragment"
+            android:layout_width="@dimen/width_service_detail"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            tools:layout="@layout/fragment_services"
+
+            />
+    </androidx.slidingpanelayout.widget.SlidingPaneLayout>
+
+</layout>

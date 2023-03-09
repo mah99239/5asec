@@ -1,0 +1,36 @@
+@startuml
+
+class com.example.a5asec.data.remote.api.CategoryHelper {
+- CategoryApi mCategoryApi
++ Observable<List<Category>> getCategory()
++ Observable<Category.ItemsEntity> getItemCategory(long)
+}
+class com.example.a5asec.data.remote.api.CategoryClient {
+- {static} CategoryClient INSTANCE
+- CategoryApi mCategoryApi
+- CategoryApi mItemCategoryTokenApi
++ {static} CategoryClient getINSTANCE()
++ Observable<List<Category>> getCategory()
++ Observable<Category.ItemsEntity> getItemCategory(long)
+}
+interface com.example.a5asec.data.remote.api.CategoryApi {
+~ Observable<List<Category>> getCategory()
+~ Observable<Category.ItemsEntity> getItemCategory(long)
+}
+abstract class com.example.a5asec.data.remote.api.Client {
+- {static} String TAG
+- {static} String BASE_URL
+# {static} Retrofit getRetrofit()
+# {static} Retrofit getRetrofitConverterScalar()
+# {static} Retrofit getRetrofitAdapter()
+}
+class com.example.a5asec.data.remote.api.ConnectivityInterceptor {
+- {static} String TAG
++ Response intercept(Chain)
+}
+
+
+com.example.a5asec.data.remote.api.CategoryApi <|.. com.example.a5asec.data.remote.api.CategoryClient
+com.example.a5asec.data.remote.api.Client <|-- com.example.a5asec.data.remote.api.CategoryClient
+okhttp3.Interceptor <|.. com.example.a5asec.data.remote.api.ConnectivityInterceptor
+@enduml

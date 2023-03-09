@@ -104,6 +104,7 @@ public class UserViewModel extends ViewModel
                                 mUser.postValue(Resource.success(authorizationResource.getUser()));
                                 mCompositeDisposable.remove(this);
 
+
                                 }
 
                             @Override
@@ -130,6 +131,7 @@ public class UserViewModel extends ViewModel
                             public void onSuccess(@NonNull Users userResource)
                                 {
                                 mUser.postValue(Resource.success(userResource));
+
 
                                 }
 
@@ -215,6 +217,7 @@ public class UserViewModel extends ViewModel
                                         tokenResource.getExpires_in());
                                 Log.e(TAG, "refreshToken() - onSuccess ");
 
+
                                 }
 
                             @Override
@@ -271,6 +274,7 @@ public class UserViewModel extends ViewModel
                                 mUser.postValue(Resource.success(userResource));
                                 Log.e(TAG, "SUCESS changeLanguage");
 
+
                                 }
 
                             @Override
@@ -303,6 +307,7 @@ public class UserViewModel extends ViewModel
                                 {
                                 mUser.postValue(Resource.success(userResource));
                                 Log.e(TAG, "ChangeNotification:SUCCESS");
+
                                 }
 
                             @Override
@@ -337,6 +342,7 @@ public class UserViewModel extends ViewModel
                                 {
                                 mStatusCode.postValue(Resource.success(userResource));
                                 Log.e(TAG, "SUCESS changePassword");
+
                                 }
 
                             @Override

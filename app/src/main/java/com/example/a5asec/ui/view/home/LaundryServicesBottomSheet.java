@@ -1,29 +1,19 @@
 package com.example.a5asec.ui.view.home;
 
-import android.animation.ValueAnimator;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ActionMode;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableInt;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
@@ -33,7 +23,6 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.bumptech.glide.Glide;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.data.model.db.ItemService;
@@ -44,14 +33,13 @@ import com.example.a5asec.ui.adapters.LaundryServicesAdapter;
 import com.example.a5asec.ui.view.viewmodel.CartViewModel;
 import com.example.a5asec.ui.view.viewmodel.CategoryViewModel;
 import com.example.a5asec.utility.AdaptiveUtils;
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -85,10 +73,10 @@ public class LaundryServicesBottomSheet extends BottomSheetDialogFragment implem
         {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
 
-        dialog.setOnShowListener((DialogInterface.OnShowListener) dialog1 ->
+        dialog.setOnShowListener(dialog1 ->
             {
             BottomSheetDialog d = (BottomSheetDialog) dialog1;
-            FrameLayout bottomSheet = (FrameLayout) d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            FrameLayout bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheet != null)
                 {
                 BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -113,7 +101,7 @@ public class LaundryServicesBottomSheet extends BottomSheetDialogFragment implem
         setupCartViewModel();
         setupLifecycleOwner();
         mCartViewModel.setCountObservable();
-        if (getTag() == TAG) //if insert cart.
+        if (Objects.equals(getTag(), TAG)) //if insert cart.
             {
             setupClickedInsertCartButton();
 
@@ -140,7 +128,7 @@ public class LaundryServicesBottomSheet extends BottomSheetDialogFragment implem
     private void setUpRecyclerView()
         {
         var recyclerView = mBinding.iLaundryServiceLayout.rvLaundryServicesContent;
-        mAdapter = new LaundryServicesAdapter( Glide.with(this));
+        mAdapter = new LaundryServicesAdapter();
         recyclerView.setAdapter(mAdapter);
 
         setupSelectionTracker();
@@ -218,7 +206,7 @@ public class LaundryServicesBottomSheet extends BottomSheetDialogFragment implem
                 String nameEN = i.getLaundryService().getNameEn();
                 String nameAr = i.getLaundryService().getNameAr();
                 laundryServices.add(new LaundryService(id, cost, url, nameEN, nameAr));
-                Timber.e("update:" + i);
+                Timber.e("update:%s", i);
 
                 });
 
@@ -346,27 +334,16 @@ public class LaundryServicesBottomSheet extends BottomSheetDialogFragment implem
 
                 case SUCCESS ->
                     {
-
                     Timber.e("SUCCESS%s", itemsEntities.getMData());
                     renderList(itemsEntities.getMData());
                     }
-                case LOADING ->
-                    {
+                case LOADING -> Timber.e("LOADING");
 
-                    Timber.e("LOADING");
 
-                    }
+                case NULL -> Timber.e("NULL");
 
-                case NULL ->
-                    {
-                    Timber.e("NULL");
 
-                    }
-                case ERROR ->
-                    {
-                    Timber.e("ERROR");
-
-                    }
+                case ERROR -> Timber.e("ERROR");
 
 
                 }

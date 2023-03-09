@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+<data>
+    <variable
+        name="itemCategory"
+        type="com.example.a5asec.data.model.api.Category.ItemsEntity" />
+    <variable
+        name="language"
+        type="String" />
+</data>
     <LinearLayout
         android:id="@+id/ll_item_services_container"
         android:layout_width="match_parent"
@@ -13,9 +20,9 @@
         >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:gravity="start"
             android:orientation="vertical">
 
@@ -24,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/padding_all_element"
+                android:text="@{itemCategory.getName(language)}"
 
                 android:paddingStart="@dimen/padding_all_element"
                 android:paddingEnd="@dimen/padding_all_element"
@@ -36,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/padding_all_element"
+                android:text="@{itemCategory.cost + @string/all_cost_label}"
 
                 android:paddingStart="@dimen/padding_all_element"
                 android:paddingEnd="@dimen/padding_all_element"
@@ -47,12 +56,12 @@
 
         <ImageView
             android:id="@+id/iv_item_services"
-            android:layout_width="@dimen/size_item_services_image"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/size_item_services_image"
 
             android:layout_gravity="center"
 
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:contentDescription="@null"
             app:srcCompat="@drawable/ic_arrow" />
 

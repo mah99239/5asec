@@ -118,6 +118,7 @@ public class AddressViewModel extends ViewModel
                                 Log.e(TAG, "addAddress, onSuccess");
 
                                 mAddress.postValue(Resource.success(address));
+
                                 }
 
                             @Override

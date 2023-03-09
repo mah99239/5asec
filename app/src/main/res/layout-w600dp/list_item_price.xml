@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="category"
+            type="com.example.a5asec.data.model.api.Category" />
+        <variable
+            name="language"
+            type="String" />
+        <variable
+            name="position"
+            type="int" />
+        <variable
+            name="listener"
+            type="com.example.a5asec.ui.adapters.base.ItemClickListener" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+
+        style="@style/Widget.5asec.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_item_price_card"
+        android:onClick="@{(view) -> listener.onItemClick(view,position)}"
+
+        android:layout_marginTop="@dimen/padding_all_element"
+        android:layout_marginBottom="@dimen/padding_all_element">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/padding_all_element"
+                app:loadImage="@{category.iconUrl}"
+                android:paddingBottom="@dimen/padding_all_element"
+
+                tools:srcCompat="@drawable/ic_category" />
+
+            <TextView
+                android:id="@+id/tv_itemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="0"
+                android:background="@color/md_theme_light_surfaceVariant"
+                android:paddingBottom="@dimen/padding_all_element"
+                android:text="@{category.getName(language)}"
+
+                android:textAppearance="@style/TextAppearance.5asec.TitleLarge"
+                tools:text="Thobe &amp; Abaya" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.a5asec.utility.FakeCrashLibrary;
-import com.example.a5asec.utility.NetworkConnection;
 import com.google.android.material.color.DynamicColors;
 
 import timber.log.Timber;
@@ -16,9 +15,10 @@ import timber.log.Timber.DebugTree;
 
 
 /**
- * @author : Mahmoud Abd Elhafeez
+ * @author : Mahmoud Abd-Elhafeez
  * @version : 1.0
  */
+
 
 public class MvvmApp extends Application
     {

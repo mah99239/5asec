@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.HttpException;
+import timber.log.Timber;
 
 public class SignUpViewModel extends ViewModel
     {
@@ -57,7 +58,7 @@ public class SignUpViewModel extends ViewModel
                             public void onSuccess(@NonNull ResponseEntity userResource)
                                 {
                                 mStatusCode.setValue(Resource.success(userResource));
-                                Log.e(TAG, "registerUsers:SUCCESS");
+                                Timber.tag(TAG).e("registerUsers:SUCCESS");
                                 }
 
                             @Override

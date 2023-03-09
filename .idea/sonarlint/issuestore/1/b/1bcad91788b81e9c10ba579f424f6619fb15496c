@@ -1,0 +1,19 @@
+
+p
+java:S1192Æ"YDefine a constant instead of duplicating this literal "onSuccess, idService =  " 3 times.(éÁ€‹
+˜
+java:S1186¾"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(­„ÆÝ
+H
+java:S1602Ý",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ
+˜
+java:S1186î"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(­„ÆÝ
+W	java:S125´"<This block of commented-out lines of code should be removed.(íæÁèÿÿÿÿÿ
+U
+java:S1155¼">Use isEmpty() to check whether the collection is empty or not.(æ¡›Ž
+W	java:S125æ"<This block of commented-out lines of code should be removed.(Éèþóüÿÿÿÿ
+H
+java:S1602€",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ
+H
+java:S1602„",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ
+H
+java:S1602–",Remove useless curly braces around statement(ÒÌâ–øÿÿÿÿ

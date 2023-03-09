@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
 
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Category;
@@ -20,14 +19,12 @@ import java.util.List;
 
 public class ServicesAdapter extends BaseAdapter
     {
-    private  List<Category.ItemsEntity> mItemsCategory;
-    private Fragment mFragment;
+    private final List<Category.ItemsEntity> mItemsCategory = new ArrayList<>();
 
-    public ServicesAdapter(Fragment fragment)
 
+    public ServicesAdapter()
         {
-        mItemsCategory = new ArrayList<>();
-        mFragment = fragment;
+        //Run
         }
 
 
@@ -37,11 +34,19 @@ public class ServicesAdapter extends BaseAdapter
         return mItemsCategory.size();
         }
 
+    /**
+     * Get the data item associated with the specified position in the data set.
+     *
+     * @param position Position of the item whose data we want within the adapter's
+     *                 data set.
+     * @return The data at the specified position.
+     */
     @Override
-    public Category.ItemsEntity getItem(int position)
+    public Object getItem(int position)
         {
-        return mItemsCategory.get(position);
+        return null;
         }
+
 
     @Override
     public long getItemId(int position)
@@ -49,31 +54,8 @@ public class ServicesAdapter extends BaseAdapter
         return position;
         }
 
-    /**
-     * called when item's clicked in list
-     *
-     * @param position pass item positions
-     * @return item of services
-     */
-    public Category.ItemServicesEntity setItemBase(int position)
-        {
-        int id = mItemsCategory.get(position).getId();
-        int cost = mItemsCategory.get(position).getCost();
-        return new Category.ItemServicesEntity(id, cost, null);
 
-        }
-
-    public Category.ItemsEntity getItemService(int position)
-        {
-       /*  var mItemsBase = new ArrayList<Category.ItemServicesEntity>();
-        mItemsBase.add(setItemBase(position));
-
-        mItemsBase.addAll(mItemsCategory.get(position).getItemServices()); */
-
-        return mItemsCategory.get(position);
-        }
-
-    public void addServices(@NonNull List<Category.ItemsEntity> category)
+    public void updateServices(@NonNull List<Category.ItemsEntity> category)
         {
         mItemsCategory.clear();
         mItemsCategory.addAll(category);
@@ -84,29 +66,19 @@ public class ServicesAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent)
         {
 
-        String mLanguage = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+        String languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();
 
         ListItemServicesBinding binding = inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.list_item_services, parent, false);
-        convertView = binding.getRoot();
+
 
         if (mItemsCategory.isEmpty()) return convertView;
+        var itemCategory = mItemsCategory.get(position);
+        binding.setItemCategory(itemCategory);
+        binding.setLanguage(languageTags);
 
-        int costInt = mItemsCategory.get(position).getCost();
-        String name = mItemsCategory.get(position).getName(mLanguage);
-        String labelCost = mFragment.getContext().getString(R.string.all_cost_label);
-
-        String cost = costInt + labelCost;
-
-        if (!name.isEmpty() && !name.equals("string"))
-            {
-            binding.tvItemServicesName.setText(name);
-            binding.tvItemServicesPrice.setText(cost);
-            //binding.ivItemServices.setImageResource(R.drawable.ic_menu_price);
-            }
-
-        return convertView;
+        return binding.getRoot();
         }
 
     }

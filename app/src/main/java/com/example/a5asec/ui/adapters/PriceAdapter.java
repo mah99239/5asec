@@ -2,90 +2,66 @@ package com.example.a5asec.ui.adapters;
 
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.databinding.ListItemPriceBinding;
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerDrawable;
-import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.shape.CornerFamily;
-
-import org.jetbrains.annotations.NotNull;
+import com.example.a5asec.ui.adapters.base.BaseAdapter;
+import com.example.a5asec.ui.adapters.base.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.val;
+import timber.log.Timber;
 
 
 /**
  * Author MahmoudZ
  * The {@link PriceAdapter is adapte data in price api catagory}
  */
-public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHolder>
+public class PriceAdapter extends BaseAdapter<ListItemPriceBinding, Category>
     {
     private static final String TAG = "PriceAdapter";
-    private final Fragment mFragment;
-    ItemClickListener mClickListener;
-    private List<Category> mCategoryList;
+    private final List<Category> mCategoryList = new ArrayList<>();//cannot refer to new ArrayList.
 
-    public PriceAdapter(Fragment fragment)
+    public PriceAdapter()
         {
-        this.mFragment = fragment;
-        mCategoryList = new ArrayList<>();
-        }
-
-    @NotNull
-    public PriceAdapter.PriceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-        {
-
-
-        ListItemPriceBinding itemPriceBinding = DataBindingUtil.inflate(LayoutInflater
-                        .from(parent.getContext()),
-                R.layout.list_item_price, parent, false);
-
-        return new PriceAdapter.PriceViewHolder(itemPriceBinding);
+        super.mLayoutId = R.layout.list_item_price;
         }
 
     @Override
-    public void onBindViewHolder(@NonNull PriceViewHolder holder, int position)
+    public void updateData(List<Category> list)
         {
+        if (list != null)
+            {
+            mCategoryList.clear();
+            mCategoryList.addAll(list);
+            super.updateData(mCategoryList);
 
-        var item = mCategoryList.get(position);
-        holder.bind(item);
+            }
+        Timber.tag(TAG).e("size of item = %s", getItemCount());
         }
 
-    public List<Category.ItemsEntity> getItemEntity(int position)
-        {
-        return mCategoryList.get(position).getItems();
-        }
-
-    public void addCategory(List<Category> category)
-        {
-        mCategoryList.clear();
-        mCategoryList.addAll(category);
-        notifyDataSetChanged();
-        }
 
     @SuppressLint("NotifyDataSetChanged")
     public void clear()
         {
         mCategoryList.clear();
         notifyDataSetChanged();
+        }
+
+
+    @Override
+    public void bind(ListItemPriceBinding mItemPriceBinding, Category category)
+        {
+        var language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+        mItemPriceBinding.setLanguage(language);
+        mItemPriceBinding.setCategory(category);
+        mItemPriceBinding.setListener(getItemClickListener());
+        mItemPriceBinding.setPosition(getPosition());
+        mItemPriceBinding.executePendingBindings();
         }
 
     @Override
@@ -95,88 +71,10 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.PriceViewHol
         return mCategoryList.size();
         }
 
+    @Override
     public void setClickListener(ItemClickListener itemClickListener)
         {
-        this.mClickListener = itemClickListener;
-        }
-
-    public interface ItemClickListener
-        {
-        void onItemClick(View view, int position);
-        }
-
-    public class PriceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-        {
-
-        private ListItemPriceBinding mItemPriceBinding;
-
-
-        public PriceViewHolder(@NonNull ListItemPriceBinding itemPriceBinding)
-            {
-            super(itemPriceBinding.getRoot());
-            this.mItemPriceBinding = itemPriceBinding;
-            itemPriceBinding.getRoot().setOnClickListener(this);
-
-
-            var radius = itemPriceBinding.ivItemPrice.getContext().getResources()
-                    .getDimension(R.dimen.default_corner_radius);
-            mItemPriceBinding.ivItemPrice.setShapeAppearanceModel(
-                    mItemPriceBinding.ivItemPrice.getShapeAppearanceModel()
-                            .toBuilder()
-                            .setBottomLeftCorner(CornerFamily.ROUNDED, radius)
-                            .setBottomRightCorner(CornerFamily.ROUNDED, radius)
-                            .build());
-            }
-
-        void bind(@NonNull final Category category)
-            {
-            val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-            var context = mItemPriceBinding.getRoot().getContext();
-            var shimmer = new Shimmer.ColorHighlightBuilder()
-                    .setHighlightColor(ContextCompat.getColor(context,
-                            R.color.md_theme_light_surfaceVariant))
-
-
-                    .setDuration(2000L) // how long the shimmering animation takes to do one full sweep
-                    .setBaseAlpha(0.6f) //the alpha of the underlying children
-                    .setHighlightAlpha(0.7f) // the shimmer alpha amount
-                    .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                    .setAutoStart(true)
-                    .build();
-
-            var shimmerDrawables = new ShimmerDrawable();
-            shimmerDrawables.setShimmer(shimmer);
-
-            String name = category.getName(language);
-            try
-                {
-                String url = "https://" + category.getIconUrl() /* URL of Image */;
-
-                Glide.with(mFragment)
-
-                        .load(url)
-                        .placeholder(shimmerDrawables)
-                        .error(shimmerDrawables)
-                        .fallback(shimmerDrawables)
-                        .fitCenter()
-                        .into(mItemPriceBinding.ivItemPrice);
-                } catch (Exception e)
-                {
-                e.printStackTrace();
-                Log.e(TAG, e.getMessage());
-                }
-            mItemPriceBinding.ivItemPrice.invalidateDrawable(shimmerDrawables);
-            mItemPriceBinding.tvItemPrice.setText(name);
-            }
-
-        @Override
-        public void onClick(View v)
-            {
-
-            if (mClickListener != null) mClickListener.onItemClick(v, getLayoutPosition());
-
-
-            }
+        super.setClickListener(itemClickListener);
         }
 
 

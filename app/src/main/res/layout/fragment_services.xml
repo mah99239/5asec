@@ -69,13 +69,27 @@
             tools:visibility="visible">
 
         </ListView>
+<androidx.constraintlayout.widget.Group
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:constraint_referenced_ids="imv_services_empty,tv_services_empty"
+    android:visibility="invisible"
+    android:id="@+id/g_services_empty"
 
+    />
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="lv_services"
+            android:visibility="visible"
+            android:id="@+id/g_services_items"
+
+            />
         <ImageView
             android:id="@+id/imv_services_empty"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_services_image"
             android:layout_marginTop="120dp"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +104,6 @@
             android:gravity="center"
             android:text="@string/services_text_empty"
             android:textColor="@color/md_theme_light_scrim"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/imv_services_empty"
             app:layout_constraintStart_toStartOf="@+id/imv_services_empty"
             app:layout_constraintTop_toBottomOf="@+id/imv_services_empty" />

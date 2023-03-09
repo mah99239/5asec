@@ -46,8 +46,8 @@ public class CategoryViewModel extends ViewModel
     private final MutableLiveData<Resource<List<Category.ItemsEntity>>> mItemServicesOfItemCategory = new MutableLiveData<>();
     private final MutableLiveData<Resource<Category.ItemsEntity>> mItemService = new MutableLiveData<>();
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-    private CategoryRepository mCategoryRepository;
     private final MutableLiveData<List<Integer>> mItemServiceChecked = new MutableLiveData<>();
+    private CategoryRepository mCategoryRepository;
 
     public CategoryViewModel()
         {
@@ -63,10 +63,11 @@ public class CategoryViewModel extends ViewModel
         {
         return mCategory;
         }
-public LiveData<Boolean> hasData()
-    {
-    return mHasData;
-    }
+
+    public LiveData<Boolean> hasData()
+        {
+        return mHasData;
+        }
 
 
     /**
@@ -113,7 +114,7 @@ public LiveData<Boolean> hasData()
         }
 
     /**
-     *  called reloadCategory for reload data or when data is Error.
+     * called reloadCategory for reload data or when data is Error.
      */
     public void reloadCategory()
         {
@@ -122,6 +123,7 @@ public LiveData<Boolean> hasData()
 
     /**
      * Called GetItemCategory when fetch item category
+     *
      * @return item of category
      */
     public LiveData<Resource<Category>> getItemCategory()
@@ -131,6 +133,7 @@ public LiveData<Boolean> hasData()
 
     /**
      * Called setItemCategory when add new item of item category and delay for 0.5 seconds.
+     *
      * @param position of list of category.
      */
     public void setItemCategory(int position)
@@ -152,7 +155,20 @@ public LiveData<Boolean> hasData()
         }
 
     /**
-     *  Called when fetch new item of category and set list of items service in item category.
+     * Called getItemServicesOfItemCategory to get list of items in category.
+     *
+     * @return list of item in category item.
+     */
+    public LiveData<Resource<List<Category.ItemsEntity>>> getItemServicesOfItemCategory()
+        {
+        return mItemServicesOfItemCategory;
+
+
+        }
+
+    /**
+     * Called when fetch new item of category and set list of items service in item category.
+     *
      * @param items pass list of items.
      */
     private void setItemServicesOfItemCategory(List<Category.ItemsEntity> items)
@@ -160,15 +176,6 @@ public LiveData<Boolean> hasData()
         mItemServicesOfItemCategory.postValue(Resource.loading(null));
 
         mItemServicesOfItemCategory.postValue(Resource.success(items));
-        }
-
-    /**
-     * Called getItemServicesOfItemCategory to get list of items in category.
-     * @return list of item in category item.
-     */
-    public LiveData<Resource<List<Category.ItemsEntity>>> getItemServicesOfItemCategory()
-        {
-        return mItemServicesOfItemCategory;
         }
 
     /**
@@ -185,14 +192,18 @@ public LiveData<Boolean> hasData()
         return mItemService;
         }
 
-    public void setItemService(Resource<Category.ItemsEntity> items)
+    public void setItemService(int position)
         {
         mItemService.postValue(Resource.loading(null));
-        mItemService.postValue(items);
+
+
+        var item = mItemServicesOfItemCategory.getValue().getMData().get(position);
+        mItemService.postValue(Resource.success(item));
+
 
         }
 
-    public void setItemService(int id)
+    public void setItemServiceWithId(int id)
         {
         if (mCategory.getValue() != null)
             {

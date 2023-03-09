@@ -2,11 +2,11 @@ package com.example.a5asec.ui.view.home;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,20 +18,18 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.bumptech.glide.Glide;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.databinding.FragmentServicesBinding;
 import com.example.a5asec.ui.adapters.ServicesAdapter;
 import com.example.a5asec.ui.view.viewmodel.CategoryViewModel;
 import com.example.a5asec.utility.AdaptiveUtils;
-import com.example.a5asec.utility.Resource;
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
-import lombok.val;
+import timber.log.Timber;
 
 /**
  * Second fragment for the price screen, shows service items of Category price Screen.
@@ -39,7 +37,7 @@ import lombok.val;
 public class ServicesFragment extends Fragment
     {
     private static final String TAG = "ServicesItemFragment";
-    CategoryViewModel mItemsCategory;
+    private CategoryViewModel mCategoryViewModel;
     private FragmentServicesBinding mBinding;
     private ServicesAdapter mAdapter;
     private ShimmerFrameLayout mShimmerFrameLayout;
@@ -61,6 +59,7 @@ public class ServicesFragment extends Fragment
         {
         super.onViewCreated(view, savedInstanceState);
         setupShimmerAnimation();
+
         setupUi();
 
         }
@@ -70,9 +69,7 @@ public class ServicesFragment extends Fragment
         var shimmer = new Shimmer.AlphaHighlightBuilder()
                 .setDuration(1000L) // how long the shimmering animation takes to do one full sweep
                 .setRepeatMode(ValueAnimator.REVERSE)
-                //  .setAutoStart(true)
                 .build();
-
 
         mShimmerFrameLayout = mBinding.shService;
         mShimmerFrameLayout.setShimmer(shimmer);
@@ -93,59 +90,50 @@ public class ServicesFragment extends Fragment
 
     private void setupAdapter()
         {
-        mBinding.setModel(mItemsCategory);
+        mBinding.setModel(mCategoryViewModel);
 
-        mAdapter = new ServicesAdapter(this);
+        mAdapter = new ServicesAdapter();
 
         mBinding.lvServices.setAdapter(mAdapter);
 
-        onCLickItem(mBinding.lvServices);
+        onCLickItem();
 
         }
 
-    private void onCLickItem(@NonNull ListView listView)
+    private void onCLickItem()
         {
-        listView.setOnItemClickListener((parent, view, position, id) ->
+        mBinding.lvServices.setOnItemClickListener((parent, view, position, id) ->
             {
-            Log.e(TAG, "items: " + mAdapter.getItem(position));
+            Timber.tag(TAG).e("onCLickItem() -> position: %s",position);
 
-            mItemsCategory.setItemService(Resource.success(mAdapter.getItemService(position)));
+            mCategoryViewModel.setItemService(position);
 
-                LaundryServicesBottomSheet laundryServicesFragment = new LaundryServicesBottomSheet();
-                laundryServicesFragment.show(this.getParentFragmentManager(), LaundryServicesBottomSheet.TAG);
-
-
+            LaundryServicesBottomSheet laundryServicesFragment = new LaundryServicesBottomSheet();
+            laundryServicesFragment.show(this.getParentFragmentManager(), LaundryServicesBottomSheet.TAG);
 
             });
         }
 
     private void setupObserver()
         {
-        startAnimation();
-        mItemsCategory.getItemServicesOfItemCategory().observe(getViewLifecycleOwner(), itemsEntities ->
+        mCategoryViewModel.getItemServicesOfItemCategory().observe(getViewLifecycleOwner(), itemsEntities ->
             {
             switch (itemsEntities.mStatus)
                 {
-                case LOADING ->
-                    {
-                    startAnimation();
-                    }
+                case LOADING -> startAnimation();
+
                 case SUCCESS ->
                     {
 
-                    Log.i(TAG, "suc:" + itemsEntities.getMData());
+                    Timber.tag(TAG).i("suc:%s", itemsEntities.getMData());
                     renderList(itemsEntities.getMData());
-
-                    stopAnimation();
+                new Handler(Looper.getMainLooper()).postDelayed(this::stopAnimation,500);
                     }
-                case NULL ->
-                    {
-                    emptyList();
+                case NULL -> emptyList();
 
-                    }
                 case ERROR ->
                     {
-                    Log.e(TAG, "ERROR");
+                    Timber.tag(TAG).e("ERROR");
                     startAnimation();
 
                     }
@@ -154,38 +142,38 @@ public class ServicesFragment extends Fragment
             });
 
         }
+
     private void setupItemCategoryObserver()
         {
-        mItemsCategory.getItemCategory().observe(getViewLifecycleOwner(), itemsEntities ->
+        mCategoryViewModel.getItemCategory().observe(getViewLifecycleOwner(), itemsEntities ->
             {
             switch (itemsEntities.mStatus)
                 {
                 case LOADING ->
                     {
-                    Log.e(TAG, "LOADING");
+                    Timber.tag(TAG).e("LOADING");
                     startAnimation();
                     }
                 case SUCCESS ->
                     {
 
-                    Log.i(TAG, "suc:" + itemsEntities.getMData());
-
-                        val language = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-                        var name = itemsEntities.getMData().getName(language);
-                        var icon = itemsEntities.getMData().getIconUrl();
-                         setupItemServiceWithTwoPane(name, icon);
+                    Timber.tag(TAG).i("suc:%s", itemsEntities.getMData());
+                    var currentLanguage = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+                    var name = itemsEntities.getMData().getName(currentLanguage);
+                    var icon = itemsEntities.getMData().getIconUrl();
+                    setupItemServiceWithTwoPane(name, icon);
 
                     stopAnimation();
                     }
                 case NULL ->
                     {
-                    Log.e(TAG, "NULL");
+                    Timber.tag(TAG).e("NULL");
                     emptyList();
 
                     }
                 case ERROR ->
                     {
-                    Log.e(TAG, "ERROR");
+                    Timber.tag(TAG).e("ERROR");
                     startAnimation();
 
                     }
@@ -195,28 +183,24 @@ public class ServicesFragment extends Fragment
 
         }
 
+
+    @Override
+    public void onStart()
+        {
+        super.onStart();
+        startAnimation();
+        Timber.tag(TAG).i("onStart()->");
+
+
+        }
 
 
     private void setupItemServiceWithTwoPane(@NonNull String name, @NonNull String iconUrl)
         {
 
-        try
-            {
-            String url = "https://" + iconUrl;
 
-            Glide.with(this)
-
-                    .load(url)
-
-                    .fitCenter()
-                    .into(mBinding.imvServicesIcon);
-            } catch (Exception e)
-            {
-            e.printStackTrace();
-            Log.e(TAG, e.getMessage());
-            }
-
-        mBinding.tvServicesName.setText(name);
+        mBinding.setUrl(iconUrl);
+        mBinding.setItemName(name);
 
         }
 
@@ -224,65 +208,40 @@ public class ServicesFragment extends Fragment
         {
         mShimmerFrameLayout.startShimmer();
         mShimmerFrameLayout.setVisibility(View.VISIBLE);
-        mBinding.imvServicesEmpty.setVisibility(View.GONE);
-        mBinding.tvServicesEmpty.setVisibility(View.GONE);
-        mBinding.lvServices.setVisibility(View.GONE);
-        hideImageAndName();
+        mBinding.gServicesEmpty.setVisibility(View.GONE);
+        mBinding.gServicesItems.setVisibility(View.GONE);
 
         }
 
     private void stopAnimation()
         {
-        mBinding.lvServices.setVisibility(View.VISIBLE);
-        mBinding.imvServicesEmpty.setVisibility(View.GONE);
-        mBinding.tvServicesEmpty.setVisibility(View.GONE);
-        mShimmerFrameLayout.stopShimmer();
+        mBinding.gServicesEmpty.setVisibility(View.GONE);
+        mBinding.gServicesItems.setVisibility(View.VISIBLE);
         mShimmerFrameLayout.setVisibility(View.GONE);
-        showImageAndName();
+        mShimmerFrameLayout.stopShimmer();
         }
 
     private void emptyList()
         {
-        mBinding.lvServices.setVisibility(View.GONE);
+        mBinding.gServicesItems.setVisibility(View.GONE);
         mShimmerFrameLayout.setVisibility(View.GONE);
-        hideImageAndName();
         mShimmerFrameLayout.stopShimmer();
 
-        mBinding.imvServicesEmpty.setVisibility(View.VISIBLE);
-        mBinding.tvServicesEmpty.setVisibility(View.VISIBLE);
+        mBinding.gServicesEmpty.setVisibility(View.VISIBLE);
         }
 
-    private void showImageAndName()
-        {
-        if (!AdaptiveUtils.compactScreen(requireActivity()))
-            {
-            mBinding.imvServicesIcon.setVisibility(View.VISIBLE);
-            mBinding.tvServicesName.setVisibility(View.VISIBLE);
-            }
-        }
 
-    private void hideImageAndName()
+    private void renderList(List<Category.ItemsEntity> listItemCategory)
         {
-        if (!AdaptiveUtils.compactScreen(requireActivity()))
-            {
-            mBinding.imvServicesIcon.setVisibility(View.GONE);
-            mBinding.tvServicesName.setVisibility(View.GONE);
-            }
-        }
-
-    private void renderList(List<Category.ItemsEntity> category)
-        {
-        mAdapter.addServices(category);
-
-        mAdapter.notifyDataSetChanged();
+        mAdapter.updateServices(listItemCategory);
         }
 
     private void setupViewModel()
         {
         NavController navController = NavHostFragment.findNavController(this);
         NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_priceList);
-        Log.e(TAG, "BackStack: " + backStackEntry);
-        mItemsCategory = new ViewModelProvider(backStackEntry)
+
+        mCategoryViewModel = new ViewModelProvider(backStackEntry)
                 .get(CategoryViewModel.class);
 
         }
@@ -299,5 +258,6 @@ public class ServicesFragment extends Fragment
         {
         super.onDestroy();
         mBinding = null;
+        mShimmerFrameLayout = null;
         }
     }

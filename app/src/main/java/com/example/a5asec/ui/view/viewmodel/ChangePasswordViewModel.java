@@ -62,6 +62,7 @@ public class ChangePasswordViewModel extends ViewModel
                                 {
                                 mStatusCode.setValue(Resource.success(userResource));
                                 Log.e(TAG, "registerUsers:SUCCESS");
+
                                 }
 
                             @Override
@@ -105,6 +106,7 @@ public class ChangePasswordViewModel extends ViewModel
                                 {
                                 mStatusCode.setValue(Resource.success(userResource));
                                 Log.e(TAG, "finishPassword:SUCCESS");
+
                                 }
 
                             @Override

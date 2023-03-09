@@ -1,11 +1,9 @@
 package com.example.a5asec.ui.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,15 +15,12 @@ import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.RequestManager;
 import com.example.a5asec.R;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.databinding.ListItemLaundryServicesBinding;
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerDrawable;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.shape.CornerFamily;
+import com.example.a5asec.databinding.ListItemPriceBinding;
+import com.example.a5asec.ui.adapters.base.BaseAdapter;
+import com.example.a5asec.ui.adapters.base.BaseViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,22 +34,100 @@ import lombok.val;
 import timber.log.Timber;
 
 
-public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServicesAdapter.LaundryServicesViewHolder>
+public class LaundryServicesAdapter extends BaseAdapter<ListItemLaundryServicesBinding, Category.ItemServicesEntity>
     {
     private static final String TAG = "LaundryServicesAdapter";
     private final Set<Category.ItemServicesEntity> checkedChipId;
-    private final RequestManager mGlide;
+    private final List<Category.ItemServicesEntity> mItemServiceEntity = new ArrayList<>();
     private SelectionTracker<Long> selectionTracker;
-    private List<Category.ItemServicesEntity> mItemServiceEntity;
+    public static final int BASE_SERVICE_ITEM = 0;
+    private final Details details;
 
-    public LaundryServicesAdapter(RequestManager glide)
+    public LaundryServicesAdapter()
         {
-        mItemServiceEntity = new ArrayList<>();
+        super.mLayoutId = R.layout.list_item_laundry_services;
+        details = new Details();
         checkedChipId = new HashSet<>();
-        mGlide = glide;
         }
 
+    @Override
+    public void updateData(List<Category.ItemServicesEntity> list)
+        {
+      //  mItemServiceEntity.clear();
+       // mItemServiceEntity.addAll(list);
+        super.updateData(list);
+        Timber.tag(TAG).e("size of item = %s", getItemCount());
 
+        }
+
+    @Override
+    public void bind(ListItemLaundryServicesBinding binding, Category.ItemServicesEntity item)
+        {
+        val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+        details.position = position;
+
+        binding.setItemService(item);
+        binding.setLanguage(languageTags);
+        if (position == BASE_SERVICE_ITEM)
+            {
+            binding.setPosition(BASE_SERVICE_ITEM);
+            } else
+            {
+            binding.setPosition(1);
+            }
+
+        if (selectionTracker != null)
+            {
+            bindSelectedState(binding);
+            }
+
+        selectionTracker.setItemsSelected(List.of((long) BASE_SERVICE_ITEM), true);
+
+        bindSelectedData();
+        }
+    private void bindSelectedState(ListItemLaundryServicesBinding binding)
+        {
+        binding.cvLaundryServicesServices.setChecked(selectionTracker.isSelected(details.getSelectionKey()));
+        changeColorInView(details.getSelectionKey(),binding);
+
+        }
+    private void changeColorInView(long position, ListItemLaundryServicesBinding binding)
+        {
+        int colorChecked = ContextCompat.getColor(binding.cvLaundryServicesServices.getContext(), R.color.md_theme_light_onPrimary);
+        int colorNotChecked = ContextCompat.getColor(binding.cvLaundryServicesServices.getContext(), R.color.md_theme_light_scrim);
+
+        if (selectionTracker.isSelected(position))
+            {
+            binding.ivLaundryServices.setColorFilter(colorChecked);
+            binding.tvLaundryServicesContentTitle.setTextColor(colorChecked);
+            binding.tvLaundryServicesSalary.setTextColor(colorChecked);
+            } else
+            {
+            binding.ivLaundryServices.setColorFilter(colorNotChecked);
+            binding.tvLaundryServicesContentTitle.setTextColor(colorNotChecked);
+            binding.tvLaundryServicesSalary.setTextColor(colorNotChecked);
+            }
+
+        }
+    private void bindSelectedData()
+        {
+        if (selectionTracker.isSelected(details.getSelectionKey())
+                && details.getSelectionKey() > BASE_SERVICE_ITEM)
+            {
+
+            checkedChipId.add(getItemsId(details.getPosition()));
+            //  mCard.setChecked(true);
+            } else if (details.getPosition() > BASE_SERVICE_ITEM)
+            {
+            //   mCard.setChecked(false);
+            checkedChipId.remove(getItemsId(details.getPosition()));
+
+            }
+        }
+    ItemDetailsLookup.ItemDetails<Long> getItemDetails()
+        {
+        return details;
+        }
     public Set<Category.ItemServicesEntity> getCheckedChipId()
         {
         return checkedChipId;
@@ -64,7 +137,6 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
         {
         try
             {
-
             id.forEach(integer ->
                 {
                 var item = getItemsIdService(integer);
@@ -80,7 +152,7 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
             }
         }
 
-    @NotNull
+/*     @NotNull
     public LaundryServicesAdapter.LaundryServicesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
         {
         ListItemLaundryServicesBinding itemLaundryServicesBinding =
@@ -88,10 +160,10 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
                         R.layout.list_item_laundry_services, parent, false);
 
         return new LaundryServicesViewHolder(itemLaundryServicesBinding);
-        }
+        } */
 
 
-    @Override
+ /*    @Override
     public void onBindViewHolder(@NonNull LaundryServicesAdapter.LaundryServicesViewHolder holder, int position)
         {
 
@@ -99,7 +171,7 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
         holder.bind(baseItem, position);
 
 
-        }
+        } */
 
     public Iterator<Long> getSelectionTracker()
         {
@@ -120,6 +192,7 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
         {
         mItemServiceEntity.add(new Category.ItemServicesEntity(category.getId(), category.getCost(), null));
         mItemServiceEntity.addAll(category.getItemServices());
+        updateData(mItemServiceEntity);
         }
 
     @Override
@@ -167,10 +240,10 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
             if (view != null)
                 {
                 RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-                if (viewHolder instanceof LaundryServicesViewHolder)
+              /*   if (viewHolder instanceof BaseViewHolder<?>)
                     {
                     return ((LaundryServicesViewHolder) viewHolder).getItemDetails();
-                    }
+                    } */
                 }
             return null;
             }
@@ -243,12 +316,12 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
             }
         }
 
-    public class LaundryServicesViewHolder extends RecyclerView.ViewHolder
+ /*   class LaundryServicesViewHolder extends RecyclerView.ViewHolder
         {
         public static final int BASE_SERVICE_ITEM = 0;
         private final Details details;
 
-        private ListItemLaundryServicesBinding mItemsBinding;
+        private final ListItemLaundryServicesBinding mItemsBinding;
 
 
         public LaundryServicesViewHolder(@NonNull ListItemLaundryServicesBinding itemLaundryServicesBinding)
@@ -265,37 +338,17 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
         public void bind(Category.ItemServicesEntity item, int position)
             {
             val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-            var context = mItemsBinding.getRoot().getContext();
-
-            // setupCornerImage(context);
-            //     mCard.setTag(BASE_SERVICE_ITEM);
             details.position = position;
 
-            String labelCost = context.getString(R.string.all_cost_label);
-            String cost;
-            String name;
-
+            mItemsBinding.setItemService(item);
+            mItemsBinding.setLanguage(languageTags);
             if (position == BASE_SERVICE_ITEM)
                 {
-
-                mItemsBinding.ivLaundryServices.setImageResource(R.drawable.ic_product);
-                cost = item.getCost() + " " + labelCost;
-                name = context.getString(R.string.laundry_Service_base_name);
+                mItemsBinding.setPosition(BASE_SERVICE_ITEM);
                 } else
                 {
-                String getUrl = item.getLaundryService().getIconUrl();
-                cost = item.getCost() + " " + labelCost;
-                String url;
-                if (!getUrl.contains("5asec-ksa.com/icons/laundry-service/"))
-                    {
-                    url = "https://5asec-ksa.com/icons/laundry-service/" + getUrl;
-                    } else url = "https://" + getUrl;
-                name = item.getLaundryService().getName(languageTags);
-                setupLoadImage(url, context);
-
+                mItemsBinding.setPosition(1);
                 }
-            mItemsBinding.tvLaundryServicesContentTitle.setText(name);
-            mItemsBinding.tvLaundryServicesSalary.setText(cost);
 
             if (selectionTracker != null)
                 {
@@ -309,45 +362,6 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
 
             }
 
- /*        private void setupCornerImage(Context context)
-            {
-            var radius = context.getResources().getDimension(R.dimen.default_corner_radius);
-            mItemsBinding.ivLaundryServices.setShapeAppearanceModel(
-                    mItemsBinding.ivLaundryServices.getShapeAppearanceModel()
-                    .toBuilder()
-                    .setBottomLeftCorner(CornerFamily.ROUNDED, radius)
-                    .setBottomRightCorner(CornerFamily.ROUNDED, radius).build());
-
-
-            } */
-
-        private void setupLoadImage(String currentUrl, Context context)
-            {
-            var shimmer = new Shimmer.ColorHighlightBuilder()
-                    .setHighlightColor(ContextCompat.getColor(context,
-                            R.color.md_theme_light_inversePrimary))
-                    .setBaseColor(ContextCompat.getColor(context,
-                            R.color.md_theme_light_primaryContainer))
-
-                    .setDuration(2000L) // how long the shimmering animation takes to do one full sweep
-                    .setBaseAlpha(0.6f) //the alpha of the underlying children
-                    .setHighlightAlpha(0.7f) // the shimmer alpha amount
-                    .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                    .setAutoStart(true)
-                    .build();
-            var shimmerDrawables = new ShimmerDrawable();
-            shimmerDrawables.setShimmer(shimmer);
-            shimmerDrawables.startShimmer();
-
-
-            mGlide
-                    .load(currentUrl)
-                    .placeholder(shimmerDrawables)
-                    .error(shimmerDrawables)
-                    .fallback(shimmerDrawables)
-                    .fitCenter()
-                    .into(mItemsBinding.ivLaundryServices);
-            }
 
         private void bindSelectedState()
             {
@@ -397,7 +411,7 @@ public class LaundryServicesAdapter extends RecyclerView.Adapter<LaundryServices
             return details;
             }
 
-        }
+        }  */
 
 
     }

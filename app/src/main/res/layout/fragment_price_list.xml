@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
-        <variable
-            name="bannerViewModel"
-            type="com.example.a5asec.ui.view.viewmodel.BannersViewModel" />
+        <import type="com.example.a5asec.data.model.api.Banners" />
+
+        <import type="java.util.List" />
 
         <variable
             name="bannerAdapter"
             type="com.example.a5asec.ui.adapters.BannersAdapter" />
+
+        <variable
+            name="bannerList"
+            type="List&lt;Banners>" />
+
+
+
+        <variable
+            name="categoryList"
+            type="List&lt;com.example.a5asec.data.model.api.Category>" />
+
+        <variable
+            name="priceAdapter"
+            type="com.example.a5asec.ui.adapters.PriceAdapter" />
     </data>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_price_list_root"
         android:layout_width="match_parent"
@@ -31,13 +46,14 @@
                 android:id="@+id/avf_price_list_banner"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                 app:setAdapter="@{bannerAdapter}"
-                app:submitList="@{bannerViewModel.banners}"
                 android:background="@color/md_theme_light_primary"
+                app:adapterFlipper="@{bannerAdapter}"
+                app:dataFlipper="@{bannerList}"
                 app:layout_constraintDimensionRatio="H,3:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
                 tools:visibility="visible">
 
             </AdapterViewFlipper>
@@ -52,12 +68,14 @@
                 android:paddingEnd="@dimen/margin_all_guideline"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="3"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_price_list_top"
-                tools:listitem="@layout/list_item_price"
-                tools:visibility="visible" />
+                app:setAdapter="@{priceAdapter}"
+                app:setDataAtAdapter="@{categoryList}"
+                />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/sh_price"
@@ -67,14 +85,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <View
                         android:layout_width="match_parent"
@@ -103,4 +119,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</layout>
+</layout><!--   app:setAdapter="@{bannerAdapter}"
+                    app:submitList="@{bannerViewModel.banners}"-->

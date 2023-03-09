@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="url"
+            type="String" />
+        <variable
+            name="itemName"
+            type="String" />
+        <variable
+            name="model"
+            type="com.example.a5asec.ui.view.viewmodel.CategoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_services_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginStart="@dimen/margin_all_guideline"
+        android:layout_marginEnd="@dimen/margin_all_guideline"
+
+        android:layout_marginTop="@dimen/margin_all_guideline"
+
+
+        tools:context=".ui.view.home.ServicesFragment">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sh_service"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:background="@color/md_theme_light_surfaceVariant"
+                    android:padding="@dimen/padding_all_element"
+
+
+                    />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+                <include layout="@layout/shimmer_service" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="imv_services_icon,tv_services_name,lv_services"
+            android:visibility="visible"
+            android:id="@+id/g_services_items"
+
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imv_services_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/md_theme_light_surfaceVariant"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="H,3:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{url}"
+            tools:src="@drawable/ic_category"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_services_name"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="start"
+            android:paddingTop="@dimen/padding_all_element"
+            android:paddingBottom="@dimen/padding_all_element"
+            android:text="@{itemName}"
+            android:textAppearance="@style/TextAppearance.5asec.DisplaySmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imv_services_icon"
+            tools:text="Thobe"
+            tools:visibility="visible" />
+
+        <ListView
+            android:id="@+id/lv_services"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_services_name"
+            tools:listitem="@layout/list_item_services"
+            tools:visibility="visible">
+
+        </ListView>
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="imv_services_empty,tv_services_empty"
+            android:visibility="invisible"
+            android:id="@+id/g_services_empty"
+
+            />
+        <ImageView
+            android:id="@+id/imv_services_empty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            app:layout_constraintDimensionRatio="H,3:1"
+
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imv_services_icon"
+            app:srcCompat="@drawable/ic_menu_discount" />
+
+        <TextView
+            android:id="@+id/tv_services_empty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/services_text_empty"
+            android:textColor="@color/md_theme_light_scrim"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/imv_services_empty"
+            app:layout_constraintStart_toStartOf="@+id/imv_services_empty"
+            app:layout_constraintTop_toBottomOf="@+id/imv_services_empty" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

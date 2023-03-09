@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,6 +34,9 @@ public abstract class Client
         var client = okHttpClient.newBuilder()
                 .addInterceptor(tokenInterceptor)
                 //   .cache(cache)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 .build();
 
         return new Retrofit.Builder()
@@ -53,6 +58,9 @@ public abstract class Client
 
         var client = okHttpClient.newBuilder()
                 .addInterceptor(tokenInterceptor)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 //   .cache(cache)
                 .build();
 
@@ -76,6 +84,9 @@ public abstract class Client
         var okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
         var client = okHttpClient.newBuilder()
                 .addInterceptor(new ConnectivityInterceptor())
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 //   .cache(cache)
                 .build();
 

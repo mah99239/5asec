@@ -1,0 +1,17 @@
+
+b
+java:S1301æ"KReplace this "switch" statement by "if" statements to increase readability.(íÿ÷
+>
+java:S5411Ù"(Use a primitive boolean expression here.(Î¼à4
+V	java:S125L"<This block of commented-out lines of code should be removed.(×öáŠøÿÿÿÿ
+K
+java:S2440n"0Remove this instantiation of "TokenPreferences".(âÍßØþÿÿÿÿ
+V	java:S125w"<This block of commented-out lines of code should be removed.(ÒÌâ–øÿÿÿÿ
+W	java:S125Š"<This block of commented-out lines of code should be removed.(ÒÌâ–øÿÿÿÿ
+Q	java:S125ü"<This block of commented-out lines of code should be removed.(ˆêÏ+
+W	java:S125”"<This block of commented-out lines of code should be removed.(óœÂöþÿÿÿÿ
+o	java:S131æ"YComplete cases by adding the missing enum constants or add a default case to this switch.(íÿ÷
+o	java:S131…"YComplete cases by adding the missing enum constants or add a default case to this switch.(ÌÆÉá
+o	java:S131–"YComplete cases by adding the missing enum constants or add a default case to this switch.(¾±”‚
+Q
+java:S1144ù":Remove this unused private "setupNavigationDrawer" method.(ÚðÂŸ

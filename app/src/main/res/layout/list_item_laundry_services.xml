@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="itemService"
+            type="com.example.a5asec.data.model.api.Category.ItemServicesEntity" />
+        <variable
+            name="language"
+            type="String" />
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -28,6 +38,8 @@
                 android:layout_weight="2"
                 android:cropToPadding="true"
                 android:paddingTop="@dimen/padding_all_element"
+                app:baseImage="@{@drawable/ic_product}"
+                app:loadImage="@{position == 1 ? itemService.laundryService.iconUrl : null}"
 
                 android:scaleType="fitCenter"
 
@@ -40,6 +52,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_all_element"
+                android:text="@{position == 0 ? @string/laundry_Service_base_name : itemService.getLaundryService().getName(language)}"
                 android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
 
                 tools:text="Title goes here" />
@@ -52,6 +65,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_item_laundry_services_text"
                 android:paddingBottom="@dimen/padding_all_element"
+                android:text="@{ itemService.cost + @string/all_cost_label}"
 
                 android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
                 tools:text="10 SAR"

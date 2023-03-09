@@ -1,0 +1,24 @@
+
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¸ùË§
+3
+java:S1118"Hide this public constructor.(·ÎÄÍ
+@
+java:S3010"%Remove this assignment of "sContext".(öÆ«Îùÿÿÿÿ
+J
+java:S3010"/Remove this assignment of "sSharedPreferences".(„Äã¤øÿÿÿÿ
+T
+java:S1874"9Remove this use of "PreferenceManager"; it is deprecated.(„Äã¤øÿÿÿÿ
+^
+java:S1874"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(„Äã¤øÿÿÿÿ
+T
+java:S1874 "9Remove this use of "PreferenceManager"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ
+^
+java:S1874 "CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ
+T
+java:S1874("9Remove this use of "PreferenceManager"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ
+^
+java:S1874("CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ
+T
+java:S18744"9Remove this use of "PreferenceManager"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ
+^
+java:S18744"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(ÿ‘ö…ýÿÿÿÿ

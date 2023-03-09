@@ -1,6 +1,5 @@
 package com.example.a5asec.data.remote.api;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +10,7 @@ import java.net.UnknownHostException;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
+import timber.log.Timber;
 
 public class ConnectivityInterceptor implements Interceptor
     {
@@ -25,8 +25,8 @@ public class ConnectivityInterceptor implements Interceptor
             throw new UnknownHostException("No Internet Connection");
             } else
             {
-            Log.e(TAG,"request: " +  chain.request());
-            Log.e(TAG,"response: " +  chain.request().tag());
+            Timber.tag(TAG).e("request: %s", chain.request());
+            Timber.tag(TAG).e("response: %s", chain.request().tag());
             return chain.proceed(chain.request());
             }
         }

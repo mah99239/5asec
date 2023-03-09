@@ -20,6 +20,7 @@ import java.util.Map;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import timber.log.Timber;
 
 public class TokenInterceptor implements Interceptor
     {
@@ -37,7 +38,7 @@ public class TokenInterceptor implements Interceptor
        // okhttp3.RequestBody$Companion$toRequestBody$1@eebc8e4
         Request newRequest = chain.request();
         Response response = chain.proceed(newRequest);
-        Log.e(TAG, "intercept ,request : " + newRequest.toString());
+        Timber.tag(TAG).e("intercept ,request : " + newRequest.toString());
 
 
      /*    if (responseCount(response) >= 3)
@@ -57,7 +58,7 @@ public class TokenInterceptor implements Interceptor
                 try
                     {
                      String newAccessToken = TokenPreferences.getPrefAccessToken();
-                    Log.e(TAG, "intercept() Code: " + response.code());
+                    Timber.tag(TAG).e("intercept() Code: %s", response.code());
                     response.close();
                     return chain.proceed(newRequestWithAccessToken(newRequest, newAccessToken));
 
@@ -67,7 +68,7 @@ public class TokenInterceptor implements Interceptor
                     }
                 }
             }
-        Log.e(TAG, "intercept: CODE: " + response.code());
+        Timber.tag(TAG).e("intercept: CODE: " + response.code());
 
         return response;
         }

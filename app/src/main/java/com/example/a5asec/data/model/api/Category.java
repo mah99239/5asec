@@ -12,8 +12,7 @@ import lombok.Getter;
 @Data
 public class Category
     {
-    private static final String COST_LABEL_EN = "SAR";
-    private static final String COST_LABEL_AR = "ريال";
+
 
     @Expose
     @SerializedName("id")
@@ -44,37 +43,6 @@ public class Category
     public String getName(String language)
         {
         return language.equals("en") ? nameEn : nameAr;
-        }
-
-
-    @Data
-    public class ItemsEntity
-        {
-        @Expose
-        @SerializedName("id")
-        private int id;
-        @Expose
-        @SerializedName("nameEn")
-        private String nameEn;
-        @Expose
-        @SerializedName("nameAr")
-        private String nameAr;
-
-        @Getter(AccessLevel.NONE)
-        private String name;
-        @Expose
-        @SerializedName("itemServices")
-        private List<ItemServicesEntity> itemServices;
-
-        @Expose
-        @SerializedName("cost")
-        private int cost;
-
-        public String getName(String language)
-            {
-            return language.equals("en") ? nameEn : nameAr;
-            }
-
         }
 
     @Data
@@ -119,7 +87,48 @@ public class Category
 
         @Expose
         @SerializedName("iconUrl")
+        @Getter(AccessLevel.NONE)
         private String iconUrl;
+
+        public String getIconUrl()
+            {
+            String url;
+            if (!iconUrl.contains("5asec-ksa.com/icons/laundry-service/"))
+                {
+                url = "https://5asec-ksa.com/icons/laundry-service/" + iconUrl;
+                } else url = "https://" + iconUrl;
+            return url;
+            }
+
+        public String getName(String language)
+            {
+            return language.equals("en") ? nameEn : nameAr;
+            }
+
+        }
+
+    @Data
+    public class ItemsEntity
+        {
+        @Expose
+        @SerializedName("id")
+        private int id;
+        @Expose
+        @SerializedName("nameEn")
+        private String nameEn;
+        @Expose
+        @SerializedName("nameAr")
+        private String nameAr;
+
+        @Getter(AccessLevel.NONE)
+        private String name;
+        @Expose
+        @SerializedName("itemServices")
+        private List<ItemServicesEntity> itemServices;
+
+        @Expose
+        @SerializedName("cost")
+        private int cost;
 
         public String getName(String language)
             {

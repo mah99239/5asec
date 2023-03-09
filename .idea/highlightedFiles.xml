@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectTreeColorHighlighter">
-    <files>
-      <node color="3" path="$PROJECT_DIR$/app/src/main/res/layout/content_order_info_notes.xml" />
-      <node color="2" path="$PROJECT_DIR$/app/src/main/res/layout/fragment_order_info" />
-    </files>
+    <files />
     <colors>
       <color id="1" value="#4f060d" name="Color 1" enabled="true" />
       <color id="2" value="#44220e" name="Color 2" enabled="true" />

@@ -1,9 +1,7 @@
 package com.example.a5asec.ui.view.home;
 
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +9,18 @@ import android.view.ViewGroup;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.slidingpanelayout.widget.SlidingPaneLayout;
-import androidx.window.layout.WindowMetrics;
-import androidx.window.layout.WindowMetricsCalculator;
 
-import com.bumptech.glide.Glide;
 import com.example.a5asec.R;
-import com.example.a5asec.data.model.api.Banners;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.data.remote.api.BannersClient;
 import com.example.a5asec.data.remote.api.BannersHelper;
@@ -46,12 +36,10 @@ import com.example.a5asec.ui.view.viewmodel.CategoryViewModel;
 import com.example.a5asec.utility.AdaptiveUtils;
 import com.example.a5asec.utility.NetworkConnection;
 import com.example.a5asec.utility.Resource;
-import com.example.a5asec.utility.Status;
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
-import java.util.Objects;
 
 import lombok.val;
 import timber.log.Timber;
@@ -64,92 +52,49 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
     {
     private static final String TAG = "PriceListFragment";
 
+
     private FragmentPriceListBinding mBinding;
-    private PriceAdapter mPriceAdapter;
-    private BannersAdapter mBannersAdapter;
     private CategoryViewModel mCategoryViewModel;
     private BannersViewModel mBannersViewModel;
     private ShimmerFrameLayout mShimmerFrameLayout;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_price_list, container, false);
-
         return mBinding.getRoot();
 
         }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
         {
         super.onViewCreated(view, savedInstanceState);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+        mBinding.setLifecycleOwner(this);
+
+        setupUi();
+
+        }
+
+    private void setupUi()
+        {
+
         setupShimmerAnimation();
         setupRefreshView();
         setupViewModel();
         setupBannersAdapter();
+        setupCategoryAdapter();
         setupObserverBanners();
-        setupTwoPane();
+        setupCategoriesWithTwoPane();
+        checkConnectionsToInitCategory();
 
         }
 
-    private void setupTwoPane()
-        {
-
-
-        boolean isCompact = AdaptiveUtils.compactScreen(requireActivity());
-        Timber.tag(TAG).e("setupTwoPane:  isCompact = %s", isCompact);
-        setupUi(isCompact);
-        if (!isCompact)
-            {
-
-            if (mBinding.splPrice != null)
-                {
-
-                requireActivity().getOnBackPressedDispatcher().addCallback(
-                        getViewLifecycleOwner(),
-                        new PriceOnBackPressedCallback(mBinding.splPrice));
-
-                mBinding.splPrice.open();
-                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
-
-                }
-            } else
-            {
-
-            if (mBinding.splPrice != null)
-                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
-
-
-            }
-        }
-
-
-    private void setupUi(boolean isCompact)
-        {
-
-
-        if (!isCompact)
-            {
-            setupCategoryAdapterWithTwoPane();
-            setupObserverCategoryWithTwoPane();
-            } else
-            {
-            setupCategoryAdapter();
-
-            setupObserverCategory();
-            checkConnectionsToInitCategory();
-
-            }
-        }
 
     private void setupShimmerAnimation()
         {
-        var shimmer = new Shimmer.AlphaHighlightBuilder()
-                .setDuration(1000L) // how long the shimmering animation takes to do one full sweep
+        var shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(500L) // how long the shimmering animation takes to do one full sweep
                 .setRepeatMode(ValueAnimator.REVERSE)
                 //  .setAutoStart(true)
                 .build();
@@ -170,89 +115,131 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
 
         }
 
+    /**
+     * called when user swipe to refresh data in screen.
+     */
+    private void reloadDataUI()
+        {
+        mBannersViewModel.reload();
+        mCategoryViewModel.reloadCategory();
 
+
+        }
+
+
+    private void setupViewModel()
+        {
+        setupCategoryViewModel();
+        setupBannersViewModel();
+        }
+
+    private void setupCategoryViewModel()
+        {
+        NavController navController = NavHostFragment.findNavController(this);
+        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_priceList);
+
+        mCategoryViewModel = new ViewModelProvider(backStackEntry, new CategoryViewModelFactory(new CategoryHelper(new CategoryClient()))).get(CategoryViewModel.class);
+        }
+
+    private void setupBannersViewModel()
+        {
+        mBannersViewModel = new ViewModelProvider(this, new BannersViewModelFactory(new BannersHelper(new BannersClient()))).get(BannersViewModel.class);
+        }
+
+    /**
+     *
+     */
     private void setupBannersAdapter()
         {
-        mBannersAdapter = new BannersAdapter(getParentFragment());
+        mBinding.setBannerAdapter(new BannersAdapter());
 
-        mBinding.avfPriceListBanner.setAdapter(mBannersAdapter);
-        mBinding.avfPriceListBanner.setFlipInterval(4000);
-        mBinding.avfPriceListBanner.startFlipping();
-        mBinding.avfPriceListBanner.setHorizontalScrollBarEnabled(true);
         }
 
     private void setupCategoryAdapter()
         {
 
-        mPriceAdapter = new PriceAdapter(this);
-        mPriceAdapter.setClickListener(this::onItemClick);
-
-        StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        mBinding.rvPriceList.setLayoutManager(gridLayoutManager);
-        mBinding.rvPriceList.setAdapter(mPriceAdapter);
-
+        PriceAdapter priceAdapter = new PriceAdapter();
+        priceAdapter.setClickListener(this::onItemClick);
+        mBinding.setPriceAdapter(priceAdapter);
         }
 
     public void onItemClick(View view, int position)
         {
-
         fetchItemsCategory(position);
-        var action
-                = PriceListFragmentDirections.actionPriceListFragmentToServicesItemFragment();
-        Navigation.findNavController(view).navigate(action);
 
-
-        }
-
-    private void setupCategoryAdapterWithTwoPane()
-        {
-        var recyclerView = mBinding.rvPriceList;
-
-
-        mPriceAdapter = new PriceAdapter(this);
-        mPriceAdapter.setClickListener(this::onItemClickWithTwoPane);
-
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(mPriceAdapter);
+        if (AdaptiveUtils.compactScreen(requireActivity()))
+            {
+            var action = PriceListFragmentDirections.actionPriceListFragmentToServicesItemFragment();
+            Navigation.findNavController(view).navigate(action);
+            }
 
         }
-
-
-    public void onItemClickWithTwoPane(View view, int position)
-        {
-
-        fetchItemsCategory(position);
-        }
-
 
 
     private void setupObserverBanners()
         {
         mBannersViewModel.getBanners().observe(getViewLifecycleOwner(), bannersObserve ->
             {
+            val tagObserverBanners = "setupObserverBanners()-> ";
 
-            if (Objects.requireNonNull(bannersObserve.mStatus) == Status.SUCCESS)
+            switch (bannersObserve.mStatus)
                 {
-                Timber.tag(TAG).e("setupObserverBanners:" + "SUCCESS");
-                renderListBanners(bannersObserve);
-                } else if (bannersObserve.mStatus == Status.ERROR)
-                {
-                startAnimation();
-                Timber.tag(TAG).e(bannersObserve.mMessage);
+                case SUCCESS ->
+                    {
+                    Timber.tag(TAG).e("%sSUCCESS", tagObserverBanners);
+                    mBinding.setBannerList(bannersObserve.getMData());
+                    }
+                case LOADING ->
+                    {
+                    Timber.tag(TAG).e("%sLOADING", tagObserverBanners);
+
+                    }
+                case ERROR ->
+                    {
+                    startAnimation();
+                    Timber.tag(TAG).e("%sERROR", tagObserverBanners);
+                    }
+                case NULL -> Timber.tag(TAG).e("%sNULL", tagObserverBanners);
+
                 }
+
             });
         }
 
-    private void setupObserverCategory()
+    private void setupCategoriesWithTwoPane()
         {
 
+        boolean isCompact = AdaptiveUtils.compactScreen(requireActivity());
+        Timber.tag(TAG).e("setupTwoPane:  isCompact = %s", isCompact);
+        setupObserverCategory(isCompact);
 
+        if (!isCompact)
+            {
+
+            if (mBinding.splPrice != null)
+                {
+
+                requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new PriceOnBackPressedCallback(mBinding.splPrice));
+
+                mBinding.splPrice.open();
+                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
+
+                }
+            } else
+            {
+
+            if (mBinding.splPrice != null)
+                mBinding.splPrice.setLockMode(SlidingPaneLayout.LOCK_MODE_LOCKED);
+
+
+            }
+        }
+
+    private void setupObserverCategory(boolean isCompact)
+        {
         mCategoryViewModel.getCategory().observe(getViewLifecycleOwner(), categoryObserve ->
             {
-            val tagObserverCategory = "setupObserverCategory";
+            val tagObserverCategory = "setupObserverCategory() ->";
             switch (categoryObserve.mStatus)
                 {
 
@@ -260,7 +247,11 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
                     {
                     Timber.tag(TAG).e(tagObserverCategory + "SUCCESS, = " + categoryObserve.getMData());
                     stopAnimation();
-                    renderListCategory(categoryObserve);
+                    fetchListCategories(categoryObserve);
+                    if (!isCompact)
+                        {
+                        mCategoryViewModel.setItemCategoryWithTwoPane();
+                        }
 
                     }
 
@@ -275,7 +266,6 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
 
 
                     Timber.tag(TAG).e("%sERROR", tagObserverCategory);
-                    Timber.tag(TAG  ).e("%s%s", tagObserverCategory, categoryObserve.mMessage);
                     startAnimation();
                     }
 
@@ -290,46 +280,6 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
 
         }
 
-    private void setupObserverCategoryWithTwoPane()
-        {
-
-        mCategoryViewModel.getCategory().observe(getViewLifecycleOwner(), categoryObserve ->
-            {
-            switch (categoryObserve.mStatus)
-                {
-
-                case SUCCESS ->
-                    {
-                    Timber.tag(TAG).e("setupObserverCategoryWithTwoPane, SUCCESS = %s",
-                            (categoryObserve.getMData()));
-
-                    renderListCategory(categoryObserve);
-                    mCategoryViewModel.setItemCategoryWithTwoPane();
-
-                    stopAnimation();
-                    }
-
-                case LOADING ->
-                    {
-                    Timber.tag(TAG).e("setupObserverCategoryWithTwoPane, LOADING");
-                    startAnimation();
-
-                    }
-                case ERROR ->
-                    {
-                    Timber.tag(TAG).e("setupObserverCategory:ERROR %s", categoryObserve.mMessage);
-                    startAnimation();
-                    }
-                case NULL ->
-                    {
-                    startAnimation();
-                    Timber.tag(TAG ).e( "setupObserverCategory:NULL%s",categoryObserve.mMessage);
-
-                    }
-                }
-            });
-
-        }
 
     private void startAnimation()
         {
@@ -349,20 +299,11 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
         mShimmerFrameLayout.setVisibility(View.GONE);
         }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private void renderListBanners(Resource<List<Banners>> banners)
+
+    private void fetchListCategories(@NonNull Resource<List<Category>> category)
         {
-        mBannersAdapter.addBanners(banners.getMData());
-
-        mPriceAdapter.notifyDataSetChanged();
-
-        }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void renderListCategory(@NonNull Resource<List<Category>> category)
-        {
-        mPriceAdapter.addCategory(category.getMData());
-        mPriceAdapter.notifyDataSetChanged();
+        //   Timber.tag(TAG).e("renderListCateg");
+        mBinding.setCategoryList(category.getMData());
         }
 
     private void fetchItemsCategory(int position)
@@ -370,73 +311,46 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
         mCategoryViewModel.setItemCategory(position);
         }
 
-    private void setupViewModel()
-        {
-        setupCategoryViewModel();
-        setupBannersViewModel();
-        }
-
-    private void setupCategoryViewModel()
-        {
-        NavController navController = NavHostFragment.findNavController(this);
-        NavBackStackEntry backStackEntry = navController.getBackStackEntry(R.id.nav_home_priceList);
-
-        mCategoryViewModel = new ViewModelProvider(backStackEntry,
-                new CategoryViewModelFactory(new CategoryHelper(new CategoryClient())))
-                .get(CategoryViewModel.class);
-        }
-
-    private void setupBannersViewModel()
-        {
-        mBannersViewModel = new ViewModelProvider(this,
-                new BannersViewModelFactory(new BannersHelper(new BannersClient())))
-                .get(BannersViewModel.class);
-        }
 
     /**
      * called when network is connected and check if status of data is error return load data.
+     * t
      */
     private void checkConnectionsToInitCategory()
         {
         NetworkConnection networkConnection = new NetworkConnection(requireActivity());
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
             {
-            // if internet not connect,
+            // if internet not connect, :
+
             if (isConnected)
                 {
 
 
-                mCategoryViewModel.hasData().observe(getViewLifecycleOwner(), hasData ->
+                mCategoryViewModel.hasData().observe(getViewLifecycleOwner(), hasDataCategory ->
                     {
-                    if(!hasData)
+                    if (!hasDataCategory)
                         {
-                        Timber.tag(TAG).e("Connected:ERROR %s", mCategoryViewModel.getCategory().getValue());
-                        reloadDataUI();
+                        Timber.tag(TAG).e("hasDataCategory () ->Connected:ERROR %s", mCategoryViewModel.getCategory().getValue());
+                        mCategoryViewModel.reloadCategory();
+
+
                         }
                     });
-                  /*   if (mCategoryViewModel.getCategory().getValue().getMStatus().equals(Status.ERROR)
-                            || mBannersViewModel.getBanners().getValue().getMStatus().equals(Status.ERROR))
-                        {
-                        Timber.tag(TAG).e("Connected:ERROR %s", mCategoryViewModel.getCategory().getValue());
-                        reloadDataUI();
-                        }
 
-                    } catch (NullPointerException e)
+
+                mBannersViewModel.hasData().observe(getViewLifecycleOwner(), hasDataBanner ->
                     {
-                    Timber.tag(TAG).e("Connected:NullPointerException:%s", e.getMessage());
-                    } */
+                    if (!hasDataBanner)
+                        {
+                        Timber.tag(TAG).e("hasDataBanner () -> Connected:ERROR %s", mBannersViewModel.getBanners().getValue());
+                        mBannersViewModel.reload();
 
-
+                        }
+                    });
                 }
 
             });
-        }
-
-    private void reloadDataUI()
-        {
-        getViewModelStore().clear();
-        mCategoryViewModel.reloadCategory();
-        mBannersViewModel.reload();
         }
 
 
@@ -452,11 +366,11 @@ public class PriceListFragment extends Fragment implements LifecycleObserver
         {
         super.onDestroy();
         mBinding = null;
-        //  mShimmerFrameLayout = null;
+        mShimmerFrameLayout = null;
+        getViewModelStore().clear();
         }
 
-    static class PriceOnBackPressedCallback extends OnBackPressedCallback
-            implements SlidingPaneLayout.PanelSlideListener
+    static class PriceOnBackPressedCallback extends OnBackPressedCallback implements SlidingPaneLayout.PanelSlideListener
         {
 
         private final SlidingPaneLayout mSlidingPaneLayout;
