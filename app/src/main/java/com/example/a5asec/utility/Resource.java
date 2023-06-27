@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import org.jetbrains.annotations.Contract;
 
 import lombok.Getter;
+import timber.log.Timber;
 
 public class Resource<T>
     {
@@ -20,9 +21,7 @@ public class Resource<T>
     private T mData;
 
 
-    public Resource()
-        {
-        }
+
 
     public Resource(Status mStatus, T mData, String mMessage)
         {
@@ -31,41 +30,38 @@ public class Resource<T>
         this.mMessage = mMessage;
         }
 
-    @Nullable
+
     public static <T> Resource<T> success(@Nullable T data)
         {
-        Log.e(TAG, "Suc:" + data);
+      //  Timber.tag(TAG).i("Suc:%s", data);
         if (data.toString().equals("[]") || data == null)
             {
-            Log.i(TAG, "Success:null :" + data);
+         //   Timber.tag(TAG).i("Success:null :%s", data);
             return new Resource<>(Status.NULL, null, null);
             } else return new Resource<>(Status.SUCCESS, data, null);
 
         }
 
-    @NonNull
     @Contract("_ -> null")
     public static <T> Resource<T> empty(T data)
         {
-        Log.i(TAG, "null" + data);
+      //  Timber.tag(TAG).i("null%s", data);
 
         return new Resource<>(Status.NULL, data, null);
         }
 
-    @NonNull
     @Contract("null, !null -> null")
     public static <T> Resource<T> error(String msg, T data)
         {
-        Log.i(TAG, String.valueOf(data));
+       // Timber.tag(TAG).i(String.valueOf(data));
 
         return new Resource<>(Status.ERROR, data, msg);
         }
 
-    @NonNull
     @Contract("_ -> null")
     public static <T> Resource<T> loading(T data)
         {
-        Log.i(TAG, "loading" + data);
+       // Timber.tag(TAG).i("loading%s", data);
 
         return new Resource<>(Status.LOADING, data, null);
         }

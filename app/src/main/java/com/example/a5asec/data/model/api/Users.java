@@ -90,7 +90,7 @@ public class Users
 
     @Expose
     @SerializedName("password")
-    private String password;
+    private final String password;
 
     @Getter(AccessLevel.NONE)
     private String city;

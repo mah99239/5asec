@@ -2,88 +2,69 @@ package com.example.a5asec.data.local.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
+import javax.inject.Inject;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
-public final class TokenPreferences
+
+public class TokenPreferences
     {
-    public static final String PREF_ACCESS_TOKEN = "access_token";
-    public static final String PREF_EXPIRES_IN = "expires_in";
-    public static final String PREF_REFRESH_TOKEN = "refresh_token";
-    private static final String TAG = TokenPreferences.class.getName();
-    private static final String PREF_password = "password";
-     static Context sContext;
 
-    static SharedPreferences sSharedPreferences;
+    private static final String PREFS_NAME = "token_prefs";
+    private static final String ACCESS_TOKEN_KEY = "access_token";
+    private static final String REFRESH_TOKEN_KEY = "refresh_token";
+    private static final String EXPIRES_IN_KEY = "expires_in";
+    private static final String PASSWORD_KEY = "password";
 
+    private final SharedPreferences sharedPreferences;
+    @Inject
     public TokenPreferences(Context context)
         {
-        sContext = context;
-        sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         }
 
-    public static void setToken(String accessToken, String refreshToken, long expiresIn)
+    public void setToken(String accessToken, String refreshToken, long expiresIn)
         {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(sContext).edit();
-        editor.putString(PREF_ACCESS_TOKEN, accessToken);
-        editor.putString(PREF_REFRESH_TOKEN, refreshToken);
-        editor.putLong(PREF_EXPIRES_IN, setExpireTime(expiresIn));
-        editor.apply();
-        }
-    public static void setPassword(String password)
-        {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(sContext).edit();
-        editor.putString(PREF_password, password);
-        editor.apply();
-        }
-    public static String getPassword()
-        {
-        return sSharedPreferences.getString(PREF_password, "null").intern();
-
-        }
-
-    public static void restToken()
-        {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(sContext).edit();
-        editor.putString(PREF_ACCESS_TOKEN, "default");
-        editor.putString(PREF_REFRESH_TOKEN, null);
-        editor.putLong(PREF_EXPIRES_IN,0L);
-
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ACCESS_TOKEN_KEY, accessToken);
+        editor.putString(REFRESH_TOKEN_KEY, refreshToken);
+        editor.putLong(EXPIRES_IN_KEY, expiresIn);
         editor.apply();
         }
 
-    @NonNull
-    public static String getPrefAccessToken()
+    public String getAccessToken()
         {
-        return sSharedPreferences.getString(PREF_ACCESS_TOKEN, "default").intern();
+        return sharedPreferences.getString(ACCESS_TOKEN_KEY, null);
         }
 
-    public static String getPrefRefreshToken()
+    public String getRefreshToken()
         {
-        return sSharedPreferences.getString(PREF_REFRESH_TOKEN, null);
+        return sharedPreferences.getString(REFRESH_TOKEN_KEY, null);
         }
 
-    public static long getPrefExpireIn()
+    public long getExpiresIn()
         {
-        return sSharedPreferences.getLong(PREF_EXPIRES_IN, 0);
+        return sharedPreferences.getLong(EXPIRES_IN_KEY, 0);
         }
 
-    private static long setExpireTime(long expire)
+    public String getPassword()
         {
-        Date date = new Date();
-        long currentTime = System.currentTimeMillis();
-        long millis = TimeUnit.SECONDS.toMillis(expire);
+        return sharedPreferences.getString(PASSWORD_KEY, null);
+        }
 
-        date.setTime(currentTime + millis);
-        long expireTime = date.getTime();
+    public void setPassword(String password)
+        {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PASSWORD_KEY, password);
+        editor.apply();
+        }
 
-        Log.e(TAG, "setExpireTime() - expire millis = " + millis);
-        Log.e(TAG, "setExpireTime() - expireTime = " + expireTime);
-        return expireTime;
+    public void resetToken()
+        {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(ACCESS_TOKEN_KEY);
+        editor.remove(REFRESH_TOKEN_KEY);
+        editor.remove(EXPIRES_IN_KEY);
+        editor.apply();
         }
     }

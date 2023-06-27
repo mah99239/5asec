@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Observable;
 public class SettingRepository
     {
     private static final String TAG = "SettingRepository";
-    private SettingHelper mSettingHelper;
+    private final SettingHelper mSettingHelper;
 
 
     public SettingRepository(SettingHelper settingHelper) {

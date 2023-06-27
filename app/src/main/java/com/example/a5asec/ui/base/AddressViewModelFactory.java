@@ -10,7 +10,7 @@ import com.example.a5asec.ui.view.viewmodel.AddressViewModel;
 
 public class AddressViewModelFactory implements ViewModelProvider.Factory
     {
-    private AddressHelper mAddressHelper;
+    private final AddressHelper mAddressHelper;
 
     public AddressViewModelFactory(AddressHelper addressHelper)
         {

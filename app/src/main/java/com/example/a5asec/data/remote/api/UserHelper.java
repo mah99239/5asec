@@ -10,7 +10,7 @@ import okhttp3.RequestBody;
 
 public class UserHelper
     {
-    private UserApi mUserApi;
+    private final UserApi mUserApi;
 
     public UserHelper(UserApi userApi)
         {

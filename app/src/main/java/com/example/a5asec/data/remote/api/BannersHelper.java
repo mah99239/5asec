@@ -1,19 +1,23 @@
 package com.example.a5asec.data.remote.api;
 
-import com.example.a5asec.data.model.api.Banners;
+import com.example.a5asec.data.model.api.Banner;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
+import javax.inject.Inject;
 
-public class BannersHelper {
-private BannersApi mBannersApi;
+import io.reactivex.rxjava3.core.Single;
 
-public BannersHelper(BannersApi bannersApi) {
-this.mBannersApi = bannersApi;
-}
+public class BannersHelper
+{
+    private final BannersApi mBannersApi;
 
-public Observable<List<Banners>> getBanners() {
-return this.mBannersApi.getBanners();
-}
+    @Inject
+    public BannersHelper(BannersApi bannersApi) {
+        this.mBannersApi = bannersApi;
+    }
+
+    public Single<List<Banner>> getBanners() {
+        return this.mBannersApi.getBanners();
+    }
 }

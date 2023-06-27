@@ -9,7 +9,7 @@ import com.example.a5asec.data.repository.OrderRepository;
 import com.example.a5asec.ui.view.viewmodel.OrderViewModel;
 
 public class OrderViewModelFactory implements ViewModelProvider.Factory {
-private OrderHelper mOrderHistoryHelper;
+private final OrderHelper mOrderHistoryHelper;
 
 public OrderViewModelFactory(OrderHelper orderHistoryHelper) {
         this.mOrderHistoryHelper = orderHistoryHelper;

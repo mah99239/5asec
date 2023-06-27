@@ -15,12 +15,11 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface OrderDao
-    {
+{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Single<Long> insertService(ItemService service);
@@ -29,10 +28,13 @@ public interface OrderDao
     Completable insertLaundryService(List<LaundryService> laundryServices);
 
     @Update
-    Single<Integer> updateService(ItemService... order);
+    Single<Integer> updateService(ItemService order);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    Completable updateLaundryService(List<LaundryService> order);
+    Completable updateLaundryServices(List<LaundryService> order);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    Completable updateLaundryService(LaundryService laundryService);
 
 
     @Update
@@ -50,26 +52,26 @@ public interface OrderDao
     Flowable<List<ServiceAndLaundryService>> getOrder();
 
     @Transaction
-    @Query("SELECT * FROM table_item_service where flag = 0 ")
-    Observable<List<ServiceAndLaundryService>> getAllOrder();
+    @Query("SELECT * FROM table_item_service WHERE table_item_service.flag = 0 ")
+    Flowable<List<ServiceAndLaundryService>> getAllOrder();
 
 
-    @Transaction
     @Query("SELECT sum(count) FROM table_item_service where flag = 0")
-    Single<Integer> getCountOrder();
+    Flowable<Integer> getCountOrder();
 
 
 /*     @Transaction
-    @Query(" select cost_item_service from table_item_service where id = 21 union all select SUM(cost) " +
+    @Query(" select cost_item_service from table_item_service where id = 21 union all select SUM
+    (cost) " +
             "from table_laundry_service where id_service = 2") */
-  //  Single<Integer> geSumCostAllService();
+    //  Single<Integer> geSumCostAllService();
 
 /*     @Transaction
-    @Query("SELECT  (sum(cost_item_service)  + sum(table_laundry_service.cost))   * count FROM table_item_service  JOIN" +
+    @Query("SELECT  (sum(cost_item_service)  + sum(table_laundry_service.cost))   * count FROM
+    table_item_service  JOIN" +
             " table_laundry_service  " +
             "where table_item_service.id = :id AND (table_laundry_service.id_service = :id )") */
- //   Single<Integer> geSumCostOfService(int id);
-
+    //   Single<Integer> geSumCostOfService(int id);
 
 
     @Query("delete from sqlite_sequence where name='table_item_service'")
@@ -85,4 +87,4 @@ public interface OrderDao
     Single<Integer> test1(int id); */
 
 
-    }
+}

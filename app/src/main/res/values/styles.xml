@@ -115,8 +115,8 @@
         <item name="cardBackgroundColor">@color/card_status</item>
         <item name="cardCornerRadius">12dp</item>
         <item name="cardElevation">1dp</item>
-        <item name="checkedIcon">@null</item>
         <item name="strokeWidth">0dp</item>
+        <item name="checkedIcon">@null</item>
     </style>
 
     <style name="Widget.5asec.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
@@ -237,4 +237,24 @@
     <style name="customDatePickerStyle" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:datePickerStyle">@style/customDatePicker</item>
     </style>
+
+    <style name="CustomActionModeStyle" parent="@style/Widget.Material3.ActionMode">
+        <item name="height">?attr/actionBarSize</item>
+        <item name="background">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="titleTextColor">@color/md_theme_light_onPrimary</item>
+        <item name="titleTextStyle">@style/TextAppearance.5asec.TitleSmall</item>
+    </style>
+
+
+
+    <style name="Base.Widget.AppCompat.ActionMode" parent="">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
+        <item name="height">?attr/actionBarSize</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle</item>
+        <item name="closeItemLayout">@layout/abc_action_mode_close_item_material</item>
+    </style>
+
+
 </resources>

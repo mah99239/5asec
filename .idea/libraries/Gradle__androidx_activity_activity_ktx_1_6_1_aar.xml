@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.activity:activity-ktx:1.6.1@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/2b8e43270758f4ee128004b8c8d57143/transformed/jetified-activity-ktx-1.6.1/res" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/2b8e43270758f4ee128004b8c8d57143/transformed/jetified-activity-ktx-1.6.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/2b8e43270758f4ee128004b8c8d57143/transformed/jetified-activity-ktx-1.6.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/androidx.activity/activity-ktx/1.6.1/919ce22f7ced37bb707da496c1852fa8a30b6571/activity-ktx-1.6.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

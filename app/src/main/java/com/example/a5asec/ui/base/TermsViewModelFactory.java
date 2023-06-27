@@ -9,7 +9,7 @@ import com.example.a5asec.data.repository.TermsRepository;
 import com.example.a5asec.ui.view.viewmodel.TermsViewModel;
 
 public class TermsViewModelFactory implements ViewModelProvider.Factory {
-    private TermsHelper mTermsHelper;
+    private final TermsHelper mTermsHelper;
 
     public TermsViewModelFactory(TermsHelper termsHelper) {
         this.mTermsHelper = termsHelper;

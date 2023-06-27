@@ -31,11 +31,11 @@ public class AddressViewModel extends ViewModel
     private static final String TAG = "AddressViewModel";
      final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     MutableLiveData<Resource<List<Address>>> mResourceAddresses = new MutableLiveData<>();
-    private MutableLiveData<Resource<Address>> mAddress = new MutableLiveData<>();
-    private MutableLiveData<Resource<Address>> mUpdateAddress = new MutableLiveData<>();
-    private MutableLiveData<Resource<Address>> mUpdatePrimaryAddress = new MutableLiveData<>();
-    private MutableLiveData<Resource<ResponseEntity>> mResponse = new MutableLiveData<>();
-    private MutableLiveData<Resource<List<City>>> mCities = new MutableLiveData<>();
+    private final MutableLiveData<Resource<Address>> mAddress = new MutableLiveData<>();
+    private final MutableLiveData<Resource<Address>> mUpdateAddress = new MutableLiveData<>();
+    private final MutableLiveData<Resource<Address>> mUpdatePrimaryAddress = new MutableLiveData<>();
+    private final MutableLiveData<Resource<ResponseEntity>> mResponse = new MutableLiveData<>();
+    private final MutableLiveData<Resource<List<City>>> mCities = new MutableLiveData<>();
     private AddressRepository mAddressRepository;
 
     public AddressViewModel()

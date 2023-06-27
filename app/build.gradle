@@ -1,27 +1,33 @@
 plugins {
+
     id 'com.android.application'
     id "androidx.navigation.safeargs"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-/*    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'*/
+    id("com.google.dagger.hilt.android")
+
+    /*    id 'com.google.gms.google-services'
+        id 'com.google.firebase.crashlytics'*/
 
 
 }
 
+
 android {
 
-    compileSdk rootProject.ext.compileSdkVersion
+    compileSdk 33
+
     namespace 'com.example.a5asec'
 
 
     defaultConfig {
-        resConfigs 'ar', 'en'
+        resourceConfigurations += ['ar', 'en']
 
         applicationId "com.example.a5asec"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -31,9 +37,8 @@ android {
         splits.density.isEnable = false
         aaptOptions.cruncherEnabled = false
     }
-
-/*    buildFeatures {
-        buildConfig = false
+/*
+    buildFeatures {
         viewBinding = false
         dataBinding = false
         aidl = false
@@ -43,10 +48,11 @@ android {
     }*/
 
     buildFeatures {
+        buildConfig = true
+
         dataBinding = true
         viewBinding = true
     }
-
 
 
     // TODO : add multiple productFlavors in my app (go learn)
@@ -59,7 +65,7 @@ android {
         debug {
             pseudoLocalesEnabled true
 
-            //IMROVE:error with minifyEnabled is true
+            //IMPROVE:error with minifyEnabled is true
             minifyEnabled false
             debuggable true
         }
@@ -70,6 +76,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -77,104 +84,124 @@ android {
         targetCompatibility JavaVersion.VERSION_17
 
     }
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 }
 
 dependencies {
 
-/*    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+    /*    // Import the BoM for the Firebase platform
+        implementation platform('com.google.firebase:firebase-bom:31.2.0')
 
-    // Add the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-analytics'*/
+        // Add the dependencies for the Crashlytics and Analytics libraries
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        implementation 'com.google.firebase:firebase-crashlytics'
+        implementation 'com.google.firebase:firebase-analytics'*/
 
-    api(androidXDependencies.splashScreen)
-    api(androidXDependencies.appcompat)
-    api(androidXDependencies.constraintlayout)
-    api(androidXDependencies.legacy)
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
 
-    api(androidXDependencies.recycleViewSelection)
 
-    api androidXDependencies.navigationFragment
-    api androidXDependencies.navigationUi
-    api androidXDependencies.navigationDynamicFeatures
-    // Testing Navigation
-    //androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
+    implementation libs.annotation
+    implementation libs.coreSplashScreen
+    implementation libs.appcompat
+    implementation libs.constraintLayout
+    implementation libs.legacySupport
+    implementation libs.recyclerView
+    implementation libs.recyclerViewSelection
+    implementation libs.navigationFragment
+    implementation libs.navigationUI
+    implementation libs.navigationDynamicFeatures
+    implementation libs.lifecycleViewmodel
+    implementation libs.lifecycleLivedata
+    implementation libs.lifecycleRuntime
+    implementation libs.lifecycleViewmodelSavedstate
+    annotationProcessor libs.lifecycleCompiler
+    implementation libs.lifecycleCommonJava8
+    implementation libs.lifecycleService
+    implementation libs.lifecycleProcess
+    androidTestImplementation libs.lifecycleTesting
+    implementation libs.multidex
+    implementation libs.swiperefreshlayout
 
-    api androidXDependencies.lifecycleViewmodel
-    api androidXDependencies.lifecylceLivedata
-    api androidXDependencies.lifecylceRunTime
-    api androidXDependencies.lifecylceSavedState
-    // annotationProcessor androidXDependencies.lifecylceCompiler
-    api androidXDependencies.lifecylceCommon
-    api androidXDependencies.lifecylceService
-    api androidXDependencies.lifecylceProcess
-
-    annotationProcessor androidXDependencies.annotation
-
-    api androidXDependencies.multidex
-    api androidXDependencies.swiprefresh
+    annotationProcessor libs.annotation
+    implementation libs.junit
 
 
     //lombok
-    compileOnly lombokDependencies.run
-    annotationProcessor lombokDependencies.project
+    compileOnly libs.projectlombok.lombok
+    annotationProcessor libs.projectlombok.lombok
 
     //Loading effect shimmer
-    implementation('com.facebook.shimmer:shimmer:0.5.0@aar')
+    implementation(libs.shimmer)
+    implementation libs.timber
 
 
-    implementation('org.apache.commons:commons-lang3:3.0')
+    implementation(libs.commons.lang3)
 
-    api 'com.jakewharton.timber:timber:5.0.1'
 
-/*
-    implementation 'com.github.smarteist:autoimageslider:1.4.0'
-*/
+    /*
+        implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    */
 
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation libs.material
 
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.maps.android:maps-rx:1.0.0'
+    implementation libs.play.services.maps
+    implementation libs.maps.rx
 
-    implementation "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
+    implementation libs.slidingpanelayout
 
-    implementation "androidx.window:window:1.0.0"
+    implementation libs.window
 
-    // For Java-friendly APIs to register and unregister callbacks
-    implementation "androidx.window:window-java:1.0.0"
-
-    //retrofit
-    api retrofitDependencies.run
-    api retrofitDependencies.convertergson
-    api retrofitDependencies.converterscalars
-    api retrofitDependencies.okhttp
-
-    //retrofit adapter
-    api retrofitDependencies.adapter
-    api retrofitDependencies.adapterrxjava3
-    api retrofitDependencies.interceptor
-
-    //rxAndroid
-    api retrofitDependencies.rxandroid
-    api retrofitDependencies.rxjava3
-
-//    implementation 'org.maplibre.gl:android-sdk:9.2.1'
-
-    //room
-    api roomDependencies.runtime
-    annotationProcessor roomDependencies.compiler
-    api roomDependencies.rxjava3
-    api roomDependencies.guava
-
+    implementation libs.window.java
 
     //Glide
-    api glideDependencies.run
-    annotationProcessor glideDependencies.compiler
-    api(glideDependencies.integration) {
-        exclude group: 'glide-parent'
+    implementation libs.glide
+    annotationProcessor libs.glideCompiler
+    implementation(libs.okhttp3.integration) {
+        exclude module: 'OkHttpLibraryGlideModule'
     }
 
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    // Dependencies for local unit tests
+    testImplementation libs.junit.junit
+    testImplementation libs.hamcrest.all
+
+    testImplementation libs.core.testing
+    testImplementation libs.mockito.core
+
+    // Dependencies for Dagger
+    implementation libs.dagger
+    implementation libs.dagger.android
+    implementation libs.dagger.android.support
+    annotationProcessor libs.dagger.compiler
+    annotationProcessor libs.dagger.android.processor
+
+
+    //retrofit
+    implementation libs.retrofit
+    implementation libs.converter.gson
+    implementation libs.converter.scalars
+    implementation libs.rxjava3.retrofit.adapter
+    implementation libs.adapter.rxjava3
+    implementation libs.logging.interceptor
+    implementation libs.rxandroid
+    implementation libs.rxjava
+    implementation libs.okhttp
+
+
+    //room
+    implementation(libs.room.runtime)
+    implementation(libs.androidx.room.rxjava3)
+    implementation(libs.androidx.room.guava)
+    annotationProcessor libs.androidx.room.compiler
+    androidTestImplementation(libs.androidx.room.testing)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.hilt.android)
+    annotationProcessor(libs.hilt.android.compiler)
 
 }

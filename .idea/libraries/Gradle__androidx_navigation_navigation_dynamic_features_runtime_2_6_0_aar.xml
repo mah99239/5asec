@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.navigation:navigation-dynamic-features-runtime:2.6.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/0a51835a4928d6f43f290506c2b660db/transformed/jetified-navigation-dynamic-features-runtime-2.6.0/res" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/0a51835a4928d6f43f290506c2b660db/transformed/jetified-navigation-dynamic-features-runtime-2.6.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/0a51835a4928d6f43f290506c2b660db/transformed/jetified-navigation-dynamic-features-runtime-2.6.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/androidx.navigation/navigation-dynamic-features-runtime/2.6.0/8820902b4bc958cca69daa44b1ef32f374717ebc/navigation-dynamic-features-runtime-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

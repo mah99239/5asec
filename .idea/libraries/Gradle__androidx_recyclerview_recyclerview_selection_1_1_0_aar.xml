@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.recyclerview:recyclerview-selection:1.1.0@aar" external-system-id="GRADLE">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/c1999f4c7008005d7fff6411777fb770/transformed/recyclerview-selection-1.1.0/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/c1999f4c7008005d7fff6411777fb770/transformed/recyclerview-selection-1.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/c1999f4c7008005d7fff6411777fb770/transformed/recyclerview-selection-1.1.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/c1999f4c7008005d7fff6411777fb770/transformed/recyclerview-selection-1.1.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview-selection/1.1.0/1095da7182a2b5bc725b8582fb620e3425ee13b5/recyclerview-selection-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

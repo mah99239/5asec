@@ -60,7 +60,7 @@
     <string name="log_out_Negative">الفاء</string>
 
     <string name="about_tittle">من نحن</string>
-    <string name="all_cost_label">ريال</string>
+    <string name="all_cost_label">\u0020ريال</string>
     <string name="all_network_back">تم استعاده الاتصال بالانترنت</string>
     <string name="all_network_button">اعاده المحاوله</string>
     <string name="all_network_error">تحقق من اتصالك بالانترنت من فضلك</string>
@@ -68,7 +68,7 @@
     <string name="cart_text_name_service">Thobe</string>
     <string name="cart_text_services">الخدمه المطلوبه:</string>
     <string name="all_total_service">احمالى السعر</string>
-    <string name="cart_text_count"> الكميه:</string>
+    <string name="cart_text_count">الكميه:\u0020</string>
     <string name="cart_text_empty">عربة التسوق فارغة!</string>
 
     <string name="cart_tittle">السله</string>

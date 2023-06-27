@@ -5,6 +5,7 @@
     <!-- Login Activity-->
     <dimen name="guideline_all_margin">16dp</dimen>
     <dimen name="padding_all_element">8dp</dimen>
+    <dimen name="padding_all_item">4dp</dimen>
     <dimen name="margin_card">8dp</dimen>
     <dimen name="margin_terms_text">8dp</dimen>
 

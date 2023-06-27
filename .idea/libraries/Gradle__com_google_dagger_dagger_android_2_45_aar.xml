@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.dagger:dagger-android:2.45@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/4ad10cb15d609188e7fa31d076873dae/transformed/jetified-dagger-android-2.45/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/4ad10cb15d609188e7fa31d076873dae/transformed/jetified-dagger-android-2.45/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/com.google.dagger/dagger-android/2.45/238b949b9b885fd80afef43c19bfaa6e305c20c6/dagger-android-2.45-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/com.google.dagger/dagger-android/2.45/3eab55c8af9e54f47505382114028557d5cea2cc/dagger-android-2.45-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

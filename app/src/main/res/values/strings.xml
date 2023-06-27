@@ -46,7 +46,7 @@
     <string name="sign_up_empty_confirmpassword">confirm password is null</string>
 
     <string name="about_tittle">about us</string>
-    <string name="all_cost_label">SAR</string>
+    <string name="all_cost_label">\u0020SAR</string>
     <string name="all_network_back">back online</string>
     <string name="all_network_button">Retry</string>
     <string name="all_network_error">Check your internet connection Please</string>
@@ -54,9 +54,11 @@
     <string name="cart_button_label">GO to checkout</string>
     <string name="cart_text_name_service">Thobe</string>
     <string name="cart_text_services">Required service: </string>
-    <string name="all_total_service">Total: </string>
-    <string name="cart_text_count">count: </string>
+    <string name="all_total_service">Total:</string>
+    <string name="cart_text_count">count:\u0020</string>
     <string name="cart_tittle">Cart</string>
+    <string name="cart_message_delete_item">Item cart was removed from the list.</string>
+    <string name="cart_undo_button">Undo</string>
     <string name="cart_text_empty">Your cart is empty!</string>
 
     <string name="contact_text_find">Find us</string>
@@ -73,6 +75,8 @@
     <string name="laundry_service_content_available_services">Available service:</string>
     <string name="laundry_service_content_cart_button">Add to cart</string>
     <string name="laundry_service_content_cart_update_button">Update cart</string>
+    <string name="laundry_service_update_item_succes">Cart Updated successfully.</string>
+    <string name="laundry_service_update_item_fail">Cart not update.</string>
     <string name="login_button_signUp">Sign Up</string>
     <string name="login_email">E-mail</string>
     <string name="login_forgotPassword">Forgot password?</string>

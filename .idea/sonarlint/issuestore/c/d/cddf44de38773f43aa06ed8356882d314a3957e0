@@ -1,0 +1,13 @@
+
+P
+java:S1118	":Add a private constructor to hide the implicit public one.(öï³ò
+o
+java:S6201"TReplace this instanceof check and cast with 'instanceof HttpException httpexception'(ØÓéÿÿÿÿÿ
+b
+java:S3252"LUse static access with "java.net.HttpURLConnection" for "HTTP_UNAUTHORIZED".( û×¾
+d
+java:S3252"IUse static access with "java.net.HttpURLConnection" for "HTTP_FORBIDDEN".(‰¨ùªşÿÿÿÿ
+i
+java:S3252"NUse static access with "java.net.HttpURLConnection" for "HTTP_INTERNAL_ERROR".(ˆ¯´úÿÿÿÿ
+f
+java:S3252"KUse static access with "java.net.HttpURLConnection" for "HTTP_BAD_REQUEST".(â™Û›ÿÿÿÿÿ

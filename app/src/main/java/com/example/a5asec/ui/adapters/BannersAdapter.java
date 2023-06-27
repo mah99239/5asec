@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.a5asec.R;
-import com.example.a5asec.data.model.api.Banners;
+import com.example.a5asec.data.model.api.Banner;
 import com.example.a5asec.databinding.ListItemBannersBinding;
 
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.List;
 
 public class BannersAdapter extends BaseAdapter
     {
-    private final ArrayList<Banners> mBanners = new ArrayList<>();
+    private final ArrayList<Banner> mBanners = new ArrayList<>();
 
     public BannersAdapter()
         {
        // mBanners = new ArrayList<>();
         }
 
-    public void addBanners(List<Banners> banners)
+    public void addBanners(List<Banner> banners)
         {
 
         if (banners != null)
@@ -41,7 +41,7 @@ public class BannersAdapter extends BaseAdapter
         }
 
     @Override
-    public Banners getItem(int position)
+    public Banner getItem(int position)
         {
         return mBanners.get(position);
         }
@@ -60,7 +60,7 @@ public class BannersAdapter extends BaseAdapter
         ListItemBannersBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.list_item_banners, parent, false);
 
-        Banners banners = mBanners.get(position);
+        Banner banners = mBanners.get(position);
         binding.setBanner(banners);
         // binding.setVariable(BR.banner,banners);
         binding.executePendingBindings();

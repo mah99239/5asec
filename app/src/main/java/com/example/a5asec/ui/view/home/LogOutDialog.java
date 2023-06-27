@@ -12,42 +12,52 @@ import com.example.a5asec.data.local.prefs.TokenPreferences;
 import com.example.a5asec.ui.view.login.MainActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class LogOutDialog extends DialogFragment
-    {
-    public LogOutDialog()
-        {
-// Empty constructor required for DialogFragment
-        }
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+
+public class LogOutDialog extends DialogFragment
+{
+    @Inject
+    TokenPreferences tokenPreferences;
+
+    public LogOutDialog()
+    {
+/*
+        ((MvvmApp) getActivity().getApplication()).getPreferencesComponent().inject((MainActivity) getActivity());
+*/
+
+// Empty constructor required for DialogFragment
+    }
 
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
-        {
+    {
         String tittle = getString(R.string.log_out_tittle);
         String message = getString(R.string.log_out_message);
         String positive = getString(R.string.log_out_positive);
         String negative = getString(R.string.log_out_Negative);
 
-        MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext());
+        MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(
+                requireContext());
         alertDialogBuilder.setTitle(tittle);
         alertDialogBuilder.setMessage(message);
-        alertDialogBuilder.setPositiveButton(positive, (dialog, which) ->
-            {
-            TokenPreferences.restToken();
+        alertDialogBuilder.setPositiveButton(positive, (dialog, which) -> {
+            tokenPreferences.resetToken();
             startActivity(new Intent(getContext(), MainActivity.class));
             requireActivity().finish();
-            });
-        alertDialogBuilder.setNegativeButton(negative, (dialog, which) ->
-            {
-            if (dialog != null)
-                {
+        });
+        alertDialogBuilder.setNegativeButton(negative, (dialog, which) -> {
+            if (dialog != null) {
                 dialog.dismiss();
-                }
-            });
+            }
+        });
 
         return alertDialogBuilder.create();
-        }
-
     }
+
+}

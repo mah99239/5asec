@@ -1,5 +1,8 @@
 package com.example.a5asec.data.model.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -11,7 +14,7 @@ import lombok.Getter;
 
 @Data
 @Entity(tableName = "table_item_service")
-public class ItemService
+public class ItemService implements Parcelable
     {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -53,4 +56,44 @@ public class ItemService
         return language.equals("en") ? nameEn : nameAr;
         }
 
+
+    protected ItemService(Parcel in) {
+    id = in.readInt();
+    costItemService = in.readInt();
+    idItemService = in.readInt();
+    count = in.readInt();
+    nameEn = in.readString();
+    nameAr = in.readString();
+    flag = in.readInt();
+    name = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(id);
+    dest.writeInt(costItemService);
+    dest.writeInt(idItemService);
+    dest.writeInt(count);
+    dest.writeString(nameEn);
+    dest.writeString(nameAr);
+    dest.writeInt(flag);
+    dest.writeString(name);
+    }
+
+    @Override
+    public int describeContents() {
+    return 0;
+    }
+
+    public static final Creator<ItemService> CREATOR = new Creator<ItemService>() {
+    @Override
+    public ItemService createFromParcel(Parcel in) {
+    return new ItemService(in);
+    }
+
+    @Override
+    public ItemService[] newArray(int size) {
+    return new ItemService[size];
+    }
+    };
     }

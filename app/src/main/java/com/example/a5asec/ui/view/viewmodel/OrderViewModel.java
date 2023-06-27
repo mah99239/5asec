@@ -22,8 +22,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class OrderViewModel extends ViewModel
     {
     private static final String TAG = "OrderHistoryViewModel";
-    private MutableLiveData<Resource<List<Order>>> orderHistory = new MutableLiveData<>();
-    private MutableLiveData<Resource<Order>> mItemsHistoryOrder = new MutableLiveData<>();
+    private final MutableLiveData<Resource<List<Order>>> orderHistory = new MutableLiveData<>();
+    private final MutableLiveData<Resource<Order>> mItemsHistoryOrder = new MutableLiveData<>();
     final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private OrderRepository mOrderRepository;
 

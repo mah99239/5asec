@@ -3,7 +3,6 @@ package com.example.a5asec.ui.adapters.base;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
@@ -22,19 +20,21 @@ public abstract class BaseAdapter<Binding extends ViewDataBinding, T>
         extends RecyclerView.Adapter<BaseViewHolder<Binding>>
     {
 
-    @Getter
-    ItemClickListener itemClickListener;
-
     @LayoutRes
     public int mLayoutId;
-    private List<T> data;
-    @Getter public  int position;
+    @Getter
+    public int position;
+    @Getter
+    ItemClickListener itemClickListener;
+    private List<T> listData;
+    private T data;
 
     public BaseAdapter()
         {
 
         }
-    public  void setClickListener(ItemClickListener itemClickListener)
+
+    public void setClickListener(ItemClickListener itemClickListener)
         {
         this.itemClickListener = itemClickListener;
         }
@@ -44,10 +44,12 @@ public abstract class BaseAdapter<Binding extends ViewDataBinding, T>
     @SuppressLint("NotifyDataSetChanged")
     public void updateData(List<T> list)
         {
-        this.data = list;
+        this.listData = list;
         notifyDataSetChanged();
 
         }
+
+
 
     @Override
     public long getItemId(int position)
@@ -64,22 +66,22 @@ public abstract class BaseAdapter<Binding extends ViewDataBinding, T>
                 DataBindingUtil.inflate(LayoutInflater
                                 .from(parent.getContext()),
                         mLayoutId, parent, false);
-        return new BaseViewHolder<Binding>(binder);
+        return new BaseViewHolder<>(binder);
         }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<Binding> holder, int position)
         {
-        bind(holder.mBinder, data.get(position));
+        bind(holder.mBinder, listData.get(position));
         holder.mBinder.getRoot().setOnClickListener(v ->
             {
 
 
-                this.position = holder.getAdapterPosition();
-                if (this.position != RecyclerView.NO_POSITION)
-                    {
-                    itemClickListener.onItemClick(v, this.position);
-                    }
+            this.position = holder.getCurrentPosition();
+            if (this.position != RecyclerView.NO_POSITION)
+                {
+                itemClickListener.onItemClick(v, holder.getCurrentPosition());
+                }
 
             });
         }
@@ -87,7 +89,7 @@ public abstract class BaseAdapter<Binding extends ViewDataBinding, T>
     @Override
     public int getItemCount()
         {
-        return data.size();
+        return listData.size();
         }
 
 

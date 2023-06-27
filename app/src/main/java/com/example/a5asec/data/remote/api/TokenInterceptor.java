@@ -7,15 +7,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.a5asec.data.local.prefs.TokenPreferences;
-import com.example.a5asec.utility.NetworkConnection;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -23,22 +23,28 @@ import okhttp3.Response;
 import timber.log.Timber;
 
 public class TokenInterceptor implements Interceptor
-    {
+{
     private static final String TAG = "TokenInterceptor";
+    @Inject
+    TokenPreferences tokenPreferences;
+  /*  @Inject
+    NetworkConnection networkConnection;*/
 
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException
-        {
+    {
 
-        if (!NetworkConnection.isOnline())
-            {
+     /*   if (networkConnection.isActive()) {
             throw new UnknownHostException("No Internet Connection");
-            }
-       // okhttp3.RequestBody$Companion$toRequestBody$1@eebc8e4
+        }*/
+        // okhttp3.RequestBody$Companion$toRequestBody$1@eebc8e4
         Request newRequest = chain.request();
         Response response = chain.proceed(newRequest);
-        Timber.tag(TAG).e("intercept ,request : " + newRequest.toString());
+        Timber.tag(TAG).e("intercept ,request : %s", newRequest.toString());
+
+
+
 
 
      /*    if (responseCount(response) >= 3)
@@ -50,70 +56,52 @@ public class TokenInterceptor implements Interceptor
 
 
         // Check code is equal to 401
-        if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
-            {
-          //  synchronized (this)
-                {
+        if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            synchronized (this) {
+                try {
 
-                try
-                    {
-                     String newAccessToken = TokenPreferences.getPrefAccessToken();
+                    String newAccessToken = tokenPreferences.getAccessToken();
                     Timber.tag(TAG).e("intercept() Code: %s", response.code());
                     response.close();
-                    return chain.proceed(newRequestWithAccessToken(newRequest, newAccessToken));
+                    return chain.proceed(newRequestWithAccessToken(newRequest,
+                            newAccessToken));
 
-                    } catch (NullPointerException e)
-                    {
-                    e.getMessage();
-                    }
+                } catch (NullPointerException e) {
+                    Timber.tag(TAG).e("NullPointerException:" + e);
+
+
                 }
             }
-        Timber.tag(TAG).e("intercept: CODE: " + response.code());
+        }
+        Timber.tag(TAG).e("intercept: CODE : %s", response.code());
 
         return response;
-        }
+    }
 
-    private int resultTime()
-        {
-        // 23.9H to milliSecond = 86399000
-        long expireTime = TokenPreferences.getPrefExpireIn();
-        Log.e(TAG, "expitre:" + expireTime);
-
-        Date expireDate = new Date();
-        expireDate.setTime(expireTime);
-        Date nowDate = new Date();
-
-
-
-        Log.e(TAG, "intercept() - current time " + nowDate + "expire time" + expireDate);
-        return expireDate.compareTo(nowDate);
-        }
-
-    private int responseCount(Response response)
-        {
-        int result = 1;
-        while ((response = response.priorResponse()) != null)
-            {
-            result++;
-            }
-        return result;
-        }
 
     @NonNull
     private Request newRequestWithAccessToken(@NonNull Request request, @NonNull String accessToken)
-        {
+    {
         return request.newBuilder()
-                .header("Authorization", "bearer " + accessToken)
-                .build();
-        }
+                .header("Authorization", "bearer " + accessToken).build();
+    }
 
+
+    private int responseCount(Response response)
+    {
+        int result = 1;
+        while ((response = response.priorResponse()) != null) {
+            result++;
+        }
+        return result;
+    }
 
     private void refreshToken()
-        {
+    {
         // you can use RxJava with Retrofit and add blockingGet
         // it is up to you how to refresh your token
         Map<String, Object> jsonParams = new ArrayMap<>();
-        String refreshToken = TokenPreferences.getPrefRefreshToken();
+        // String refreshToken = TokenPreferences.getRefreshToken();
 
     /*     //put something inside the map, could be null
         String refreshToken = TokenPreferences.getPrefRefreshToken();
@@ -126,32 +114,53 @@ public class TokenInterceptor implements Interceptor
                     {
                     @Override
                     public void onResponse(@NonNull Call<Authorization.AuthorizationEntity> call,
-                                           @NonNull retrofit2.Response<Authorization.AuthorizationEntity> response)
+                                           @NonNull retrofit2.Response<Authorization
+                                           .AuthorizationEntity> response)
                         {
                         Authorization.AuthorizationEntity body = response.body();
                         if (response.code() == 200 && body != null)
                             {
                             Log.e(TAG,
-                                    "refreshToken().onResponse - into condition if code equal to 200"
+                                    "refreshToken().onResponse - into condition if code equal to
+                                    200"
                                             + response.message());
 
-                            TokenPreferences.setToken(body.getAccess_token(), body.getRefresh_token(),
+                            TokenPreferences.setToken(body.getAccess_token(), body
+                            .getRefresh_token(),
                                     body.getExpires_in());
                             } else
                             {
                             Log.e(TAG,
-                                    "refreshToken().onResponse - into condition code not equal to 200"
+                                    "refreshToken().onResponse - into condition code not equal to
+                                     200"
                                             + response.message());
                             }
                         call.cancel();
                         }
 
                     @Override
-                    public void onFailure(@NonNull Call<Authorization.AuthorizationEntity> call, @NonNull Throwable t)
+                    public void onFailure(@NonNull Call<Authorization.AuthorizationEntity> call,
+                    @NonNull Throwable t)
                         {
                         Log.e(TAG, "refreshToken().onFailure() - show message " + t.getMessage());
                         call.cancel();
                         }
                     }); */
-        }
     }
+
+    private int resultTime()
+    {
+        // 23.9H to milliSecond = 86399000
+        long expireTime = 3;//preferencesModule.provideTokenPreferences().getExpiresIn();
+        Log.e(TAG, "expitre:" + expireTime);
+
+        Date expireDate = new Date();
+        expireDate.setTime(expireTime);
+        Date nowDate = new Date();
+
+
+        Log.e(TAG,
+                "intercept() - current time " + nowDate + "expire time" + expireDate);
+        return expireDate.compareTo(nowDate);
+    }
+}

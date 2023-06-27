@@ -54,31 +54,31 @@ public  class Address
 
         @Expose
         @SerializedName("street")
-        private transient  String street;
+        private final transient  String street;
         @Expose
         @SerializedName("note")
-        private String note;
+        private final String note;
         @Expose
         @SerializedName("nearLandmark")
-        private String nearLandmark;
+        private final String nearLandmark;
         @Expose
         @SerializedName("lat")
-        private String lat;
+        private final String lat;
         @Expose
         @SerializedName("lang")
-        private String lang;
+        private final String lang;
         @Expose
         @SerializedName("floor")
-        private String floor;
+        private final String floor;
         @Expose
         @SerializedName("building")
-        private String building;
+        private final String building;
         @Expose
         @SerializedName("areaId")
-        private int areaId;
+        private final int areaId;
         @Expose
         @SerializedName("apartment")
-        private String apartment;
+        private final String apartment;
         public CreateAddress(String apartment, String street, int areaId, String building, String floor,
                        String lang, String lat, String nearLandmark, String notes)
             {
@@ -101,34 +101,34 @@ public  class Address
 
         @Expose
         @SerializedName("street")
-        private String street;
+        private final String street;
         @Expose
         @SerializedName("note")
-        private String note;
+        private final String note;
         @Expose
         @SerializedName("nearLandmark")
-        private String nearLandmark;
+        private final String nearLandmark;
         @Expose
         @SerializedName("lat")
-        private String lat;
+        private final String lat;
         @Expose
         @SerializedName("lang")
-        private String lang;
+        private final String lang;
         @Expose
         @SerializedName("id")
         private int id;
         @Expose
         @SerializedName("floor")
-        private String floor;
+        private final String floor;
         @Expose
         @SerializedName("building")
-        private String building;
+        private final String building;
         @Expose
         @SerializedName("areaId")
-        private int areaId;
+        private final int areaId;
         @Expose
         @SerializedName("apartment")
-        private String apartment;
+        private final String apartment;
 
         public UpdateAddress(String apartment, String street, int areaId, String building, String floor,
                              String lang, String lat, String nearLandmark, String notes)

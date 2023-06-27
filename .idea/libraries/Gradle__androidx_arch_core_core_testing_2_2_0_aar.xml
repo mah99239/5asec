@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.arch.core:core-testing:2.2.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/6c00e73ababb73a639ae21cc1e50d076/transformed/core-testing-2.2.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/6c00e73ababb73a639ae21cc1e50d076/transformed/core-testing-2.2.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/transforms-3/6c00e73ababb73a639ae21cc1e50d076/transformed/core-testing-2.2.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.gradle/wrapper/dists/gradle-8.1-rc-1-bin/caches/modules-2/files-2.1/androidx.arch.core/core-testing/2.2.0/3e62766aa73bfefb3f504249858f213a02174452/core-testing-2.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

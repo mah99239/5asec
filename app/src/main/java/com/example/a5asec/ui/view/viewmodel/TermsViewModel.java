@@ -27,7 +27,7 @@ public class TermsViewModel extends ViewModel
     {
     private static final String TAG = "TermsViewModel";
     public MutableLiveData<Resource<List<Terms>>> terms = new MutableLiveData<>();
-    private  CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private TermsRepository mTermsRepository;
 
     public TermsViewModel()

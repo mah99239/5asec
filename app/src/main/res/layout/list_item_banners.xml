@@ -6,7 +6,7 @@
     <data>
         <variable
             name="banner"
-            type="com.example.a5asec.data.model.api.Banners" />
+            type="com.example.a5asec.data.model.api.Banner" />
     </data>
 
     <LinearLayout

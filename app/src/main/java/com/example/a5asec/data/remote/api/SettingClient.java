@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Observable;
 public class SettingClient extends Client implements SettingApi
     {
     private static SettingClient INSTANCE;
-    private SettingApi mSettingApi;
+    private final SettingApi mSettingApi;
 
     public SettingClient()
         {

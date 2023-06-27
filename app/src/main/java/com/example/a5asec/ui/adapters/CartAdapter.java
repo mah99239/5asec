@@ -1,215 +1,288 @@
 package com.example.a5asec.ui.adapters;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a5asec.R;
+import com.example.a5asec.data.model.db.LaundryService;
 import com.example.a5asec.data.model.db.ServiceAndLaundryService;
 import com.example.a5asec.databinding.ListItemCartBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lombok.val;
+import lombok.Setter;
 
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>
-    {
-    private static final String TAG = "CartAdapter";
-    private RvClickListener onClickListenerNested;
-    private List<ServiceAndLaundryService> mItems = new ArrayList<>();
-    private ArrayList<Integer> mTotalService;
+public class CartAdapter extends
+                         ListAdapter<ServiceAndLaundryService, CartAdapter.CartViewHolder>
+{
+    @Setter
+    private static SelectionTracker<Long> selectionTracker;
+
 
     public CartAdapter()
-        {
-        }
+    {
+        super(cartCallback());
 
-    public void setOnclickListener(RvClickListener clickHandler)
+    }
+
+    @NonNull
+    private static DiffUtil.ItemCallback<ServiceAndLaundryService> cartCallback()
+    {
+        return new DiffUtil.ItemCallback<>()
         {
-        this.onClickListenerNested = clickHandler;
-        }
+            @Override
+            public boolean areItemsTheSame(@NonNull ServiceAndLaundryService oldItem,
+                                           @NonNull ServiceAndLaundryService newItem)
+            {
+                return oldItem.getService().getId() == newItem.getService().getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull ServiceAndLaundryService oldItem,
+                                              @NonNull ServiceAndLaundryService newItem)
+            {
+                return oldItem.getLaundryServiceWithFlagZero()
+                        .size() == newItem.getLaundryServiceWithFlagZero().size() &&
+                        oldItem.getLaundryServiceWithFlagZero()
+                                .equals(newItem.getLaundryServiceWithFlagZero());
+            }
+
+        };
+    }
+
+
+    public Integer getItemIdService(long position)
+    {
+        return getItem((int) position).getService().getId();
+    }
 
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-        {
-        int layoutIdForListItem = R.layout.list_item_cart;
-        boolean shouldAttachToParentImmediately = false;
-        ListItemCartBinding listItemCartBinding = DataBindingUtil.inflate(LayoutInflater
-                        .from(parent.getContext()),
-                layoutIdForListItem, parent, shouldAttachToParentImmediately);
+    {
 
-        return new CartViewHolder(listItemCartBinding, onClickListenerNested);
-        }
+        return CartViewHolder.from(parent);
+    }
 
 
     @Override
-    public void onBindViewHolder(CartViewHolder viewHolder, int position)
-        {
-        var dataToBind = getItemByPosition(position);
-        viewHolder.bind(dataToBind, position);
+    public void onBindViewHolder(@NonNull CartViewHolder viewHolder, int position)
+    {
+        ServiceAndLaundryService dataToBind = getItem(viewHolder.getAbsoluteAdapterPosition());
+        viewHolder.bind(dataToBind);
 
+    }
+
+    /**
+     * called when remove item to get id primary of item service.
+     *
+     * @param position of List Item service.
+     * @return primary id in item service.
+     */
+    public int getItemServiceId(int position)
+    {
+        return getItem(position).getService().getIdItemService();
+    }
+
+
+    public static class CartDetailsLookup extends ItemDetailsLookup<Long>
+    {
+        private final RecyclerView recyclerView;
+
+        public CartDetailsLookup(RecyclerView recyclerView)
+        {
+            this.recyclerView = recyclerView;
         }
 
-
-    @Override
-    public int getItemCount()
+        @Nullable
+        @Override
+        public ItemDetails<Long> getItemDetails(@NonNull MotionEvent e)
         {
-        return mItems.size();
-        }
+            View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+            if (view != null) {
+                RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
 
-
-
-    public void setData(List<ServiceAndLaundryService> data)
-        {
-        mItems = data;
-        notifyDataSetChanged();
-
-        }
-
-    public void removeItem(int position)
-        {
-        mItems.remove(position);
-        notifyItemRemoved(position);
-        }
-
-    public void restoreItem(ServiceAndLaundryService item, int position)
-        {
-        mItems.add(position, item);
-        notifyItemInserted(position);
-        }
-
-    public ServiceAndLaundryService getItemByPosition(int position)
-        {
-        return mItems.get(position);
-        }
-
-
-    public void setTotalService(ArrayList<Integer> total)
-        {
-        mTotalService = total;
-        notifyDataSetChanged();
-        }
-
-
-    public interface RvClickListener
-        {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(int position);
-
-        }
-
-    public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-        {
-        private final ListItemCartBinding mBinding;
-        private final RvClickListener mRvClickListener;
-
-
-        public CartViewHolder(ListItemCartBinding itemView, RvClickListener recycleViewInterface)
-            {
-            super(itemView.getRoot());
-            this.mBinding = itemView;
-            mRvClickListener = recycleViewInterface;
-
-            }
-
-
-        public void bind(ServiceAndLaundryService item, int position)
-            {
-            mBinding.getRoot().setOnClickListener(CartViewHolder.this);
-            setupOnLongClick();
-
-            val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();
-
-            var context = mBinding.getRoot().getContext();
-            var nameTextView = mBinding.tvCartNameService;
-            var countTextView = mBinding.tvCartCount;
-            var totalTextView = mBinding.tvCartTotalService;
-
-
-            var name = item.getService().getName(languageTags);
-
-            var count = context.getString(R.string.cart_text_count) + " " + item.getService().getCount();
-            var costService = getTotalService(position) + " " + context.getString(R.string.all_cost_label);
-
-            setupNestedRecycleView(item);
-            nameTextView.setText(name);
-            countTextView.setText(count);
-            totalTextView.setText(costService);
-
-            }
-
-
-        private void setupNestedRecycleView(ServiceAndLaundryService item)
-            {
-            RecyclerView.RecycledViewPool
-                    viewPool
-                    = new RecyclerView
-                    .RecycledViewPool();
-            var laundryServiceRecycleView = mBinding.rvCartService;
-            RecyclerView.ItemDecoration itemDecoration = new
-                    DividerItemDecoration(mBinding.rvCartService.getContext(), DividerItemDecoration.HORIZONTAL);
-            laundryServiceRecycleView.addItemDecoration(itemDecoration);
-            LinearLayoutManager layoutManager
-                    = new LinearLayoutManager(
-                    laundryServiceRecycleView.getContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false);
-            layoutManager
-                    .setInitialPrefetchItemCount(
-                            item.getLaundryServices().size());
-
-            LaundryServiceCartAdapter laundryServiceCartAdapter =
-                    new LaundryServiceCartAdapter(getAdapterPosition());
-            laundryServiceCartAdapter.setClickListener(mRvClickListener);
-            laundryServiceCartAdapter.setData(item);
-            laundryServiceRecycleView.setLayoutManager(layoutManager);
-            laundryServiceRecycleView.setAdapter(laundryServiceCartAdapter);
-            laundryServiceRecycleView.setRecycledViewPool(viewPool);
-
-            }
-
-        private Integer getTotalService(int pos)
-            {
-            return mTotalService.get(pos);
-            }
-
-        public void onClick(View v)
-            {
-            if (mRvClickListener != null)
-                {
-                int pos = getAdapterPosition();
-                if (pos != RecyclerView.NO_POSITION)
-                    {
-                    mRvClickListener.onItemClick(v, pos);
-                    }
+                if (viewHolder instanceof CartAdapter.CartViewHolder itemViewHolder) {
+                    return (itemViewHolder).getItemDetails();
                 }
-
             }
+            return null;
+        }
 
-        private void setupOnLongClick()
-            {
-            mBinding.getRoot().setOnLongClickListener(v ->
-                {
-                if (mRvClickListener != null)
-                    {
-                    int pos = getAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION)
-                        {
-                        mRvClickListener.onItemLongClick(pos);
-                        }
-                    }
-                return true;
-                });
-            }
+    }
+
+    public static class CartItemsKeyProvider extends ItemKeyProvider<Long>
+    {
+        CartAdapter mCartAdapter;
+
+        public CartItemsKeyProvider(CartAdapter adapter)
+        {
+            super(ItemKeyProvider.SCOPE_CACHED);
+            mCartAdapter = adapter;
+        }
+
+        @Nullable
+        @Override
+        public Long getKey(int position)
+        {
+            return (long) position;
+        }
+
+        @Override
+        public int getPosition(@NonNull Long key)
+        {
+            long value = key;
+
+            return (int) value;
+
         }
     }
+
+    public static class CartViewHolder extends RecyclerView.ViewHolder
+    {
+        private final ListItemCartBinding binding;
+
+        private CartViewHolder(ListItemCartBinding binding)
+        {
+            super(binding.getRoot());
+            this.binding = binding;
+
+
+        }
+
+        private static CartViewHolder from(@NonNull ViewGroup parent)
+        {
+            boolean shouldAttachToParentImmediately = false;
+            ListItemCartBinding listItemCartBinding = DataBindingUtil.inflate(LayoutInflater
+                            .from(parent.getContext()),
+                    R.layout.list_item_cart, parent, shouldAttachToParentImmediately);
+
+            return new CartViewHolder(listItemCartBinding);
+        }
+
+        public void bind(ServiceAndLaundryService item)
+        {
+
+
+            String languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags();
+            int total = getTotalItemService(item);
+            binding.setLifecycleOwner(binding.getLifecycleOwner());
+
+            binding.setLanguage(languageTags);
+
+            binding.setItemService(item);
+            binding.setTotalCostItem(total);
+            setupNestedRecycleView(item);
+
+
+            if (selectionTracker != null) {
+
+                bindSelectedState();
+            }
+
+            binding.executePendingBindings();
+
+
+        }
+
+        private void bindSelectedState()
+        {
+            binding.cvCartContainer.setChecked(
+                    selectionTracker.isSelected(getItemDetails().getSelectionKey()));
+
+        }
+
+        /**
+         * sum total in item service Cart with Stream.
+         *
+         * @return sum total of item service and List LaundryService
+         */
+        private int getTotalItemService(ServiceAndLaundryService serviceAndLaundryService)
+        {
+            if (serviceAndLaundryService == null) return -1;
+
+            int costItemService = serviceAndLaundryService.getService().getCostItemService();
+            int totalCostListLaundryService = serviceAndLaundryService.getLaundryService().stream()
+                    .mapToInt(LaundryService::getCost).sum();
+            int total = costItemService + totalCostListLaundryService;
+            total *= serviceAndLaundryService.getService().getCount();
+            return total;
+
+        }
+
+        /**
+         * initialize nested recycleView that bind ItemService as base and List of LaundryService
+         */
+        private void setupNestedRecycleView(ServiceAndLaundryService item)
+        {
+            RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(
+                    binding.rvCartService.getContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false);
+
+            layoutManager.setInitialPrefetchItemCount(
+                    item.getLaundryService().size());
+
+            LaundryServiceCartAdapter laundryServiceCartAdapter =
+                    new LaundryServiceCartAdapter();
+
+            laundryServiceCartAdapter.setData(item);
+            binding.rvCartService.setLayoutManager(layoutManager);
+            binding.rvCartService.setAdapter(laundryServiceCartAdapter);
+
+            binding.rvCartService.setRecycledViewPool(viewPool);
+
+        }
+
+        private ItemDetailsLookup.ItemDetails<Long> getItemDetails()
+        {
+            return new ItemDetailsLookup.ItemDetails<Long>()
+            {
+                @Override
+                public int getPosition()
+                {
+                    return getAbsoluteAdapterPosition();
+                }
+
+                @Override
+                public Long getSelectionKey()
+                {
+                    return (long) getAbsoluteAdapterPosition();
+                }
+
+
+                @Override
+                public boolean inSelectionHotspot(@NonNull MotionEvent e)
+                {
+                    return false;
+                }
+
+                @Override
+                public boolean inDragRegion(@NonNull MotionEvent e)
+                {
+                    return true;
+                }
+            };
+        }
+
+
+    }
+
+
+}

@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 public class TermsRepository {
 private static final String TAG = "TermsRepository";
-    private TermsHelper mTermsHelper;
+    private final TermsHelper mTermsHelper;
 
 
     public TermsRepository(TermsHelper apiHelper) {

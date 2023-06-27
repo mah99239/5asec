@@ -25,7 +25,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
     private static final String TAG = AddressAdapter.class.getSimpleName();
 
-    private List<Address> mListAddress = new ArrayList<>();
+    private final List<Address> mListAddress = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public AddressAdapter()

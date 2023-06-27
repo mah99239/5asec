@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a5asec.R;
-import com.example.a5asec.data.model.api.Banners;
+import com.example.a5asec.data.model.api.Banner;
 import com.example.a5asec.data.model.api.Category;
 import com.example.a5asec.ui.adapters.BannersAdapter;
 import com.example.a5asec.ui.adapters.base.BaseAdapter;
@@ -43,7 +43,7 @@ public class DataBindingUtils
         }
 
     @BindingAdapter("dataFlipper")
-    public static void setDataFlipper(AdapterViewFlipper adapterViewFlipper, @Nullable List<Banners> bannersList)
+    public static void setDataFlipper(AdapterViewFlipper adapterViewFlipper, @Nullable List<Banner> bannersList)
         {
         var adapter = (BannersAdapter) adapterViewFlipper.getAdapter();
         adapter.addBanners(bannersList);

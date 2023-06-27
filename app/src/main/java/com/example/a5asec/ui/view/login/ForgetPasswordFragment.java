@@ -26,143 +26,139 @@ import com.example.a5asec.utility.Status;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 /**
- *  UI for Forget password.
+ * UI for Forget password.
  */
 public class ForgetPasswordFragment extends Fragment
-    {
+{
     private static final String TAG = "ForgetPasswordFragment";
-
+    @Inject
+    NetworkConnection networkConnection;
     private FragmentForgetPasswordBinding mBinding;
     private ChangePasswordViewModel mChangePasswordViewModel;
-
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
-        {
+    {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forget_password, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forget_password, container
+                , false);
 
         return mBinding.getRoot();
-        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-        {
+    {
         super.onViewCreated(view, savedInstanceState);
 
         setupViewModel();
         setupUi();
         networkAvailable();
 
-        }
+    }
 
     private void setupUi()
-        {
-        mBinding.btnForgetPassword.setOnClickListener(v -> validateEmail() );
+    {
+        mBinding.btnForgetPassword.setOnClickListener(v -> validateEmail());
         mBinding.etForgetPasswordEmail.setOnEditorActionListener((v, actionId, event) ->
-            {
+        {
             validateEmail();
             return false;
-            });
-        }
+        });
+    }
 
     private void validateEmail()
-        {
+    {
         var email = Objects.requireNonNull(mBinding.etForgetPasswordEmail.getText()).toString();
 
-        if(isValidEmail(email))
-            {
+        if (isValidEmail(email)) {
             addUserSignUpInAPI(email);
-            }
         }
+    }
 
     private boolean isValidEmail(String email)
-        {
-        if((TextUtils.isEmpty(email) ||
+    {
+        if ((TextUtils.isEmpty(email) ||
                 !email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))))
-            {
+        {
 
-            if (TextUtils.isEmpty(email))
-                {
+            if (TextUtils.isEmpty(email)) {
                 mBinding.tilForgetPasswordEmail.setError(getString(R.string.sign_up_empty_email));
-                }
-            else if(!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS)))
-                {
+            } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {
                 mBinding.tilForgetPasswordEmail.setError(getString(R.string.sign_up_invalid_email));
-                }
-            return false;
             }
-        return true;
+            return false;
         }
+        return true;
+    }
 
 
     private void addUserSignUpInAPI(String email)
-        {
+    {
 
 
         mChangePasswordViewModel.setRestPassword(email);
-        mChangePasswordViewModel.getStatusCode().observe(getViewLifecycleOwner(), authorizationResource ->
-            {
-
-            Log.e(TAG, String.valueOf(authorizationResource.mStatus));
-
-            if (authorizationResource.mStatus == Status.SUCCESS)
+        mChangePasswordViewModel.getStatusCode()
+                .observe(getViewLifecycleOwner(), authorizationResource ->
                 {
-                Log.e(TAG, "SUCCESS");
+
+                    Log.e(TAG, String.valueOf(authorizationResource.mStatus));
+
+                    if (authorizationResource.mStatus == Status.SUCCESS) {
+                        Log.e(TAG, "SUCCESS");
 
 
-                new Handler(Looper.getMainLooper()).postDelayed
-                        (this::openNewPasswordFragment, 500);
-                } else if (authorizationResource.mStatus == Status.ERROR)
-                {
-                Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
-                //Handle Error
-                }
-            });
+                        new Handler(Looper.getMainLooper()).postDelayed
+                                (this::openNewPasswordFragment, 500);
+                    } else if (authorizationResource.mStatus == Status.ERROR) {
+                        Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
+                        //Handle Error
+                    }
+                });
 
-        }
+    }
 
     private void openNewPasswordFragment()
-        {
+    {
         NavDirections action =
                 ForgetPasswordFragmentDirections.actionForgetPasswordFragmentToNewPasswordFragment();
 
         Navigation.findNavController(mBinding.getRoot()).navigate(action);
-        }
+    }
 
 
     private void setupViewModel()
-        {
+    {
         mChangePasswordViewModel = new ViewModelProvider(this).get(ChangePasswordViewModel.class);
-        }
+    }
 
     /**
      * Check network is available
      */
     public void networkAvailable()
-        {
-        NetworkConnection networkConnection = new NetworkConnection(requireContext());
+    {
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
-            {
-            if (!isConnected)
-                {
+        {
+            if (!isConnected) {
                 mBinding.btnForgetPassword.setVisibility(View.INVISIBLE);
 
-                } else
-                {
+            } else {
                 mBinding.btnForgetPassword.setVisibility(View.VISIBLE);
 
 
-                }
-            });
-        }
+            }
+        });
+    }
+
     @Override
     public void onDestroy()
-        {
+    {
         super.onDestroy();
         mBinding = null;
-        }
     }
+}

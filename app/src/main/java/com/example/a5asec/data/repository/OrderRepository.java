@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Single;
 public class OrderRepository
     {
     private static final String TAG = "OrderRepository";
-    private OrderHelper mOrderHelper;
+    private final OrderHelper mOrderHelper;
 
 
     public OrderRepository(OrderHelper orderHelper)

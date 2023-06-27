@@ -9,21 +9,25 @@
         <variable
             name="language"
             type="String" />
-        <variable
+      <!--  <variable
             name="position"
             type="int" />
         <variable
             name="listener"
-            type="com.example.a5asec.ui.adapters.base.ItemClickListener" />
+            type="com.example.a5asec.ui.adapters.base.ItemClickListener"--> />
     </data>
     <com.google.android.material.card.MaterialCardView
 
         style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
-        android:onClick="@{(view) -> listener.onItemClick(view,position)}"
-        android:layout_height="@dimen/height_item_price_card"
+       android:layout_height="@dimen/height_item_price_card"
         android:layout_marginStart="@dimen/margin_card"
-        android:layout_marginTop="@dimen/margin_card">
+        app:checkedIcon="@drawable/ic_m3_chip_checked_circle"
+        app:checkedIconTint="@color/m3_card_stroke_color"
+
+
+    android:layout_marginTop="@dimen/margin_card"
+        tools:ignore="PrivateResource">
 
         <LinearLayout
             android:layout_width="match_parent"

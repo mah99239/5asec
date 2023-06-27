@@ -20,8 +20,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SettingViewModel  extends ViewModel
     {
     private static final String TAG = "SettingViewModel";
-    private MutableLiveData<Resource<Setting>> mSetting = new MutableLiveData<>();
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final MutableLiveData<Resource<Setting>> mSetting = new MutableLiveData<>();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private SettingRepository mSettingRepository;
 
     public SettingViewModel()

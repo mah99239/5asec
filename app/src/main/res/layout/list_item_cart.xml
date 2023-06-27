@@ -4,83 +4,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+    <variable
+        name="itemService"
+        type="com.example.a5asec.data.model.db.ServiceAndLaundryService" />
+    <variable
+        name="language"
+        type="String" />
+    <variable
+        name="position"
+        type="int" />
+        <variable
+        name="totalCostItem"
+        type="Integer" />
 
-
+    </data>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_cart_container"
+        style="@style/Widget.5asec.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.5asec.CardView"
-        android:addStatesFromChildren="true"
+        android:layout_marginTop="@dimen/margin_card"
+        android:layout_marginBottom="@dimen/margin_card"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_cart_tittle_service"
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_cart_tittle_container"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_cart_text"
-                android:text="@string/cart_text_services"
-                app:layout_constraintBottom_toTopOf="@+id/rv_cart_service"
+                android:background="@color/md_theme_light_primary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_cart_tittle_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_all_element"
+                    android:text="@string/cart_text_services"
+                    android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
+                    android:textColor="@color/md_theme_light_onPrimary"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_cart_name_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_all_element"
+                    android:text="@{itemService.service.getName(language)}"
+                    tools:text="@string/cart_text_name_service"
+                    android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
+                    android:textColor="@color/md_theme_light_onPrimary"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_cart_tittle_service"
+
+                    app:layout_constraintStart_toEndOf="@+id/tv_cart_tittle_service" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cart_service"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="@+id/tv_cart_tittle_service"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cart_tittle_service"
-                tools:listitem="@layout/list_item_laundry_services" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider"
-                android:layout_width="0dp"
-
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_cart_text"
-                app:layout_constraintBottom_toTopOf="@+id/tv_cart_count"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_cart_service" />
+                app:layout_constraintTop_toBottomOf="@+id/cl_cart_tittle_container"
+                tools:listitem="@layout/list_item_cart_laundry_services" />
 
-            <TextView
-                android:id="@+id/tv_cart_name_service"
-                android:layout_marginStart="@dimen/margin_cart_text"
 
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_cart_count_container"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:text="@string/cart_text_name_service"
-                app:layout_constraintStart_toEndOf="@+id/tv_cart_tittle_service"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_cart_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_cart_text"
-
-                android:layout_marginBottom="@dimen/margin_cart_text"
+                android:background="@color/md_theme_light_secondary"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/rv_cart_service"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="count : 1" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_cart_service">
 
-            <TextView
-                android:id="@+id/tv_cart_total_service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_cart_text"
+                <TextView
+                    android:id="@+id/tv_cart_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:layout_marginBottom="@dimen/margin_cart_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="10SAR" />
+                    android:layout_margin="@dimen/padding_all_element"
+
+                    android:textAppearance="@style/TextAppearance.5asec.BodyMedium"
+
+                    android:textColor="@color/md_theme_light_onSecondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@{@string/cart_text_count + itemService.service.count}"
+
+                    tools:text="count : 1" />
+
+                <TextView
+                    android:id="@+id/tv_cart_total_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/padding_all_element"
+                    android:textAppearance="@style/TextAppearance.5asec.BodyMedium"
+                    android:text="@{String.valueOf(totalCostItem) + @string/all_cost_label}"
+                    android:textColor="@color/md_theme_light_onSecondary"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tv_cart_count"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="10 SAR" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -24,12 +24,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/margin_all_guideline" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_cart_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/margin_all_guideline" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_cart_bottom"
@@ -42,17 +36,13 @@
             android:id="@+id/rv_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/tv_cart_total"
+            app:layout_constraintBottom_toTopOf="@+id/btn_cart_check_out"
             app:layout_constraintEnd_toStartOf="@+id/gl_cart_end"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/gl_cart_start"
-            app:layout_constraintTop_toTopOf="@+id/gl_cart_up"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="6"
             tools:listitem="@layout/list_item_cart"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -60,24 +50,20 @@
             android:id="@+id/tv_cart_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_cart_check_out"
-            app:layout_constraintEnd_toEndOf="@+id/gl_cart_end"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/TextAppearance.5asec.BodyMedium"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_cart_check_out"
+            app:layout_constraintStart_toStartOf="@+id/gl_cart_start"
             tools:text="Total: 120SAR"
-            tools:visibility="gone" />
+            />
 
         <Button
             android:id="@+id/btn_cart_check_out"
-            style="@style/Widget.5asec.primaryButton"
+            style="@style/Widget.5asec.tertiaryButton"
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
-
             android:text="@string/cart_button_label"
             app:layout_constraintBottom_toTopOf="@+id/gl_cart_bottom"
-            app:layout_constraintEnd_toStartOf="@+id/gl_cart_end"
-            app:layout_constraintStart_toStartOf="@+id/gl_cart_start" />
+            app:layout_constraintEnd_toStartOf="@+id/gl_cart_end" />
 
         <ImageView
             android:id="@+id/imv_cart_empty"
@@ -91,8 +77,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_bar_shopping"
-            tools:visibility="visible"
-            app:tint="@color/md_theme_dark_inversePrimary" />
+            app:tint="@color/md_theme_dark_inversePrimary"
+            tools:visibility="invisible"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/tv_cart_empty"
@@ -100,8 +87,8 @@
             android:layout_height="wrap_content"
             android:text="@string/cart_text_empty"
             android:textColor="@color/md_theme_dark_inversePrimary"
-            android:textSize="24sp"
             android:visibility="gone"
+            android:textAppearance="@style/TextAppearance.5asec.TitleLarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imv_cart_empty"

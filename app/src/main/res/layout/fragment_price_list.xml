@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.example.a5asec.data.model.api.Banners" />
+        <import type="com.example.a5asec.data.model.api.Banner" />
 
         <import type="java.util.List" />
 
@@ -15,7 +15,7 @@
 
         <variable
             name="bannerList"
-            type="List&lt;Banners>" />
+            type="List&lt;com.example.a5asec.data.model.api.Banner>" />
 
 
 
@@ -66,12 +66,12 @@
 
                 android:paddingStart="@dimen/margin_card"
                 android:paddingEnd="@dimen/margin_all_guideline"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="3"
+                tools:listitem="@layout/list_item_price"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_price_list_top"
                 app:setAdapter="@{priceAdapter}"
                 app:setDataAtAdapter="@{categoryList}"
@@ -85,7 +85,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,5 +120,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</layout><!--   app:setAdapter="@{bannerAdapter}"
-                    app:submitList="@{bannerViewModel.banners}"-->
+</layout>

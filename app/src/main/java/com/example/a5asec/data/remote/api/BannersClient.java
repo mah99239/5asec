@@ -1,29 +1,28 @@
 package com.example.a5asec.data.remote.api;
 
-import com.example.a5asec.data.model.api.Banners;
+import com.example.a5asec.data.model.api.Banner;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
+import javax.inject.Inject;
 
-public class BannersClient extends Client implements BannersApi
-    {
-    private static BannersClient INSTANCE;
+import io.reactivex.rxjava3.core.Single;
+
+
+public class BannersClient implements BannersApi
+{
 
     private final BannersApi mBannersApi;
 
-    public BannersClient() {
-    mBannersApi = getRetrofitAdapter().create(BannersApi.class);
-    }
-
-    public static BannersClient getINSTANCE() {
-    return null == INSTANCE ? new BannersClient() : INSTANCE;
+    @Inject
+    public BannersClient(BannersApi bannersApi) {
+        mBannersApi = bannersApi;
     }
 
 
     @Override
-    public Observable<List<Banners>> getBanners()
-        {
+    public Single<List<Banner>> getBanners()
+    {
         return mBannersApi.getBanners();
-        }
     }
+}

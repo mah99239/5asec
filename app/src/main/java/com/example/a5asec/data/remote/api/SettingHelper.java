@@ -5,7 +5,7 @@ import com.example.a5asec.data.model.api.Setting;
 import io.reactivex.rxjava3.core.Observable;
 
 public class SettingHelper {
-private SettingApi mSettingApi;
+private final SettingApi mSettingApi;
 
 public SettingHelper(SettingApi settingApi) {
 this.mSettingApi = settingApi;

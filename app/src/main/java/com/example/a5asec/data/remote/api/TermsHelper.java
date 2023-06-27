@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 /* loaded from: classes3.dex */
 public class TermsHelper {
-private TermsApi mTermsInterface;
+private final TermsApi mTermsInterface;
 
 public TermsHelper(TermsApi termsInterface) {
 this.mTermsInterface = termsInterface;

@@ -4,8 +4,8 @@ package com.example.a5asec.data.remote.api;
 import android.util.ArrayMap;
 import android.util.Log;
 
-import com.example.a5asec.data.model.api.Authorization;
 import com.example.a5asec.data.local.prefs.TokenPreferences;
+import com.example.a5asec.data.model.api.Authorization;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,26 +14,34 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import okhttp3.Authenticator;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
+import timber.log.Timber;
 
-public class TokenAuthenticator implements Authenticator {
+public class TokenAuthenticator implements Authenticator
+{
     private static final String TAG = "TokenAuthenticator";
     boolean isRefresh;
     retrofit2.Response<Authorization.AuthorizationEntity> sCall;
     String newAccessToken;
+    @Inject
+    TokenPreferences tokenPreferences;
+
 
     @Nullable
     @Override
     public synchronized Request authenticate(@Nullable Route route, @NotNull Response response)
-            throws IOException {
+            throws IOException
+    {
 
-        Log.e(TAG, "token:" + newAccessToken);
+        Timber.tag(TAG).e("token:" + newAccessToken);
 
         if (responseCount(response) >= 3) {
-            Log.e(TAG, "response count grater than:" + 3);
+            Timber.tag(TAG).e("response count grater than:" + 3);
             return null; // If we've failed 3 times, give up.
         }
         boolean refresh = refreshToken();
@@ -44,10 +52,9 @@ public class TokenAuthenticator implements Authenticator {
         }
         if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
             if (refresh) {
-                Log.e(TAG, "refresh");
-                return response.request().newBuilder()
-                        .header("Authorization", "bearer" + " " + newAccessToken)
-                        .build();
+                Timber.tag(TAG).e("refresh");
+                return response.request().newBuilder().header("Authorization",
+                        "bearer" + " " + newAccessToken).build();
 
                 // refresh token is successful, we saved new token to storage.
                 // Get your token from storage and set header
@@ -60,16 +67,19 @@ public class TokenAuthenticator implements Authenticator {
                 return null;
             }
         }
-        Log.e(TAG, "refresh:" + newAccessToken);
-        newAccessToken = TokenPreferences.getPrefAccessToken();
+        Timber.tag(TAG).e("refresh:" + newAccessToken);
+
+        newAccessToken = tokenPreferences.getAccessToken();
 
         Request request = response.request().newBuilder()
-                .header("Authorization", "bearer" + " " + newAccessToken).build();
-        Log.e(TAG, "request" + response.code());
+                .header("Authorization", "bearer" + " " + newAccessToken)
+                .build();
+        Timber.tag(TAG).e("request" + response.code());
         return request;
     }
 
-    public synchronized boolean refreshToken() throws IOException {
+    public synchronized boolean refreshToken() throws IOException
+    {
         // you can use RxJava with Retrofit and add blockingGet
         // it is up to you how to refresh your token
         Map<String, Object> jsonParams = new ArrayMap<>();
@@ -119,12 +129,13 @@ public class TokenAuthenticator implements Authenticator {
 
             return false;
         } */
-    return false;
+        return false;
 
     }
 
 
-    retrofit2.Response<Authorization.AuthorizationEntity> refresh() {
+    retrofit2.Response<Authorization.AuthorizationEntity> refresh()
+    {
         // Map<String> jsonParams = new ArrayMap<>();
    /*      Map<String, Object> jsonParams = new ArrayMap<>();
         //put something inside the map, could be null
@@ -156,7 +167,8 @@ public class TokenAuthenticator implements Authenticator {
 
     }
 
-    private int responseCount(Response response) {
+    private int responseCount(Response response)
+    {
         int result = 1;
         while ((response = response.priorResponse()) != null) {
             result++;

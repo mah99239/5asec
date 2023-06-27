@@ -26,5 +26,28 @@
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+
+
+
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.5asec.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.5asec.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.5asec.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.5asec.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.5asec.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.5asec.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.5asec.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.5asec.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.5asec.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.5asec.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.5asec.BodyMedium</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.5asec.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.5asec.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.5asec.LabelSmall</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Material3.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Material3.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Material3.LargeComponent</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="actionModeStyle">@style/CustomActionModeStyle</item>
     </style>
 </resources>

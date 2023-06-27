@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Single;
 public class AddressRepository
     {
     private static final String TAG = "AddressRepository";
-    private AddressHelper mAddressHelper;
+    private final AddressHelper mAddressHelper;
 
 
     public AddressRepository(AddressHelper address)

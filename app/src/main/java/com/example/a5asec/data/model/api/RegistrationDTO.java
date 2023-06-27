@@ -11,26 +11,26 @@ public class RegistrationDTO
     {
 
     @SerializedName("password")
-    private String password;
+    private final String password;
 
     @SerializedName("mobile")
-    private String mobile;
+    private final String mobile;
 
     @SerializedName("langKey")
-    private String langKey;
+    private final String langKey;
 
     @Setter(AccessLevel.NONE)
     @SerializedName("gender")
     private String gender;
 
     @SerializedName("fullName")
-    private String fullName;
+    private final String fullName;
 
     @SerializedName("email")
-    private String email;
+    private final String email;
 
     @SerializedName("birthDate")
-    private String birthDate;
+    private final String birthDate;
 
     public RegistrationDTO(String fullName, String email, String password, String mobile, String gender,
                            String birthDate, String langKey)

@@ -15,10 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.os.LocaleListCompat;
-import androidx.core.util.Consumer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,15 +24,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.window.java.layout.WindowInfoTrackerCallbackAdapter;
-import androidx.window.layout.DisplayFeature;
-import androidx.window.layout.FoldingFeature;
 import androidx.window.layout.WindowInfoTracker;
-import androidx.window.layout.WindowLayoutInfo;
-import androidx.window.layout.WindowMetrics;
-import androidx.window.layout.WindowMetricsCalculator;
 
 import com.example.a5asec.R;
-import com.example.a5asec.data.local.prefs.TokenPreferences;
 import com.example.a5asec.data.remote.api.SettingClient;
 import com.example.a5asec.data.remote.api.SettingHelper;
 import com.example.a5asec.data.remote.api.UserClient;
@@ -48,7 +40,6 @@ import com.example.a5asec.ui.view.viewmodel.SettingViewModel;
 import com.example.a5asec.ui.view.viewmodel.UserViewModel;
 import com.example.a5asec.utility.AdaptiveUtils;
 import com.example.a5asec.utility.GlideApp;
-import com.example.a5asec.utility.Injection;
 import com.example.a5asec.utility.NetworkConnection;
 import com.example.a5asec.utility.Status;
 import com.google.android.material.badge.BadgeDrawable;
@@ -56,26 +47,35 @@ import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import timber.log.Timber;
+
+@AndroidEntryPoint
 @OptIn(markerClass = ExperimentalBadgeUtils.class)
 public class HomeActivity extends AppCompatActivity
-    {
-
+{
 
 
     private static final String TAG = "HomeActivity";
+    //  @Inject
+    // TokenPreferences tokenPreferences;
     NavController navController;
+    @Inject
+    CartViewModelFactory cartViewModelFactory;
+    @Inject
+
+    NetworkConnection networkConnection;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding mBinding;
     @Nullable
     private WindowInfoTrackerCallbackAdapter windowInfoTracker;
-/*
-    private final Consumer<WindowLayoutInfo> stateContainer = new StateContainer();
-*/
-
+    /*
+        private final Consumer<WindowLayoutInfo> stateContainer = new StateContainer();
+    */
     private SettingViewModel mSettingViewModel;
     private BadgeDrawable badgeDrawable;
 
@@ -84,35 +84,44 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
-        {
+    {
         super.onCreate(savedInstanceState);
 
         mBinding = ActivityHomeBinding.inflate(getLayoutInflater());
-
+        mBinding.setLifecycleOwner(this);
         setContentView(mBinding.getRoot());
-        windowInfoTracker =
-                new WindowInfoTrackerCallbackAdapter(WindowInfoTracker.getOrCreate(this));
+       /* ((MvvmApp) this.getApplication()).getPreferencesComponent()
+                .inject(this);*/
+
+        // Inject the dependencies into this class
+
+        windowInfoTracker = new WindowInfoTrackerCallbackAdapter(
+                WindowInfoTracker.getOrCreate(this));
 
         ViewGroup container = mBinding.clHomeContainer;
         container.addView(new View(this)
-            {
+        {
             @Override
             protected void onConfigurationChanged(Configuration newConfig)
-                {
+            {
                 super.onConfigurationChanged(newConfig);
                 computeWindowSizeClasses();
-                }
-            });
+            }
+        });
         computeWindowSizeClasses();
 
         checkConnections();
 
-        new TokenPreferences(this);
         setupViewModel();
         setupObservers();
 
         setupCartBadge();
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+    }
+
 
 /*     @Override
     protected void onStart()
@@ -184,70 +193,76 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig)
-        {
+    {
         super.onConfigurationChanged(newConfig);
         AppCompatDelegate.getApplicationLocales();
 
 
-        }
+    }
 
     private void computeWindowSizeClasses()
-        {
+    {
 
-        if (AdaptiveUtils.compactScreen(this))
-            {
+        if (AdaptiveUtils.compactScreen(this)) {
             setupNavigationForCompact();
-            } else
-            {
+        } else {
             setupNavigationForRail();
-            }
-
-
         }
 
+
+    }
+
     private void setupNavigationForCompact()
-        {
+    {
         setSupportActionBar(mBinding.toolbarHome);
         setupToolBar();
         setupNavigationBottom();
 
 
-        }
+    }
 
     private void setupNavigationBottom()
-        {
+    {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home_priceList, R.id.nav_home_orders, R.id.nav_home_setting)
-                .build();
-        var navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
+                R.id.nav_home_priceList, R.id.nav_home_orders,
+                R.id.nav_home_setting).build();
+        var navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(
+                R.id.nav_host_fragment_home);
 
         navController = navHostFragment.getNavController();
-        NavigationUI.setupActionBarWithNavController( this,navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(mBinding.navViewHome, navController);
-        }
+        NavigationUI.setupActionBarWithNavController(this, navController,
+                mAppBarConfiguration);
+        NavigationUI.setupWithNavController(mBinding.navViewHome,
+                navController);
+    }
+
     private void setupNavigationForRail()
-        {
+    {
         setupNavigationRil();
         setupHeaderNavigationRail();
-        }
+    }
+
     private void setupNavigationRil()
-        {
+    {
         setSupportActionBar(mBinding.toolbarHome);
-         getSupportActionBar().hide();
+        getSupportActionBar().hide();
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home_priceList, R.id.nav_home_orders, R.id.nav_home_setting)
-                .build();
-        var navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
+                R.id.nav_home_priceList, R.id.nav_home_orders,
+                R.id.nav_home_setting).build();
+        var navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(
+                R.id.nav_host_fragment_home);
 
-         navController = navHostFragment.getNavController();
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this, navController,
+                mAppBarConfiguration);
 
-            NavigationUI.setupWithNavController(mBinding.navRailHome, navController);
+        NavigationUI.setupWithNavController(mBinding.navRailHome,
+                navController);
 
-        }
+    }
 
     private void setupNavigationDrawer()
-        {
+    {
 /*
         BottomNavigationView drawer = mBinding.drawerHome;
         NavigationView navigationView = mBinding.ngvHome;
@@ -277,185 +292,174 @@ public class HomeActivity extends AppCompatActivity
 */
 
 
-        }
+    }
 
 
     @Override
     public boolean onSupportNavigateUp()
-        {
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_home);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-        }
+    {
+        navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment_home);
+        return NavigationUI.navigateUp(navController,
+                mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
-        {
+    {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
 
-        }
+    }
 
     private void setupToolBar()
-        {
+    {
 
-        if (mBinding.toolbarHome != null)
-            {
-            mBinding.toolbarHome.setOnMenuItemClickListener(item ->
-                {
-                switch (item.getItemId())
-                    {
-                    case R.id.action_home_notification:
-                        // User chose the "notification" item, show the app settings UI...
-                        Snackbar.make(getParent(), mBinding.getRoot(), "not", 300).show();
-                        navController.navigateUp();
-
-                        navController.navigate(R.id.nav_home_notification);
-                        return true;
-
-                    case R.id.action_home_cart:
-                        // User chose the "cart" action, mark the current item
-                        // as a favorite...
-                        navController.navigateUp();
-
-                        navController.navigate(R.id.nav_home_cart);
-
-                        return true;
-
-                    default:
-                        // If we got here, the user's action was not recognized.
-                        // Invoke the superclass to handle it.
-                        return HomeActivity.super.onOptionsItemSelected(item);
-                    }
-                });
-            }
-
-        }
-
-    private void setupHeaderNavigationRail()
-        {
-        mBinding.navHeaderHome.btnRailHeaderCart.setOnClickListener(
-                v ->
-                    {
+        if (mBinding.toolbarHome != null) {
+            mBinding.toolbarHome.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_home_notification) {// User chose the "notification"
+                    // item, show the app settings UI...
+                    Snackbar.make(getParent(), mBinding.getRoot(), "not", 300)
+                            .show();
                     navController.navigateUp();
-
+                    navController.navigate(R.id.nav_home_notification);
+                    return true;
+                } else if (itemId == R.id.action_home_cart) {// User chose the "cart" action,
+                    // mark the current item
+                    // as a favorite...
+                    navController.navigateUp();
                     navController.navigate(R.id.nav_home_cart);
-                    });
-        mBinding.navHeaderHome.btnRailHeaderNotifaction.setOnClickListener(v ->
-            {
-            Snackbar.make(getParent(), mBinding.getRoot(), "btnRailHeader Notifaction", 300).show();
-            navController.navigateUp();
-
-            navController.navigate(R.id.nav_home_notification);
+                    return true;
+                }// If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return HomeActivity.super.onOptionsItemSelected(item);
             });
         }
 
-    private void setupCartBadge()
-        {
+    }
 
-        mCartViewModel.getCount().observe(this, observeCount ->
-            {
-            switch (observeCount.getMStatus())
+    private void setupHeaderNavigationRail()
+    {
+        mBinding.navHeaderHome.btnRailHeaderCart.setOnClickListener(v -> {
+            navController.navigateUp();
+
+            navController.navigate(R.id.nav_home_cart);
+        });
+        mBinding.navHeaderHome.btnRailHeaderNotifaction.setOnClickListener(
+                v -> {
+                    Snackbar.make(getParent(), mBinding.getRoot(),
+                            "btnRailHeader Notifaction", 300).show();
+                    navController.navigateUp();
+
+                    navController.navigate(R.id.nav_home_notification);
+                });
+    }
+
+    private void setupCartBadge()
+    {
+
+        try {
+            mCartViewModel.getCount().observe(this, observeCount -> {
+                if (Objects.requireNonNull(
+                        observeCount.getMStatus()) == Status.SUCCESS)
                 {
-                case SUCCESS ->
-                    {
                     var count = observeCount.getMData();
                     Log.e(TAG, "count = " + count);
-                    if (count > 0)
-                        {
+                    if (count > 0) {
                         badgeDrawable = BadgeDrawable.create(this);
 
                         badgeDrawable.setNumber(count);
-                        }
-                    BadgeUtils.attachBadgeDrawable(badgeDrawable, mBinding.toolbarHome, R.id.action_home_cart);
-
                     }
-
+                    BadgeUtils.attachBadgeDrawable(badgeDrawable,
+                            mBinding.toolbarHome, R.id.action_home_cart);
                 }
             });
+        } catch (Exception e) {
+            Timber.tag(TAG).e(e);
         }
+    }
 
 
     private void setupObservers()
-        {
+    {
         setupSettingObserver();
         setupUserObserver();
-        }
+    }
 
     private void setupSettingObserver()
-        {
-        mSettingViewModel.getSetting().observe(this, settingResource ->
-            {
-            switch (settingResource.mStatus)
-                {
+    {
+        mSettingViewModel.getSetting().observe(this, settingResource -> {
+            switch (settingResource.mStatus) {
 
                 case SUCCESS -> Log.e(TAG + ", setupSettingObserver", "SUCCESS");
 
                 case LOADING -> Log.e(TAG + "setupSettingObserver", "LOADING");
                 case ERROR -> Log.e(TAG + ", setupSettingObserver", "ERROR");
-                }
-            });
+            }
+        });
 
-        }
+    }
 
 
     private void setupUserObserver()
-        {
-        mUserViewModel.getUser().observe(this, userResource ->
-            {
-            switch (userResource.mStatus)
-                {
+    {
+        mUserViewModel.getUser().observe(this, userResource -> {
+            switch (userResource.mStatus) {
 
-                case SUCCESS ->
-                    {
-                    String keyLanguage =
-                            userResource.getMData().getLangKey();
-                    LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(keyLanguage);
+                case SUCCESS -> {
+                    String keyLanguage = userResource.getMData().getLangKey();
+                    LocaleListCompat appLocale = LocaleListCompat.forLanguageTags(
+                            keyLanguage);
                     AppCompatDelegate.setApplicationLocales(appLocale);
 
-                    Log.e(TAG + ", setupUserObserver", "suc:" + userResource.getMData());
+                    Log.e(TAG + ", setupUserObserver",
+                            "suc:" + userResource.getMData());
 
 
-                    }
+                }
 
                 case LOADING -> Log.e(TAG + ":user", "LOADING");
                 case ERROR -> Log.e(TAG + ":user", "ERROR");
-                }
-            });
+            }
+        });
 
-        }
+    }
 
     private void setupViewModel()
-        {
+    {
         setupSettingViewModel();
         setupUserViewModel();
         setupCartViewModel();
-        }
+    }
 
     private void setupSettingViewModel()
-        {
+    {
 
         mSettingViewModel = new ViewModelProvider(this,
-                new SettingViewModelFactory(new SettingHelper(new SettingClient()))).get(SettingViewModel.class);
-        }
+                new SettingViewModelFactory(
+                        new SettingHelper(new SettingClient()))).get(
+                SettingViewModel.class);
+    }
 
     private void setupUserViewModel()
-        {
+    {
         mUserViewModel = new ViewModelProvider(this,
-                new UserViewModelFactory(new UserHelper(new UserClient()))).get(UserViewModel.class);
-        }
+                new UserViewModelFactory(new UserHelper(new UserClient()))).get(
+                UserViewModel.class);
+    }
 
     private void setupCartViewModel()
-        {
+    {
 
-        CartViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
-        mCartViewModel = new ViewModelProvider(this, viewModelFactory)
-                .get(CartViewModel.class);
-        }
+
+        mCartViewModel = new ViewModelProvider(this, cartViewModelFactory).get(
+                CartViewModel.class);
+    }
 
     private void checkConnections()
-        {
-        NetworkConnection networkConnection = new NetworkConnection(getApplication());
+    {
+
         var baseColor = ContextCompat.getColor(getApplication(),
                 R.color.md_theme_light_shadow);
         var textBaseColor = ContextCompat.getColor(getApplication(),
@@ -464,62 +468,73 @@ public class HomeActivity extends AppCompatActivity
         var vaildColor = ContextCompat.getColor(getApplication(),
                 R.color.md_theme_light_inversePrimary);
 
-        networkConnection.observe(this, isConnected ->
-            {
-            var errorNetworkMessage = getResources().getString(R.string.all_network_error);
-            var backNetworkMessage = getResources().getString(R.string.all_network_back);
+        networkConnection.getNetworkLiveData().observe(this, isConnected -> {
+            var errorNetworkMessage = getResources().getString(
+                    R.string.all_network_error);
+            var backNetworkMessage = getResources().getString(
+                    R.string.all_network_back);
 
 
-            if (!isConnected)
-                {
+            if (!isConnected) {
                 mBinding.tvHomeNetwork.setText(errorNetworkMessage);
                 mBinding.tvHomeNetwork.setBackgroundColor(baseColor);
                 mBinding.tvHomeNetwork.setTextColor(textBaseColor);
                 mBinding.tvHomeNetwork.setVisibility(View.VISIBLE);
-                } else
-                {
-                try
+            } else {
+                try {
+                    if (mSettingViewModel.getSetting().getValue().getMStatus()
+                            .equals(Status.ERROR))
                     {
-                    if (mSettingViewModel.getSetting().getValue().getMStatus().equals(Status.ERROR))
-                        {
                         mSettingViewModel.reload();
 
-                        }
-                    } catch (NullPointerException e)
-                    {
-                    Log.e(TAG, e.toString());
                     }
+                } catch (NullPointerException e) {
+                    Log.e(TAG, e.toString());
+                }
                 mBinding.tvHomeNetwork.setBackgroundColor(vaildColor);
                 mBinding.tvHomeNetwork.setTextColor(baseColor);
 
                 mBinding.tvHomeNetwork.setText(backNetworkMessage);
-                new Handler(Looper.getMainLooper()).postDelayed(() ->
-                        mBinding.tvHomeNetwork.setVisibility(View.GONE), 1000);
+                new Handler(Looper.getMainLooper()).postDelayed(
+                        () -> mBinding.tvHomeNetwork.setVisibility(View.GONE),
+                        200);
 
-                }
-            });
-        }
+            }
+        });
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+    }
 
     @Override
     public void onLowMemory()
-        {
+    {
         super.onLowMemory();
         GlideApp.get(this).clearMemory();
         GlideApp.with(this).onLowMemory();
-        }
+    }
 
     @Override
     public void onTrimMemory(int level)
-        {
+    {
         super.onTrimMemory(level);
         GlideApp.get(this).onTrimMemory(level);
         GlideApp.with(this).onTrimMemory(level);
-        }
+    }
 
     @Override
     protected void onDestroy()
-        {
+    {
         super.onDestroy();
         GlideApp.get(this).clearMemory();
-        }
     }
+}

@@ -10,7 +10,7 @@ import com.example.a5asec.ui.view.viewmodel.SettingViewModel;
 
 public class SettingViewModelFactory implements ViewModelProvider.Factory
     {
-    private SettingHelper mSettingHelper;
+    private final SettingHelper mSettingHelper;
 
     public SettingViewModelFactory(SettingHelper settingHelper)
         {

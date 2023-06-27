@@ -9,7 +9,7 @@ import com.example.a5asec.data.repository.UserRepository;
 import com.example.a5asec.ui.view.viewmodel.UserViewModel;
 
 public class UserViewModelFactory implements ViewModelProvider.Factory {
-private UserHelper mUserHelper;
+private final UserHelper mUserHelper;
 
 public UserViewModelFactory(UserHelper userHelper) {
         this.mUserHelper = userHelper;

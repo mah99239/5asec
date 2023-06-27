@@ -11,7 +11,7 @@ import okhttp3.RequestBody;
 public class UserRepository
     {
     private static final String TAG = "UserRepository";
-    private UserHelper mUserHelper;
+    private final UserHelper mUserHelper;
 
     public UserRepository(UserHelper userHelper)
         {

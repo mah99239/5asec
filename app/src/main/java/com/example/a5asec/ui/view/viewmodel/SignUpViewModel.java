@@ -28,7 +28,7 @@ public class SignUpViewModel extends ViewModel
 
     private  MutableLiveData<Resource<ResponseEntity>> mStatusCode ;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-    private UserHelper mUserHelper = new UserHelper(new UserClient());
+    private final UserHelper mUserHelper = new UserHelper(new UserClient());
 
 
     public SignUpViewModel()

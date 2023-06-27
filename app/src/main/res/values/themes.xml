@@ -48,5 +48,10 @@
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
+
+
+        <item name="actionModeStyle">@style/CustomActionModeStyle</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+
     </style>
 </resources>

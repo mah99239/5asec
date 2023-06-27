@@ -20,10 +20,10 @@ public final class ApiError
     public static String handleApiError(Throwable error)
         {
 
-        if (error instanceof HttpException)
+        if (error instanceof HttpException errorHttp)
             {
             //TODO: add message with timeout
-            return switch (((HttpException) error).code())
+            return switch (errorHttp.code())
                     {
                     case HTTP_UNAUTHORIZED -> ("Unauthorised User");
                     case HTTP_FORBIDDEN -> ("Forbidden");
@@ -44,7 +44,7 @@ public final class ApiError
             } else
             {
 
-            return ((HttpException)error).response().errorBody().toString();
+            return error.getMessage();
             }
 
         }

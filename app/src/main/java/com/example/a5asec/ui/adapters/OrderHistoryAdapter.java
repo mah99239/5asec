@@ -22,7 +22,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     private static final String TAG = OrderHistoryAdapter.class.getSimpleName();
 
-    private List<Order> mHistoryItem = new ArrayList<>();
+    private final List<Order> mHistoryItem = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public OrderHistoryAdapter()
@@ -121,7 +121,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             }
         }
 
-    public class DiffCallback extends DiffUtil.Callback
+     class DiffCallback extends DiffUtil.Callback
         {
         List<Order> oldTodoList;
         List<Order> newTodoList;

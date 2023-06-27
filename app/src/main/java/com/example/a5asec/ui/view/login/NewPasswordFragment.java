@@ -31,12 +31,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 /**
  * second UI for rest password.
  */
 public class NewPasswordFragment extends Fragment
-    {
+{
     private static final String TAG = "NewPasswordFragment";
+    @Inject
+    NetworkConnection networkConnection;
     private FragmentNewPasswordBinding mBinding;
     private ChangePasswordViewModel mChangePasswordViewModel;
     private int redColor;
@@ -45,25 +49,27 @@ public class NewPasswordFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
-        {
+    {
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_password, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_password, container,
+                false);
 
         return mBinding.getRoot();
-        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-        {
+    {
         super.onViewCreated(view, savedInstanceState);
         validInputUser();
         setupViewModel();
         setupUi();
         networkAvailable();
 
-        }
+    }
+
     private void validInputUser()
-        {
+    {
 
         redColor = ContextCompat.getColor(requireContext(),
                 R.color.md_theme_light_onError);
@@ -75,215 +81,204 @@ public class NewPasswordFragment extends Fragment
         validatePassword(boxStrokeError, boxStrokeDefault);
 
 
-        }
+    }
+
     private void validatePassword(int boxStrokeError, int boxStrokeDefault)
-        {
+    {
         final String[] password = {null};
 
         mBinding.etNewPassPass.addTextChangedListener(new TextWatcher()
-            {
+        {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
+            {
                 mBinding.tilNewPassNewPass.setBoxStrokeWidthFocused(boxStrokeDefault);
-                }
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-                if (TextUtils.isEmpty(s))
-                    {
+            {
+                if (TextUtils.isEmpty(s)) {
                     mBinding.tilNewPassNewPass.setBoxStrokeColor(redColor);
                     mBinding.tilNewPassNewPass.setBoxStrokeWidthFocused(boxStrokeError);
-                    } else if (s.length() < 8)
-                    {
+                } else if (s.length() < 8) {
                     mBinding.tilNewPassNewPass.setError(getString(R.string.sign_up_error_password));
-                    } else
-                    {
+                } else {
                     mBinding.tilNewPassNewPass.setError(null);
 
                     mBinding.tilNewPassNewPass.setBoxStrokeColor(validColor);
-                    }
                 }
+            }
 
             @Override
             public void afterTextChanged(Editable s)
-                {
-                password[0] = s.toString().trim();
-                }
-            });
-        mBinding.etNewPassConfirmPass.addTextChangedListener(new TextWatcher()
             {
+                password[0] = s.toString().trim();
+            }
+        });
+        mBinding.etNewPassConfirmPass.addTextChangedListener(new TextWatcher()
+        {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                {
+            {
                 mBinding.tilNewPassConfirmPass.setBoxStrokeWidthFocused(boxStrokeDefault);
-                }
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
-                {
-                if (TextUtils.isEmpty(s))
-                    {
+            {
+                if (TextUtils.isEmpty(s)) {
                     mBinding.tilNewPassConfirmPass.setBoxStrokeColor(redColor);
                     mBinding.tilNewPassConfirmPass.setBoxStrokeWidthFocused(boxStrokeError);
-                    } else if (!s.toString().trim().matches(String.valueOf(password[0])))
-                    {
+                } else if (!s.toString().trim().matches(String.valueOf(password[0]))) {
 
                     mBinding.tilNewPassConfirmPass.setError(getString(R.string.sign_up_dontmatch_password));
-                    } else
-                    {
+                } else {
                     mBinding.tilNewPassConfirmPass.setBoxStrokeColor(validColor);
-                    }
-                if (s.toString().trim().matches(String.valueOf(password[0])))
-                    {
-                    mBinding.tilNewPassConfirmPass.setError(null);
-                    }
                 }
+                if (s.toString().trim().matches(String.valueOf(password[0]))) {
+                    mBinding.tilNewPassConfirmPass.setError(null);
+                }
+            }
 
             @Override
             public void afterTextChanged(Editable s)
-                {
+            {
                 // add document why this method is empty
-                }
-            });
+            }
+        });
 
-        }
+    }
+
     private void setupUi()
-        {
+    {
         mBinding.btnNewPass.setOnClickListener(v ->
                 validateEmail()
         );
 
         mBinding.etNewPassConfirmPass.setOnEditorActionListener((v, actionId, event) ->
-            {
+        {
             validateEmail();
             return false;
-            });
-        }
+        });
+    }
 
     private void validateEmail()
-        {
+    {
         var code = Objects.requireNonNull(mBinding.etNewPassCode.getText()).toString();
         var password = Objects.requireNonNull(mBinding.etNewPassPass.getText()).toString();
-        var confirmPassword = Objects.requireNonNull(mBinding.etNewPassConfirmPass.getText()).toString();
+        var confirmPassword = Objects.requireNonNull(mBinding.etNewPassConfirmPass.getText())
+                .toString();
 
-        if (isValidEmail(code, password, confirmPassword))
-            {
+        if (isValidEmail(code, password, confirmPassword)) {
             addUserSignUpInAPI(code, password);
-            }
         }
+    }
 
     private boolean isValidEmail(String code, String password, String confirmPassword)
-        {
+    {
         if ((TextUtils.isEmpty(code) ||
                 TextUtils.isEmpty(password))
                 || password.length() < 8 || !confirmPassword.equals(password))
-            {
+        {
 
-            if (TextUtils.isEmpty(code))
-                {
+            if (TextUtils.isEmpty(code)) {
                 mBinding.tilNewPassCode.setError(getString(R.string.newPassword_empty_code));
-                } else if (TextUtils.isEmpty(password))
-                {
+            } else if (TextUtils.isEmpty(password)) {
                 mBinding.tilNewPassNewPass.setError(getString(R.string.sign_up_empty_password));
-                } else if (password.length() < 8)
-                {
+            } else if (password.length() < 8) {
                 mBinding.tilNewPassNewPass.setError(getString(R.string.sign_up_error_password));
 
-                }
-
-            return false;
             }
 
-        return true;
+            return false;
         }
+
+        return true;
+    }
 
 
     private void addUserSignUpInAPI(String code, String password)
-        {
+    {
 
 
         mChangePasswordViewModel.setFinishPassword(code, password);
-        mChangePasswordViewModel.getStatusCode().observe(getViewLifecycleOwner(), authorizationResource ->
-            {
-
-            Log.e(TAG, String.valueOf(authorizationResource.mStatus));
-
-            switch (authorizationResource.mStatus)
+        mChangePasswordViewModel.getStatusCode()
+                .observe(getViewLifecycleOwner(), authorizationResource ->
                 {
 
-                case SUCCESS -> {
-                Log.e(TAG, "SUCCESS");
-                Log.e(TAG, "authorizationResource");
+                    Log.e(TAG, String.valueOf(authorizationResource.mStatus));
+
+                    switch (authorizationResource.mStatus) {
+
+                        case SUCCESS -> {
+                            Log.e(TAG, "SUCCESS");
+                            Log.e(TAG, "authorizationResource");
 
 
-                new Handler(Looper.getMainLooper()).postDelayed
-                        (this::successFinishResetPassword, 1000);
+                            new Handler(Looper.getMainLooper()).postDelayed
+                                    (this::successFinishResetPassword, 1000);
 
-                }
-
-
-                case ERROR -> {
-                messageSnackbar();
-                Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
-                //Handle Error
-
-                }
+                        }
 
 
-                }
-            });
+                        case ERROR -> {
+                            messageSnackbar();
+                            Log.e(TAG, "ERROR:" + authorizationResource.getMMessage());
+                            //Handle Error
 
-        }
+                        }
+
+
+                    }
+                });
+
+    }
 
     private void messageSnackbar()
-        {
+    {
 
         var message = getString(R.string.newPassword_error_code);
         Snackbar.make(mBinding.btnNewPass, message, LENGTH_LONG)
                 .setAnchorView(mBinding.btnNewPass).show();
-        }
+    }
 
     private void successFinishResetPassword()
-        {
+    {
         NavDirections action =
                 NewPasswordFragmentDirections.actionNewPasswordFragmentToNavLogin();
 
         Navigation.findNavController(requireView()).navigate(action);
-        }
+    }
 
     private void setupViewModel()
-        {
+    {
         mChangePasswordViewModel = new ViewModelProvider(this).get(ChangePasswordViewModel.class);
-        }
+    }
 
     /**
      * Check network is available
      */
     public void networkAvailable()
-        {
-        NetworkConnection networkConnection = new NetworkConnection(requireContext());
+    {
         networkConnection.observe(getViewLifecycleOwner(), isConnected ->
-            {
-            if (!isConnected)
-                {
+        {
+            if (!isConnected) {
                 mBinding.btnNewPass.setVisibility(View.INVISIBLE);
 
-                } else
-                {
+            } else {
                 mBinding.btnNewPass.setVisibility(View.VISIBLE);
 
 
-                }
-            });
-        }
+            }
+        });
+    }
 
 
     @Override
     public void onDestroy()
-        {
+    {
         super.onDestroy();
         mBinding = null;
-        }
     }
+}

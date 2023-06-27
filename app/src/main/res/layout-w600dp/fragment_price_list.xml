@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.example.a5asec.data.model.api.Banners" />
+        <import type="com.example.a5asec.data.model.api.Banner" />
 
         <import type="java.util.List" />
 
@@ -15,7 +15,7 @@
 
         <variable
             name="bannerList"
-            type="List&lt;Banners>" />
+            type="List&lt;com.example.a5asec.data.model.api.Banner>" />
 
 
 

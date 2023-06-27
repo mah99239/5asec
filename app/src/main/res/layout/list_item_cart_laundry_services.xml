@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemService"
+            type="com.example.a5asec.data.model.db.LaundryService" />
+        <variable
+            name="language"
+            type="String" />
+        <variable
+            name="position"
+            type="int" />
+ />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_cart_laundry_services"
+        style="@style/Widget.5asec.CardView"
+        android:layout_width="@dimen/height_item_price_card"
+        android:layout_height="@dimen/height_item_price_card"
+        app:cardBackgroundColor="@color/md_theme_light_inverseOnSurface"
+
+        app:cardElevation="2dp"
+
+        android:layout_marginStart="@dimen/padding_all_item"
+        android:layout_marginBottom="@dimen/padding_all_element"
+        android:layout_marginEnd="@dimen/padding_all_item"
+        android:layout_marginTop="@dimen/padding_all_element"
+       >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_cart_laundry_services"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_laundry_services_image"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:cropToPadding="true"
+                android:paddingTop="@dimen/padding_all_element"
+                app:baseImage="@{@drawable/ic_product}"
+                app:loadImage="@{position == 1 ? itemService.iconUrl : null}"
+
+                android:scaleType="fitCenter"
+
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_cart_laundry_services_content_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_all_element"
+                android:text="@{position == 0 ? @string/laundry_Service_base_name : itemService.getName(language)}"
+                android:textAppearance="@style/TextAppearance.5asec.TitleSmall"
+
+                tools:text="Title goes here" />
+
+            <TextView
+                android:id="@+id/tv_cart_laundry_services_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_item_laundry_services_text"
+                android:paddingBottom="@dimen/padding_all_element"
+                android:text="@{itemService.cost + @string/all_cost_label}"
+
+                android:textAppearance="@style/TextAppearance.5asec.LabelSmall"
+                tools:text="10 SAR"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
